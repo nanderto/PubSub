@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PubSubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="PubSubModelStoreContainer">
+          <EntitySet Name="Message2" EntityType="PubSubModel.Store.Message2" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Message3" EntityType="PubSubModel.Store.Message3" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Message4" EntityType="PubSubModel.Store.Message4" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Message5" EntityType="PubSubModel.Store.Message5" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Messages" EntityType="PubSubModel.Store.Messages" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Message2">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MessageID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubscriptionID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessagePutTime" Type="datetime" Nullable="false" />
+          <Property Name="MessageReadTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="binary" Nullable="false" MaxLength="8" />
+          <Property Name="BatchNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message3">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MessageID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubscriptionID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessagePutTime" Type="datetime" Nullable="false" />
+          <Property Name="MessageReadTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="binary" Nullable="false" MaxLength="8" />
+          <Property Name="BatchNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message4">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MessageID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubscriptionID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessagePutTime" Type="datetime" Nullable="false" />
+          <Property Name="MessageReadTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="binary" Nullable="false" MaxLength="8" />
+          <Property Name="BatchNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message5">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MessageID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubscriptionID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessagePutTime" Type="datetime" Nullable="false" />
+          <Property Name="MessageReadTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="binary" Nullable="false" MaxLength="8" />
+          <Property Name="BatchNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MessageID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SubscriptionID" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessagePutTime" Type="datetime" Nullable="false" />
+          <Property Name="Timestamp" Type="binary" Nullable="false" MaxLength="8" />
+          <Property Name="BatchNumber" Type="int" Nullable="false" />
+          <Property Name="MessageReadTime" Type="datetime" Nullable="false" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PubSubModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="PubSubEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Messages" EntityType="PubSubModel.Message" />
+          <EntitySet Name="Message2" EntityType="PubSubModel.Message2" />
+          <EntitySet Name="Message3" EntityType="PubSubModel.Message3" />
+          <EntitySet Name="Message4" EntityType="PubSubModel.Message4" />
+          <EntitySet Name="Message5" EntityType="PubSubModel.Message5" />
+        </EntityContainer>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MessageID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubscriptionID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Guid" Name="Guid" Nullable="false" />
+          <Property Type="DateTime" Name="MessagePutTime" Nullable="false" />
+          <Property Type="Binary" Name="Timestamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="BatchNumber" Nullable="false" />
+          <Property Type="DateTime" Name="MessageReadTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message2">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MessageID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubscriptionID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Guid" Name="Guid" Nullable="false" />
+          <Property Type="DateTime" Name="MessagePutTime" Nullable="false" />
+          <Property Type="DateTime" Name="MessageReadTime" Nullable="false" />
+          <Property Type="Binary" Name="Timestamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="BatchNumber" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message3">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MessageID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubscriptionID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Guid" Name="Guid" Nullable="false" />
+          <Property Type="DateTime" Name="MessagePutTime" Nullable="false" />
+          <Property Type="DateTime" Name="MessageReadTime" Nullable="false" />
+          <Property Type="Binary" Name="Timestamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="BatchNumber" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message4">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MessageID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubscriptionID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Guid" Name="Guid" Nullable="false" />
+          <Property Type="DateTime" Name="MessagePutTime" Nullable="false" />
+          <Property Type="DateTime" Name="MessageReadTime" Nullable="false" />
+          <Property Type="Binary" Name="Timestamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="BatchNumber" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message5">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MessageID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SubscriptionID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Guid" Name="Guid" Nullable="false" />
+          <Property Type="DateTime" Name="MessagePutTime" Nullable="false" />
+          <Property Type="DateTime" Name="MessageReadTime" Nullable="false" />
+          <Property Type="Binary" Name="Timestamp" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="BatchNumber" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PubSubModelStoreContainer" CdmEntityContainer="PubSubEntities">
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="IsTypeOf(PubSubModel.Message)">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="MessagePutTime" ColumnName="MessagePutTime" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+          <ScalarProperty Name="MessageReadTime" ColumnName="MessageReadTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Message2">
+      <EntityTypeMapping TypeName="IsTypeOf(PubSubModel.Message2)">
+        <MappingFragment StoreEntitySet="Message2">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="MessagePutTime" ColumnName="MessagePutTime" />
+          <ScalarProperty Name="MessageReadTime" ColumnName="MessageReadTime" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Message3">
+      <EntityTypeMapping TypeName="IsTypeOf(PubSubModel.Message3)">
+        <MappingFragment StoreEntitySet="Message3">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="MessagePutTime" ColumnName="MessagePutTime" />
+          <ScalarProperty Name="MessageReadTime" ColumnName="MessageReadTime" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Message4">
+      <EntityTypeMapping TypeName="IsTypeOf(PubSubModel.Message4)">
+        <MappingFragment StoreEntitySet="Message4">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="MessagePutTime" ColumnName="MessagePutTime" />
+          <ScalarProperty Name="MessageReadTime" ColumnName="MessageReadTime" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Message5">
+      <EntityTypeMapping TypeName="IsTypeOf(PubSubModel.Message5)">
+        <MappingFragment StoreEntitySet="Message5">
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+          <ScalarProperty Name="SubscriptionID" ColumnName="SubscriptionID" />
+          <ScalarProperty Name="MessagePutTime" ColumnName="MessagePutTime" />
+          <ScalarProperty Name="MessageReadTime" ColumnName="MessageReadTime" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="PubSubTestModel">
+        <EntityTypeShape EntityType="PubSubModel.Message" Width="2.125" PointX="2.75" PointY="0.75" Height="2.7494921875" />
+        <EntityTypeShape EntityType="PubSubModel.Message2" Width="1.5" PointX="0.75" PointY="4.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="PubSubModel.Message3" Width="1.5" PointX="2.75" PointY="4.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="PubSubModel.Message4" Width="1.5" PointX="4.75" PointY="4.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="PubSubModel.Message5" Width="1.5" PointX="5.75" PointY="0.75" Height="2.7494921874999996" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

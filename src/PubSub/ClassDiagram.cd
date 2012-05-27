@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Phantom.PubSub.ActiveSubscriptions&lt;T&gt;">
+    <Position X="4.75" Y="2.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAIgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ActiveSubscriptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Collections.Concurrent.ConcurrentDictionary&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="5" Y="2" Width="2" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Phantom.PubSub.IQueueProvider&lt;T&gt;" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAEAAAAAAAAwAQAAEAAAAAAQAAQCAAAA=</HashCode>
+      <FileName>IQueueProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Phantom.PubSub.ISubscriber&lt;T&gt;" Collapsed="true">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAiEAAgAAAAQAIAAAAAAEAACEAAAAggo=</HashCode>
+      <FileName>ISubscriber.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Phantom.PubSub.IMessageStatus&lt;T&gt;" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>IMessageStatus.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Delegate Name="Phantom.PubSub.MessageHandlingCompleted" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IQueueProvider.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Phantom.PubSub.MessageHandlingStarted" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IQueueProvider.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
