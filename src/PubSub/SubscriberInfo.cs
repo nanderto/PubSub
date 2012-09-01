@@ -24,7 +24,7 @@
 
         public IPublishSubscribeChannel<T> WithTimeToExpire(TimeSpan timeSpan)
         {
-            return this.publishSubscribeChannel.AddSubscriberInfo(Tuple.Create(this.subscriberType.Name, this.subscriberType, timeSpan));
+            return ((PublishSubscribeChannel<T>) this.publishSubscribeChannel).AddSubscriberInfo(Tuple.Create(this.subscriberType.Name, this.subscriberType, timeSpan));
         }
     }
 }

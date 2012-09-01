@@ -40,9 +40,22 @@ namespace Phantom.PubSub
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "Static members are to interact with data specific to the type of the member")]
         public static IEnumerable<Type> TypesImplementingInterface(Assembly[] assemblies, Type desiredType)
         {
-            return assemblies
+            //List<Tuple<Type,Type>> typesAndGenericTypes = new List<Tuple<Type,Type>>();
+            //List<Tuple<Type, Type>> typesAndGenericTypes = from type in assemblies
+            //                                               where (type => IsAssignableToGenericType(type, desiredType))
+            //assemblies
+            //    .SelectMany(assembly => assembly.GetTypes())
+            //    .Where(type => IsAssignableToGenericType(type, desiredType));
+
+            var generictype = desiredType.GetGenericArguments()[0];
+
+            var x = Activator.CreateInstance(generictype);
+
+            var returnAssemblies = assemblies
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => IsAssignableToGenericType(type, desiredType));
+
+            return returnAssemblies;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = "Static members are to interact with data specific to the type of the member")]
@@ -84,10 +97,11 @@ namespace Phantom.PubSub
             {
                 var assembly = System.Reflection.Assembly.LoadFrom(item);
                 assembliesFoundInBin.Add(assembly);
-    }
+            }
 
             var typesInBin = TypesImplementingInterface(assembliesFoundInBin.ToArray(), typeof(ISubscriber<T>));
-            return new ReadOnlyCollection<Type>(typesInBin.ToList<Type>());
+            var result = new ReadOnlyCollection<Type>(typesInBin.ToList<Type>());
+            return result;
         }
     }
 }

@@ -11,27 +11,54 @@
   <AnalyseExecutionTimes>true</AnalyseExecutionTimes>
   <IncludeStaticReferencesInWorkspace>true</IncludeStaticReferencesInWorkspace>
   <DefaultTestTimeout>60000</DefaultTestTimeout>
-  <UseBuildConfiguration></UseBuildConfiguration>
-  <ProxyProcessPath></ProxyProcessPath>
+  <UseBuildConfiguration />
+  <ProxyProcessPath />
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <IgnoredTests>
     <RegexTestSelector>
-      <RegularExpression>UnitTests\.UserManagerServiceTest\..*</RegularExpression>
-    </RegexTestSelector>
-    <RegexTestSelector>
-      <RegularExpression>UnitTests\.MessageReceiverTest\..*</RegularExpression>
-    </RegexTestSelector>
-    <RegexTestSelector>
-      <RegularExpression>UnitTests\.InterfaceTest\..*</RegularExpression>
+      <RegularExpression>IntegrationTests\.AssemblyLocatorTests\..*</RegularExpression>
     </RegexTestSelector>
     <RegexTestSelector>
       <RegularExpression>UnitTests\.Class1Test\..*</RegularExpression>
     </RegexTestSelector>
     <RegexTestSelector>
+      <RegularExpression>UnitTests\.InterfaceTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.MessageServiceTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.QueueProviderTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.UserManagerServiceAdaptorTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.UserManagerServiceTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
       <RegularExpression>UnitTests\.UserManagerServiceWithInterceptorTest\..*</RegularExpression>
     </RegexTestSelector>
     <NamedTestSelector>
-      <TestName>UnitTests.MessageServiceTest.SaveMessageTest</TestName>
+      <TestName>UnitTests.MessageReceiverTest.CreateMSMQProvider</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.ParallelsTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.ProcessBatch_1_MessageTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.ProcessBatch_2_MessageTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.ProcessBatchTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.StartTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.MessageReceiverTest.StartTestMessage</TestName>
     </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

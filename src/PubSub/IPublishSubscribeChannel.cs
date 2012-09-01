@@ -1,6 +1,6 @@
 namespace Phantom.PubSub
 {
-using System;
+    using System;
     using System.Collections.Generic;
 
     public interface IPublishSubscribeChannel<T>
@@ -12,8 +12,5 @@ using System;
         void PublishMessage(T message);
 
         ISubscriberInfo<T> AddSubscriberType(Type type);
-
-        IPublishSubscribeChannel<T> AddSubscriberInfo(Tuple<string, Type, TimeSpan> tuple);
-
     }
 }

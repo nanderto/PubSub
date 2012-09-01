@@ -6,6 +6,9 @@ using System.Messaging;
 using Models = Entities;
 using Phantom.PubSub;
 using BusinessLogic;
+using System.Threading.Tasks;
+using IntegrationTests;
+using System.Threading;
 
 namespace UnitTests
 {
@@ -68,29 +71,29 @@ namespace UnitTests
             return isQueueEmpty;
         } 
 
-        public static bool IsQueueEmpty()
-        {
-            if (msgQ == null)
-            {
-                msgQ = new MessageQueue(@".\private$\EntitiesUser");
-            }
+        //public static bool IsQueueEmpty()
+        //{
+        //    if (msgQ == null)
+        //    {
+        //        msgQ = new MessageQueue(@".\private$\EntitiesUser");
+        //    }
 
-            bool isQueueEmpty = false;
-            try
-            {
-               msgQ.Peek(new TimeSpan(0));
-                //}
-                isQueueEmpty = false;
-            }
-            catch (MessageQueueException e)
-            {
-                if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
-                {
-                    isQueueEmpty = true;
-                }
-            }
-            return isQueueEmpty;
-        } 
+        //    bool isQueueEmpty = false;
+        //    try
+        //    {
+        //       msgQ.Peek(new TimeSpan(0));
+        //        //}
+        //        isQueueEmpty = false;
+        //    }
+        //    catch (MessageQueueException e)
+        //    {
+        //        if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
+        //        {
+        //            isQueueEmpty = true;
+        //        }
+        //    }
+        //    return isQueueEmpty;
+        //} 
         
 
         public static string AddABadMessage()
@@ -118,7 +121,7 @@ namespace UnitTests
             return recoverableMessage.Id;
         }
 
-        private static MessagePacket<Models.User> GetMessagePacket(Models.User u)
+        public static MessagePacket<Models.User> GetMessagePacket(Models.User u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
@@ -140,7 +143,7 @@ namespace UnitTests
             return message;
         }
 
-        private static MessagePacket<Models.Message> GetMessagePacket(Models.Message u)
+        public static MessagePacket<Models.Message> GetMessagePacket(Models.Message u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
@@ -162,19 +165,19 @@ namespace UnitTests
             return message;
         }
 
-        private static MessagePacket<Models.Message> GetMessagePacketwith1MillisecondTTE(Models.Message u)
+        public static MessagePacket<Models.Message> GetMessagePacketwith1MillisecondTTE(Models.Message u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
                 Name = "TestSubscriber`1",
-                TimeToExpire = new TimeSpan(0, 0, 0, 0, 1),
+                TimeToExpire = new TimeSpan(0, 0, 0, 0, 100),
                 StartTime = DateTime.Now
             };
 
             var subscribermetadata2 = new SubscriberMetadata()
             {
                 Name = "TestSubscriber2`1",
-                TimeToExpire = new TimeSpan(0, 0, 0, 0, 1),
+                TimeToExpire = new TimeSpan(0, 0, 0, 0, 100),
                 StartTime = DateTime.Now
             };
 
@@ -235,56 +238,7 @@ namespace UnitTests
             return subscribers;
         }
 
-        public static ActiveSubscriptionsDictionary<T> AddSubscribers<T> (ActiveSubscriptionsDictionary<T> input, List<ISubscriber<T>> CollecctionToAdd)
-        {
-            foreach (var item in CollecctionToAdd)
-            {
-                input.AddActiveSubscription(item);
-            }
-            return input;
-        }
-
-        public static ActiveSubscriptionsDictionary<T> GetSpecialSubscribers<T>()
-        {
-            var subscribers = new ActiveSubscriptionsDictionary<T>();
-            ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
-            sub.Name = "XXX";
-            sub.TimeToExpire = new TimeSpan(10000);
-            sub.Id = "Subdcription ID::XXX";
-            ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
-            sub2.Name = "YYY";
-            sub2.TimeToExpire = new TimeSpan(10000);
-            sub2.Id = "Subdcription ID::YYY";
-            ISubscriber<T> sub3 = new TestSubscriber<T>() as ISubscriber<T>;
-            sub3.Name = "ZZZ";
-            sub3.TimeToExpire = new TimeSpan(10000);
-            sub3.Id = "Subdcription ID::ZZZ";
-            subscribers.AddActiveSubscription(sub);
-            subscribers.AddActiveSubscription(sub2);
-            subscribers.AddActiveSubscription(sub3);
-            return subscribers;
-        }
-
-
-        public static ActiveSubscriptionsDictionary<T> AddAllotofSubscriptions<T>(ActiveSubscriptionsDictionary<T> input, int NumberToAdd)
-        {
-            //AddTest a bunch of active subscriptions
-            int i = 0;
-            for (int j = 0; j < NumberToAdd; j++)
-            {
-
-                foreach (var item in TestHelper.GetSubscribers<T>())
-                {
-                    item.Id = " SubScription: " + item.Name + j + ":: MessageID: " + i + "000::";
-                   // item.MessageStatusTracker = new MessageStatusTracker();
-                    input.AddActiveSubscription(item);
-                    i++;
-                }
-            }
-            return input;
-        }
-
-
+      
         public static string AddAMessageMessageWith1MillisecondTTE()
         {
             Models.Message m = new Models.Message();
@@ -383,10 +337,16 @@ namespace UnitTests
     public class TestSubscriber<T> : Subscriber<T>
     {
         #region ISubscriber Members
-                public override bool Process(T input)
+        public override bool Process(T input)
         {
             System.Diagnostics.Debug.WriteLine("Writing stuff: {0}", "");
             return true;
+        }
+
+
+        public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

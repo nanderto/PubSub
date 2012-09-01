@@ -14,5 +14,8 @@
         DateTime StartTime { get; set; }
 
         TimeSpan TimeToExpire { get; set; }
+
+        bool CanProcess();
+
     }
 }

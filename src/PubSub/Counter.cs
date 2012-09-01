@@ -31,7 +31,7 @@ namespace Phantom.PubSub
         /// <summary>
         /// Collection of counters to monitor the usage of the component
         /// </summary>
-        private static int[] listofCounters = new int[12];
+        private static int[] listofCounters = new int[30];
         
         /// <summary>
         /// Locks the counter object and gets the current Total Subscriber Count

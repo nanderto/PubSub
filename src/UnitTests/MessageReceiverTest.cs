@@ -200,14 +200,15 @@ namespace UnitTests
 
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Started processing: tIME: " + DateTime.Now);
 
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 50; i++)
             {
                 TestHelper.AddAMessageMessage();
             }
 
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Started loading msmq: tIME: " + DateTime.Now);
 
-            target.AddSubscriberType(typeof(TestSubscriber<T>)).WithTimeToExpire(new TimeSpan(0,1,0));
+            target.AddSubscriberType(typeof(TestSubscriber<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 100));
+            target.AddSubscriberType(typeof(TestSubscriber2<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 100));
             
             BatchProcessor<Message>.ConfigureWithPubSubChannel(target);
             Assert.IsTrue(BatchProcessor<Message>.IsConfigured);
@@ -227,6 +228,98 @@ namespace UnitTests
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Finished processing: tIME:" + Endprocessing);
         }
 
+        [TestMethod]
+        public void ParallelsTest()
+        {
+            Message m = new Message();
+            m.Name = "Gwen";
+            m.BatchNumber = 1;
+            m.Guid = System.Guid.NewGuid();
+            m.MessageID = "MessageID";
+            m.SubscriptionID = "SubscriptionID";
+            m.MessagePutTime = DateTime.Now;
+            m.ID = 999;
+
+            var messagePacket = TestHelper.GetMessagePacketwith1MillisecondTTE(m);
+
+            var subscribersForThisMessage = TestHelper.GetSubscribers<Message>();
+            foreach (var item in subscribersForThisMessage)
+            {
+                item.SubscribersForThisMessage = subscribersForThisMessage;
+            }
+
+            TaskWaiter taskWaiter = new TaskWaiter();
+            foreach (var subscriber in subscribersForThisMessage)
+            {
+                var parentTask = Task<bool>.Factory.StartNew(() =>
+                {
+                    var task = Task<bool>.Factory.StartNew(() =>
+                    {
+                        string newSubscriptionId = " SubScriber: " + subscriber.Name + ":: MessageID: " + messagePacket.Id + "::";
+                        subscriber.Id = newSubscriptionId;
+                        subscriber.MessageId = messagePacket.Id;
+                        //// wire up the events
+                        subscriber.OnProcessStartedEventHandler += new OnProcessStartedEventHandler(Subscriber_OnProcessStartedEvent);
+                        subscriber.OnProcessCompletedEventHandler += new OnProcessCompletedEventHandler(Subscriber_OnProcessCompletedEvent);
+                        //activeSubscriptions.AddActiveSubscription(subscriber);
+                        return subscriber.Run((Message)messagePacket.Body);
+                    });
+                    return task.Wait(subscriber.TimeToExpire);
+                });
+                taskWaiter.Add(parentTask);
+            }
+            taskWaiter.Wait();    
+        }
+
+        private void Subscriber_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
+        {
+           // throw new NotImplementedException();
+        }
+
+        private void Subscriber_OnProcessCompletedEvent(object sender, ProcessCompletedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        public void Publish_1_Message()
+        {
+            Publish_1_MessageHelper<Message>();
+        }
+
+        private void Publish_1_MessageHelper<T>() where T : Message
+        {
+            var stopwatch = Stopwatch.StartNew();
+            var pubsub = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>())
+               .AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
+               .AddSubscriberType(typeof(BusinessLogic.TestSubscriberXXX<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 100))
+               .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 30));
+
+            TestHelper.SetUpCleanTestQueue("EntitiesMessage");
+            Message m = GetNewMessage<Message>();
+
+            pubsub.PublishMessage((T)m);
+
+        }
+
+        [TestMethod]
+        public void Publish_1_MessageWithoutSubscribers()
+        {
+            Publish_1_MessageWithoutSubscribersHelper<User>();
+        }
+
+        private void Publish_1_MessageWithoutSubscribersHelper<T>() where T : User
+        {
+           // var stopwatch = Stopwatch.StartNew();
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>());
+
+            TestHelper.SetUpCleanTestQueue("EntitiesCustomer");
+            User m = GetNewUser<User>();
+
+            pubsub.PublishMessage((User)m);
+
+        }
+
         [TestCategory("Performance"), TestMethod()]
         public void RunPubSubTest()
         {
@@ -237,38 +330,31 @@ namespace UnitTests
 
         public void RunPubSubTestHelper<T>() where T : Message
         {
-            //Debug.Listeners.Add(new TextWriterTraceListener("log.txt"));
-            //Debug.AutoFlush = true;
+           
+
+
+            //Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            //Trace.AutoFlush = true;
+            Trace.Listeners.Add(new TextWriterTraceListener(@"C:\\Dev\\temp\\log.txt"));
+            Trace.AutoFlush = true;
             startTime = DateTime.Now;
             var stopwatch = Stopwatch.StartNew();
             
             System.Diagnostics.Debug.WriteLine("Started loading msmq: tIME:" + startTime);
-
+            Trace.WriteLine("Started loading msmq: tIME: Ticks: " + DateTime.Now.Ticks);
             ///create queue and channel
             var pubsub = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>())
                 .AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
-                .AddSubscriberType(typeof(BusinessLogic.TestSubscriberXXX<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 30))
-                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 30));
+                .AddSubscriberType(typeof(BusinessLogic.TestSubscriberXXX<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 100))
+                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 12));
 
             TestHelper.SetUpCleanTestQueue("EntitiesMessage");
-           // queue.SetUpWatchQueue(queue);
-            //IQueueProvider<T> Queue = new UserQueueProvider() as IQueueProvider<T>;
 
             Random r = new Random();
-           // BatchProcessor<Message>.ConfigureWithPubSubChannel(pubsub);
-            //Parallel.For(0, 5, (j) =>
-            //{
-            //    for (int i = 0; i < 1000; i++)
-            //    {
-            //        Message m = GetNewMessage<Message>();
-
-            //        pubsub.PublishMessage((T)m);
-
-            //        System.Threading.Thread.Sleep(r.Next(10,20));
-            //        //System.Threading.Thread.Sleep(30);
-            //    }
-            //});
+          
             int numbertoinsert = 1000;
+            int startRange = 40;
+            int endRange = 50;
             var t1 = Task<int>.Factory.StartNew(() =>
             {
                 int result = 0;
@@ -278,7 +364,7 @@ namespace UnitTests
 
                     pubsub.PublishMessage((T)m);
 
-                    System.Threading.Thread.Sleep(r.Next(10, 20));
+                    System.Threading.Thread.Sleep(r.Next(startRange, endRange));
                     //System.Threading.Thread.Sleep(30);
                     result = i;
                 }
@@ -294,7 +380,7 @@ namespace UnitTests
 
                     pubsub.PublishMessage((T)m);
 
-                    System.Threading.Thread.Sleep(r.Next(10, 20));
+                    System.Threading.Thread.Sleep(r.Next(startRange, endRange));
                     //System.Threading.Thread.Sleep(30);
                     result = i;
                 }
@@ -310,7 +396,7 @@ namespace UnitTests
 
                     pubsub.PublishMessage((T)m);
 
-                    System.Threading.Thread.Sleep(r.Next(10, 20));
+                    System.Threading.Thread.Sleep(r.Next(startRange, endRange));
                     //System.Threading.Thread.Sleep(30);
                     result = i;
                 }
@@ -326,7 +412,7 @@ namespace UnitTests
 
                     pubsub.PublishMessage((T)m);
 
-                    System.Threading.Thread.Sleep(r.Next(10, 20));
+                    System.Threading.Thread.Sleep(r.Next(startRange, endRange));
                     //System.Threading.Thread.Sleep(30);
                     result = i;
                 }
@@ -342,7 +428,7 @@ namespace UnitTests
 
                     pubsub.PublishMessage((T)m);
 
-                    System.Threading.Thread.Sleep(r.Next(10, 20));
+                    System.Threading.Thread.Sleep(r.Next(startRange, endRange));
                     //System.Threading.Thread.Sleep(30);
                     result = i;
                 }
@@ -376,7 +462,7 @@ namespace UnitTests
             
             Trace.WriteLine("");
             Trace.WriteLine("Finished processing: tIME: " + Endprocessing);
-            Trace.WriteLine(string.Format("Finished processing: tIME: {0} seconds", elapsedTime));
+            Trace.WriteLine(string.Format("Finished processing: tIME: {0} ms", elapsedTime));
 
             Trace.WriteLine("Finished processing: QUeuetIME seconds: " + elapsedseconds);
             float rate = totalprocessed / elapsedseconds;
@@ -408,7 +494,15 @@ namespace UnitTests
             Trace.WriteLine("Counter Index: 9 Total Count: " + Counter.Subscriber(9).ToString() + " Errors in Removing from a nmessage the queue");
             Trace.WriteLine("Counter Index: 10 Total Count: " + Counter.Subscriber(10).ToString() + " Peeks to check if message is still in queue");
             Trace.WriteLine("Counter Index: 11 Total Count: " + Counter.Subscriber(11).ToString() + " errors in Peeks to check if message is still in queue");
-             
+            Trace.WriteLine("Counter Index: 12 Total Count: " + Counter.Subscriber(12).ToString() + " Number of subscribers that Canceled out");
+            Trace.WriteLine("Counter Index: 13 Total Count: " + Counter.Subscriber(13).ToString() + " Number of subscribers that Faulted out");
+            Trace.WriteLine("Counter Index: 14 Total Count: " + Counter.Subscriber(14).ToString() + " Number of subscribers that Ran to completion"); 
+            Trace.WriteLine("Counter Index: 15 Total Count: " + Counter.Subscriber(15).ToString() + " Number of times Abort was called");
+            Trace.WriteLine("Counter Index: 16 Total Count: " + Counter.Subscriber(16).ToString() + " Number of cancellations recorded");
+            Trace.WriteLine("Counter Index: 17 Total Count: " + Counter.Subscriber(17).ToString() + " Number of put in queue");
+            Trace.WriteLine("Counter Index: 18 Total Count: " + Counter.Subscriber(18).ToString() + " number of single subscribers/transactions put back in the queue after canceling");
+            Trace.WriteLine("Counter Index: 19 Total Count: " + Counter.Subscriber(19).ToString() + " number of times in CreateSingleSubscriberMessagePacket");
+            Trace.WriteLine("Counter Index: 20 Total Count: " + Counter.Subscriber(20).ToString() + " number of single subscribers/transactions put back in the queue after exception");
         }
 
         private static T GetNewMessage<T>() where T : Message
@@ -420,6 +514,16 @@ namespace UnitTests
             m.MessageID = "MessageID";
             m.SubscriptionID = "SubscriptionID";
             m.MessagePutTime = DateTime.Now;
+            return (T)m;
+        }
+
+        private static T GetNewUser<T>() where T : User
+        {
+            User m = new User();
+            m.FirstName = "Gwen";
+            m.LastName = "Holt";
+            m.City = "Auckland";
+            m.UserName = "JOHNO";
             return (T)m;
         }
 

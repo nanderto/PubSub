@@ -1,15 +1,16 @@
 namespace Phantom.PubSub
 {
-using System;
+    using System;
     using System.Collections.Concurrent;
-using System.Collections.Generic;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Timers;
-using System.Transactions;
+    using System.Transactions;
     using Phantom.PubSub;
 
     /// <summary>
@@ -19,22 +20,21 @@ using System.Transactions;
     public class PublishSubscribeChannel<T> : IPublishSubscribeChannel<T>, IDisposable
     {
         private static object queueLock = new object();
-
-        private static bool processRunning = false;
-                
+        
+        //private static ActiveSubscriptionsDictionary<T> activeSubscriptions;
+        
         private IQueueProvider<T> queueProvider;
-
-        private System.Timers.Timer timer;
 
         private Dictionary<string, Tuple<string, Type, TimeSpan>> subscriberInfos = new Dictionary<string, Tuple<string, Type, TimeSpan>>();
         
         public PublishSubscribeChannel()
         {
-                }
+        }
 
         public PublishSubscribeChannel(IQueueProvider<T> queueProvider)
         {
             this.queueProvider = queueProvider;
+            //activeSubscriptions = new ActiveSubscriptionsDictionary<T>();
         }
 
         ~PublishSubscribeChannel()
@@ -63,12 +63,22 @@ using System.Transactions;
                 BatchProcessor<T>.ConfigureWithPubSubChannel(this);
             }
 
+            if (this.subscriberInfos.Count == 0)
+            {
+                foreach (var item in AutoConfig<T>.SubscriberInfos)
+                {
+                    this.subscriberInfos.Add(item.Item1, new Tuple<string, Type, TimeSpan>(item.Item1, item.Item2, item.Item3));
+                }
+                
+            }
+
             List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
+
             foreach (var item in this.subscriberInfos)
             {
                 var subscribermetadata = new SubscriberMetadata()
                 {
-                    // Name = item.Key, I dont think I need the name only the start time and the time to wait till it expires
+                    Name = item.Key, 
                     TimeToExpire = item.Value.Item3,
                     StartTime = DateTime.Now,
                 };
@@ -86,8 +96,6 @@ using System.Transactions;
         /// </summary>
         public void ProcessBatch()
         {
-            var traceSwitch = new TraceSwitch("Phantom.PubSub", "Phantom Pubsub Traceswitch");
-            Trace.WriteLineIf(traceSwitch.TraceInfo, "ProcessBatch Should fire every 10 seconds:" + DateTime.Now.ToString());
             this.queueProvider.ProcessQueueAsBatch(this.HandleMessageForBatchProcessing);
         }
 
@@ -107,62 +115,211 @@ using System.Transactions;
             if (string.IsNullOrEmpty(messageId)) throw new ArgumentNullException("messagePacket");
 
             var subscribersForThisMessage = this.GetSubscriptions();
-            foreach (var item in subscribersForThisMessage)
+            
+            var allSubscribersTask = Task.Run(async () =>
             {
-                item.SubscribersForThisMessage = subscribersForThisMessage;
-            }
+                foreach (var subscriber in subscribersForThisMessage)
+                {
+                    string newSubscriptionId = " SubScriber: " + subscriber.Name + ":: MessageID: " + messageId + "::";
+                    subscriber.Id = newSubscriptionId;
+                    subscriber.MessageId = messageId;
+                    var cancellationToken = new CancellationTokenSource(subscriber.TimeToExpire).Token;
 
-            Parallel.ForEach<ISubscriber<T>>(
-                subscribersForThisMessage, 
-                (ISubscriber<T> subscriber) =>
-            {
-                string newSubscriptionId = " SubScriber: " + subscriber.Name + ":: MessageID: " + messageId + "::";
-                subscriber.Id = newSubscriptionId;
-                subscriber.MessageId = messageId;
-                    //// wire up the events
-                    subscriber.OnProcessStartedEventHandler += new OnProcessStartedEventHandler(Subscriber_OnProcessStartedEvent);
-                    subscriber.OnProcessCompletedEventHandler += new OnProcessCompletedEventHandler(Subscriber_OnProcessCompletedEvent);
-                    activeSubscriptions.AddActiveSubscription(subscriber);
-                    subscriber.Run((T)messagePacket.Body);
+                    //cancellationToken.Register(() =>
+                    //{
+                    //    Trace.WriteLine("Subscriber being cancelled " + subscriber.Id + subscriber.Name);
+                    //    Trace.WriteLine("Subscriber being cancelled m(s) " + DateTime.Now.Ticks);
+                    //    //Trace.WriteLine("Subscriber being cancelled " + cancellationToken.);
+                    //    //subscriber.Abort();
+                    //});
+                    await subscriber.RunAsync((T)messagePacket.Body, cancellationToken)
+                    .ContinueWith(anticedant =>
+                    {
+                        switch (anticedant.Status)
+                        {
+                            case TaskStatus.RanToCompletion:
+                                Counter.Increment(14);
+                                break;
+                            case TaskStatus.Faulted:
+                                var newMessagId = this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(subscriber, messagePacket));
+                                Counter.Increment(13);
+                                subscriber.Abort();
+                                //Trace.WriteLine("Request failed: " + newSubscriptionId + " newMessagId" + newMessagId + " " + anticedant.Exception.InnerException.ToString());
+                                break;
+                            case TaskStatus.Canceled:
+                                this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(subscriber, messagePacket));
+                                subscriber.Abort();
+                                Counter.Increment(12);
+                                Trace.WriteLine("This task timed out : " + subscriber.Name + " The timeout timespan was: " + subscriber.TimeToExpire.TotalMilliseconds + " ms");
+                                //Trace.WriteLine("Request was canceledxxx");
+                                break;
+                        }
+                    });
+                }
             });
+            this.queueProvider.RemoveFromQueue(messageId);
+
+            //.ContinueWith(anticedant =>
+            //{
+            //    this.queueProvider.RemoveFromQueue(messageId);
+            //});
             return true;
+        }
+
+        private MessagePacket<T> CreateSingleSubscriberMessagePacket(ISubscriber<T> subscriber, MessagePacket<T> messagePacket)
+        {
+            Counter.Increment(19);
+            //Trace.WriteLine("In CreateSingleSubscriberMessagePacket ");
+
+            List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
+            var subscribermetadata = new SubscriberMetadata()
+            {
+                //need to add abort count and think thru appropriate start time
+                Name = subscriber.GetType().Name,
+                TimeToExpire = subscriber.TimeToExpire,
+                StartTime = subscriber.StartTime,
+                RetryCount = ++subscriber.AbortCount,
+                FailedOrTimedOut = true,
+                FailedOrTimedOutTime = subscriber.AbortedTime
+            };
+            metadatalist.Add(subscribermetadata);
+            return new MessagePacket<T>((T)messagePacket.Body, metadatalist);
         }
 
         public bool HandleMessageForBatchProcessing(MessagePacket<T> messagePacket, string messageId)
         {
+            //Trace.WriteLine("In HandleMessageForBatchProcessing, messageId: " + messageId);
             if (messagePacket == null) throw new ArgumentNullException("messagePacket");
             if (string.IsNullOrEmpty(messageId)) throw new ArgumentNullException("messagePacket");
+            
+            if (messagePacket.SubscriberMetadataList.Count == 1)
+            {
+                //Trace.WriteLine("In HandleMessageForBatchProcessing, Subscriber Count 1 so handling message: " + messageId);
+                return HandleSingleSubscriberforMessage(messagePacket, messageId);
+            }
+            //Trace.WriteLine("In HandleMessageForBatchProcessing, Subscriber Count NOT 1 so doing nothing message: " + messageId);
+
+            //we may see this called but it should be a timing issue
+            //expired subscriptions get a new message in the que and the original message removed
 
             foreach (var item in messagePacket.SubscriberMetadataList)
             {
-                string subscriptionId = " SubScriber: " + item.Name + ":: MessageID: " + messageId + "::";
+                //string subscriptionId = " SubScriber: " + item.Name + ":: MessageID: " + messageId + "::";
+                //Trace.WriteLine("About to check if I can process: " + subscriptionId);
 
-                if (HasExpired(item))
+                //ISubscriber<T> newSubscription = null;
+
+                if (item.CanProcess())
                 {
-                    ISubscriber<T> existingSubscription = null;
-                    bool matchExists = activeSubscriptions.TryGetValue(subscriptionId, out existingSubscription);
-                    if (matchExists)
+                    HandleMessageForFirstTime(messagePacket, messageId);
+                    break;
+                }
+            }
+            return true;
+        }
+            //        Trace.WriteLine("Processing: " + subscriptionId);
+            //        var subscriberInfo = this.subscriberInfos.FirstOrDefault(si => si.Key == item.Name);
+            //        newSubscription = (ISubscriber<T>)Activator.CreateInstance(subscriberInfo.Value.Item2);
+            //        newSubscription.Name = subscriberInfo.Value.Item1;
+            //        newSubscription.TimeToExpire = subscriberInfo.Value.Item3;
+
+            //        var cancellationToken = new CancellationTokenSource(newSubscription.TimeToExpire).Token;
+            //        var task = Task.Run(async () =>
+            //        {
+            //            await newSubscription.RunAsync((T)messagePacket.Body, cancellationToken);
+            //            return true;
+            //        })
+            //        .ContinueWith(anticedant =>
+            //        {
+            //            switch (anticedant.Status)
+            //            {
+            //                case TaskStatus.RanToCompletion:
+            //                    Counter.Increment(16);
+            //                    //Trace.WriteLine("Request succeeded: {0}" +  anticedant.Result.ToString());
+            //                    break;
+            //                case TaskStatus.Faulted:
+            //                    this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+            //                    Counter.Increment(17);
+            //                    newSubscription.Abort();
+            //                    //Trace.WriteLine("Request failed: {0}" + anticedant.Exception.InnerException.ToString());
+            //                    break;
+            //                case TaskStatus.Canceled:
+            //                    this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+            //                    newSubscription.Abort();
+            //                    Counter.Increment(18);
+            //                    //Trace.WriteLine("This task timed out : " + subscriber.Name + " The timeout timespan was: " + subscriber.TimeToExpire.TotalMilliseconds + " ms");
+            //                    Trace.WriteLine("Request was canceled");
+            //                    break;
+            //            }
+            //        });
+        //        //}
+        //    }   
+        //    return true;
+        //}
+
+        private bool HandleSingleSubscriberforMessage(MessagePacket<T> messagePacket, string messageId)
+        {
+            var metaData = messagePacket.SubscriberMetadataList[0];
+            string subscriptionId = " SubScriber: " + metaData.Name + ":: MessageID: " + messageId + "::";
+            //Trace.WriteLine("About to check if I can process: " + subscriptionId);
+
+            ISubscriber<T> newSubscription = null;
+
+            if (metaData.CanProcess())
+            {
+
+                //Trace.WriteLine("Processing: " + subscriptionId);
+                var subscriberInfo = this.subscriberInfos.FirstOrDefault(si => si.Key == metaData.Name);
+                newSubscription = (ISubscriber<T>)Activator.CreateInstance(subscriberInfo.Value.Item2);
+                newSubscription.Name = subscriberInfo.Value.Item1;
+                newSubscription.TimeToExpire = subscriberInfo.Value.Item3;
+
+                var cancellationToken = new CancellationTokenSource(newSubscription.TimeToExpire).Token;
+                var task = Task.Run(async () =>
+                {
+                    await newSubscription.RunAsync((T)messagePacket.Body, cancellationToken);
+                    return true;
+                })
+                .ContinueWith(anticedant =>
+                {
+                    switch (anticedant.Status)
                     {
-                        if (existingSubscription.CanProcess())
-                        {
-                            existingSubscription.Run(messagePacket.Body);
+                        case TaskStatus.RanToCompletion:
+                            Counter.Increment(16);
+                            this.queueProvider.RemoveFromQueue(messageId);
+                            //Trace.WriteLine("Request succeeded: {0}" +  anticedant.Result.ToString());
+                            break;
+                        case TaskStatus.Faulted:
+                            try
+                            {
+                                this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+                                Counter.Increment(20);
+                            }
+                            catch
+                            {
+                                break;
+                            }
+                            this.queueProvider.RemoveFromQueue(messageId);
+                            break;
+                        case TaskStatus.Canceled:
+                            try
+                            {
+                                this.queueProvider.PutMessageInTransaction(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+                                Counter.Increment(18);
+                                Trace.WriteLine("Request was canceled");
+                            }
+                            catch
+                            {
+                                break;
+                            }                          
+                            //Trace.WriteLine("This task timed out : " + subscriber.Name + " The timeout timespan was: " + subscriber.TimeToExpire.TotalMilliseconds + " ms")                          
+                            this.queueProvider.RemoveFromQueue(messageId);
+                            break;
                     }
-                }
-                    else 
-                    {
-                        // this is an error condition messages should not exist in queuw without existing in the activeSubscriptions in memory list
-                        // we could keep looking and maybe find some subscribers and not otheres but we will never know if they ran to completion of not.
-                        // So we choose to redatart all subscribers remember that idempotency is a must of subscribers 
-                        if (this.queueProvider.CheckItsStillInTheQueue(messageId))
-                        {
-                            this.HandleMessageForFirstTime(messagePacket, messageId);
-        }
-                }
+                });
             }
+            return true;
         }
-        
-                return true;
-            }
 
         public Subscribers<T> GetSubscriptions()
         {
@@ -202,6 +359,8 @@ using System.Transactions;
         {
             if (currentSubscriber == null) throw new ArgumentNullException("currentSubscriber");
 
+            ////Trace.WriteLine("Process Completed " + currentSubscriber.Id);
+
             currentSubscriber.FinishedProcessing = true;
 
             if (currentSubscriber.SubscribersForThisMessage.IfAllSubscribersCompletedLockAndRemove(this.RemoveFromQueue))
@@ -226,7 +385,6 @@ using System.Transactions;
         {
             if (disposing)
             {
-                this.timer.Dispose();
             }
         }
 
@@ -240,57 +398,29 @@ using System.Transactions;
             return false;
         }
 
-        private static void CheckProcessingStatus()
-        {
-            // look for subscribers that have not completed by ther expirery time
-            activeSubscriptions.ExpireOldSubscriptions();
-        }
+        //private static void CheckProcessingStatus()
+        //{
+        //    // look for subscribers that have not completed by ther expirery time
+        //    activeSubscriptions.ExpireOldSubscriptions();
+        //}
 
         private void Subscriber_OnProcessCompletedEvent(object sender, ProcessCompletedEventArgs e)
         {
             this.ProcessCompleted(e.CurrentSubscription as ISubscriber<T>);
-    }
-
-       private void Subscriber_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
-    {
-            this.ProcessStarted((ISubscriber<T>)e.CurrentSubscription);
-    }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            try
-            {
-                Trace.WriteLine("About to check if process is still running");
-                Counter.Increment(7);
-                if (!processRunning)
-                {
-                    var sw = Stopwatch.StartNew();
-                    Counter.Increment(8);
-                    Trace.WriteLine("Starting new process");
-                    processRunning = true;
-                    this.ProcessBatch();
-                    CheckProcessingStatus();
-                    processRunning = false;
-                    Trace.WriteLine(string.Format(CultureInfo.InvariantCulture, "Batch process ran for {0:#,#} ms", sw.ElapsedMilliseconds));
-                }
-                else
-    {
-                    Trace.WriteLine("Yes it is");
-                }
-            }
-            catch (Exception ex)
-        {
-                Trace.WriteLine(ex);
-            }
         }
+
+        private void Subscriber_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
+        {
+            this.ProcessStarted((ISubscriber<T>)e.CurrentSubscription);
+        }
+
+      
 
         private bool IsReady()
         {
             if (this.queueProvider == null) return false;
             if (this.subscriberInfos.Count == 0) return false; // will not work with no subscribers
             //// if(this.MessageIds == null) return false;
-            if (this.timer == null) return false;
             //// if (!GetSubScribersCalled) return false; called in timer
             return true;
         }
@@ -302,8 +432,8 @@ using System.Transactions;
             lock (queueLock)
             {
                 this.queueProvider.RemoveFromQueue(currentSubscribers[0].MessageId);
-                activeSubscriptions.RemoveIfExists(currentSubscribers);
-    }
+               // activeSubscriptions.RemoveIfExists(currentSubscribers);
+            }
 
             return true;
         }

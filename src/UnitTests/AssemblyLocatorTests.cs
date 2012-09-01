@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Phantom.PubSub;
@@ -53,7 +55,13 @@ namespace IntegrationTests
     }
     public class TestSub<dummy> : Subscriber<dummy>
     {
+
         public override bool Process(dummy input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Task<bool> ProcessAsync(dummy input, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Threading;
+    using System.Threading.Tasks;
     using Phantom.PubSub;
 
     /// <summary>
@@ -17,12 +19,13 @@
     /// the Run command until the subscription acknowledges that it has finnished processing.
     /// </summary>
     /// <typeparam name="T">Create a subscriber for your specific type of Message</typeparam>
-    public abstract class Subscriber<T> : ISubscriber<T>
+    public abstract class Subscriber<T> : ISubscriber<T> 
     {
-        private int abortCount = 0;
+        
+        public int abortCount = 0;
 
         private bool aborted;
-
+        
         public virtual event OnProcessStartedEventHandler OnProcessStartedEventHandler;
 
         public virtual event OnProcessCompletedEventHandler OnProcessCompletedEventHandler;
@@ -31,11 +34,19 @@
 
         public string Id { get; set; }
 
-        public string MessageId { get; set; }
+        public virtual string MessageId { get; set; }
 
         public DateTime AbortedTime { get; set; }
 
         public TimeSpan TimeToExpire { get; set; }
+
+        public virtual TimeSpan DefaultTimeToExpire 
+        {
+            get
+            {
+                return new TimeSpan(0, 0, 100);
+            }
+        }
 
         public DateTime StartTime { get; set; }
 
@@ -56,6 +67,19 @@
             {
                 this.aborted = value;
                 this.AbortedTime = DateTime.Now;
+            }
+        }
+
+        public int AbortCount
+        {
+            get
+            {
+                return this.abortCount;
+            }
+
+            set
+            {
+                this.abortCount = value;
             }
         }
 
@@ -81,8 +105,11 @@
         /// <returns>True on success</returns>
         public abstract bool Process(T input);
 
+        public abstract Task<bool> ProcessAsync(T input, CancellationToken cancellationToken);
+
         public bool Abort()
         {
+            Counter.Increment(15);
             this.Aborted = true;
             this.AbortedTime = DateTime.Now;
             this.abortCount = ++this.abortCount;
@@ -90,7 +117,12 @@
             this.FinishedProcessing = false;
             return true;
         }
- 
+
+        //public virtual TimeSpan SetDefaultTimeToExpire()
+        //{
+        //    this.TimeToExpire = new TimeSpan(0, 0, 100);
+        //    return this.TimeToExpire;
+        //}
         /// <summary>
         /// If the subscriber has been aborted then we can check if it is time to reprocess
         /// </summary>
@@ -139,6 +171,17 @@
             return this.PostProcess();
         }
 
+        public async Task<bool> RunAsync(T message, CancellationToken cancellationToken)
+        {
+            //Trace.WriteLine("RunAsync About to start: MessageId: " + this.MessageId + " SubscriberID: " + this.Id);
+                    
+            cancellationToken.ThrowIfCancellationRequested();
+            this.PreProcess();
+            cancellationToken.ThrowIfCancellationRequested();
+            var result = await this.ProcessAsync(message, cancellationToken);
+            return this.PostProcess();
+        }
+
         /// <summary>
         /// Private method called by Run command, runs after the method Process has being called. Completes Post processing tasks of
         /// setting up the object and raising the OnProcessCompleted event
@@ -147,7 +190,7 @@
         private bool PostProcess()
         {
             this.FinishedProcessing = true;
-            this.OnProcessCompletedEventHandler(this, new ProcessCompletedEventArgs(this));
+            //this.OnProcessCompletedEventHandler(this, new ProcessCompletedEventArgs(this));
             return true;
         }
 
@@ -161,7 +204,7 @@
             this.StartedProcessing = true;
             this.StartTime = DateTime.Now;
             this.Aborted = false;
-            this.OnProcessStartedEventHandler(this, new ProcessStartedEventArgs(this));
+            //this.OnProcessStartedEventHandler(this, new ProcessStartedEventArgs(this));
             return true;
         }
     }

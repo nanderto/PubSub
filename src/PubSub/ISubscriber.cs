@@ -5,6 +5,8 @@ namespace Phantom.PubSub
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Phantom.PubSub;
 
     public interface ISubscriber<T>
@@ -12,6 +14,8 @@ namespace Phantom.PubSub
         event OnProcessStartedEventHandler OnProcessStartedEventHandler;        
         
         event OnProcessCompletedEventHandler OnProcessCompletedEventHandler;
+
+        int AbortCount { get; set; }
 
         string Name { get; set; }
         
@@ -24,6 +28,8 @@ namespace Phantom.PubSub
         bool Aborted { get; set; }
 
         TimeSpan TimeToExpire { get; set; }
+
+        TimeSpan DefaultTimeToExpire { get; }
         
         DateTime ExpireTime { get; set; }
         
@@ -42,5 +48,7 @@ namespace Phantom.PubSub
         bool CanProcess();
 
         bool Run(T message);
+
+        Task<bool> RunAsync(T message, CancellationToken cancellationToken);
     }
 }

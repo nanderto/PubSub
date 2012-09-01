@@ -13,21 +13,21 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Phantom.PubSub.IQueueProvider&lt;T&gt;" Collapsed="true">
-    <Position X="10" Y="1.5" Width="1.5" />
+    <Position X="11.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEAAAAAAAAAAAEAAAAAAAAwAQAAEAAAAAAQAAQCAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAEAAAAAAAAwEQAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>IQueueProvider.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Phantom.PubSub.ISubscriber&lt;T&gt;" Collapsed="true">
     <Position X="8.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEAAAAAiEAAgAAAAQAIAAAAAAEAACEAAAAggo=</HashCode>
+      <HashCode>BAACAQAEAAAACCAAAgAAAAQAMAAAAAgEAAAEAAAAghs=</HashCode>
       <FileName>ISubscriber.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Phantom.PubSub.IMessageStatus&lt;T&gt;" Collapsed="true">
-    <Position X="8.25" Y="1.5" Width="1.5" />
+    <Position X="8.25" Y="1" Width="3.25" />
     <TypeIdentifier>
       <HashCode>BAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>IMessageStatus.cs</FileName>
