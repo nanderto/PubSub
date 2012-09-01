@@ -71,6 +71,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PubSub\Phantom.PubSub.csproj">
+      <Project>{1d840298-368a-45f6-a40f-47a1aff9b910}</Project>
+      <Name>Phantom.PubSub</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

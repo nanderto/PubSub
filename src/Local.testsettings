@@ -2,13 +2,14 @@
 <TestSettings name="Local" id="538e0ba7-1a6f-4397-b84f-ab1afc842b0a" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <Description>These are default test settings for a local test run.</Description>
   <Deployment>
-    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll" />
-    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
-    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll" />
     <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.Unity.Interception.dll" />
-    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.ServiceLocation.dll" />
-    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll" />
+    <DeploymentItem filename="BusinessLogic\bin\Debug\BusinessLogic.dll" />
     <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.Unity.dll" />
+    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll" />
+    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
+    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll" />
+    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.ServiceLocation.dll" />
+    <DeploymentItem filename="servicepipeline\bin\Debug\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll" />
   </Deployment>
   <Execution>
     <TestTypeSpecific>

@@ -23,12 +23,10 @@ namespace BusinessLogic
         /// </summary>
         public UserManagerServiceAdaptor()
         {
-            //need to do better job of loading the filters - could be via configuration 
-            // although I prefer not using config 
             //Once you are commited to using an agaptor you expect at least 1 filter
             var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
             IPublishSubscribeChannel<User> PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
-            PubSubChannel.AddSubscriber(typeof(TestSubscriber2<User>));
+            PubSubChannel.AddSubscriberType(typeof(TestSubscriber2<User>));
             this.Register(new PublishMessageFilter<User>(PubSubChannel));
         }
 

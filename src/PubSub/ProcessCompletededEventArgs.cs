@@ -1,48 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Phantom.PubSub
+﻿namespace Phantom.PubSub
 {
-    public class ProcessCompletededEventArgs : EventArgs
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
+    public class ProcessCompletedEventArgs : EventArgs
     {
-        private string Name;
-
-        public ProcessCompletededEventArgs(string Name)
+        public ProcessCompletedEventArgs()
         {
-            this.Name = Name;
         }
-
-        /// <summary>
-        /// This Constructor for ProcessCompletededEventArgs is used to set properties. This Event
-        /// arg is used when the Que provider is signalling that it has completed processing
-        /// </summary>
-        /// <param name="messageId">Unique ID for message (gennerally assigned by Queue Provider)</param>
-        /// <param name="subscriptionId"></param>
-        /// <param name="currentSubscription"></param>
-        /// <param name="subScriptionStatus"></param>
-        /// <param name="subscriptions"></param>
-        public ProcessCompletededEventArgs(string messageId, string subscriptionId, object currentSubscription, object subScriptionStatus, object subscriptions)
-        {
-            this.MessageId = messageId;
-            this.SubscriptionId = subscriptionId;
-            this.Subscriptions = subscriptions;
-            this.CurrentSubscription = currentSubscription;
-            this.SubScriptionStatus = subScriptionStatus;
-        }
-
-        /// <summary>
-        /// Gets or sets the Unique ID for message (generally assigned by Queue Provider)
-        /// </summary>
-        public string MessageId { get; set; }
-         
-        public string SubscriptionId { get; set; }
         
-        public object Subscriptions { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessCompletedEventArgs" /> class.
+        /// This Constructor for ProcessCompletededEventArgs is used to set properties. This Event
+        /// arg is used when the Queue provider is signalling that it has completed processing
+        /// </summary>
+        /// <param name="currentSubscription">Is the current Subscription, which containes all required information</param>
+        public ProcessCompletedEventArgs(object currentSubscription)
+        {
+            this.CurrentSubscription = currentSubscription;
+        }
 
         public object CurrentSubscription { get; set; }
-        
-        public object SubScriptionStatus { get; set; }
     }
 }

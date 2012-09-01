@@ -101,7 +101,7 @@ namespace UnitTests
             input.Guid = Guid.NewGuid();
             input.Name = "Johnny";
             input.SubscriptionID = "SubscriptionID1";
-            int expected = 1; // TODO: Initialize to an appropriate value
+
             
 
             var result = target.SaveMessage(input);

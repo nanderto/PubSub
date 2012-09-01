@@ -49,7 +49,7 @@ namespace Tests
 
     }
 
-    public class TestFilter<T> : Filterbase<T>
+    public class TestFilter<T> : FilterBase<T>
     {
         public bool ProcessCalled = false;
         protected override T Process(T input)

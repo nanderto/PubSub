@@ -1,15 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 11
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40922FDD-F1C9-4496-B0EC-D14451511869}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		Performance3.psess = Performance3.psess
+		Phantom.snk = Phantom.snk
 		ReferenceImplementatikon.vsmdi = ReferenceImplementatikon.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Performance Tests", "Performance Tests", "{48A7C3FB-ACE9-4CB7-A762-7AC8C5B52C4F}"
+	ProjectSection(SolutionItems) = preProject
+		Performance Tests\RunPubSubTest.psess = Performance Tests\RunPubSubTest.psess
+		Performance Tests\RunPubSubTest1.psess = Performance Tests\RunPubSubTest1.psess
+		Performance Tests\RunPubSubTest2.psess = Performance Tests\RunPubSubTest2.psess
+		Performance Tests\RunPubSubTest3.psess = Performance Tests\RunPubSubTest3.psess
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{C9276B4B-AC6A-4E51-B457-8838712462BE}"
 EndProject
@@ -25,52 +32,52 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interceptor", "Interceptor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC3application", "MVC3application\MVC3application.csproj", "{5083E1CC-0A87-497A-B0EC-266A8D262A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{9EFCF08E-70B3-440F-8753-E349AFDBC269}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phantom.PubSub", "PubSub\Phantom.PubSub.csproj", "{1D840298-368A-45F6-A40F-47A1AFF9B910}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{C3F7EEE3-AC0B-4088-A624-14C70A317DEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestPtojects", "TestPtojects", "{F509E802-3566-48C6-8ABF-5A5AAA604664}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionTests", "ReflectionTests\ReflectionTests.csproj", "{B49885E2-472E-4806-85B4-E9363A5B0545}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccLocalPath0 = .
 		SccLocalPath1 = BusinessLogic
-		SccLocalPath10 = UnitTests
+		SccLocalPath10 = PubSub
 		SccLocalPath2 = Data
 		SccLocalPath3 = Entities
 		SccLocalPath4 = Interceptor
 		SccLocalPath5 = Interface
 		SccLocalPath6 = MVC3application
-		SccLocalPath7 = PubSub
-		SccLocalPath8 = TestHarness
-		SccLocalPath9 = Tests
+		SccLocalPath7 = Tests
+		SccLocalPath8 = UnitTests
+		SccLocalPath9 = ReflectionTests
 		SccNumberOfProjects = 11
 		SccProjectName1 = BusinessLogic
-		SccProjectName10 = UnitTests
+		SccProjectName10 = PubSub
 		SccProjectName2 = Data
 		SccProjectName3 = Entities
 		SccProjectName4 = Interceptor
 		SccProjectName5 = Interface
 		SccProjectName6 = MVC3application
-		SccProjectName7 = PubSub
-		SccProjectName8 = TestHarness
-		SccProjectName9 = Tests
-		SccProjectTopLevelParentUniqueName10 = PubSub.sln
+		SccProjectName7 = Tests
+		SccProjectName8 = UnitTests
+		SccProjectName9 = ReflectionTests
+		SccProjectTopLevelParentUniqueName7 = PubSub.sln
 		SccProjectTopLevelParentUniqueName8 = PubSub.sln
 		SccProjectTopLevelParentUniqueName9 = PubSub.sln
 		SccProjectUniqueName1 = BusinessLogic\\BusinessLogic.csproj
-		SccProjectUniqueName10 = UnitTests\\IntegrationTests.csproj
+		SccProjectUniqueName10 = PubSub\\Phantom.PubSub.csproj
 		SccProjectUniqueName2 = Data\\Data.csproj
 		SccProjectUniqueName3 = Entities\\Entities.csproj
 		SccProjectUniqueName4 = Interceptor\\Interceptor.csproj
 		SccProjectUniqueName5 = Interface\\Interface.csproj
 		SccProjectUniqueName6 = MVC3application\\MVC3application.csproj
-		SccProjectUniqueName7 = PubSub\\Phantom.PubSub.csproj
-		SccProjectUniqueName8 = TestHarness\\TestHarness.csproj
-		SccProjectUniqueName9 = Tests\\Tests.csproj
+		SccProjectUniqueName7 = Tests\\Tests.csproj
+		SccProjectUniqueName8 = UnitTests\\IntegrationTests.csproj
+		SccProjectUniqueName9 = ReflectionTests\\ReflectionTests.csproj
 		SccTeamFoundationServer = https://anderton.tfspreview.com/defaultcollection
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -113,16 +120,16 @@ Global
 		{5B54063C-6E6E-4BF2-95DE-A03C225598F4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5B54063C-6E6E-4BF2-95DE-A03C225598F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5B54063C-6E6E-4BF2-95DE-A03C225598F4}.Release|x86.ActiveCfg = Release|Any CPU
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Debug|x86.ActiveCfg = Debug|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Debug|x86.Build.0 = Debug|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Release|Any CPU.ActiveCfg = Release|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Release|Mixed Platforms.Build.0 = Release|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Release|x86.ActiveCfg = Release|x86
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269}.Release|x86.Build.0 = Release|x86
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B49885E2-472E-4806-85B4-E9363A5B0545}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB609803-6D30-4BC8-91AB-BE27968272FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB609803-6D30-4BC8-91AB-BE27968272FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB609803-6D30-4BC8-91AB-BE27968272FC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -189,13 +196,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B54063C-6E6E-4BF2-95DE-A03C225598F4} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
-		{9EFCF08E-70B3-440F-8753-E349AFDBC269} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
+		{B49885E2-472E-4806-85B4-E9363A5B0545} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
 		{C3F7EEE3-AC0B-4088-A624-14C70A317DEB} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.Logging.5.0.505.0\lib\NET35
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

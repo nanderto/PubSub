@@ -1,6 +1,7 @@
 <ProjectConfiguration>
   <CopyReferencedAssembliesToWorkspace>false</CopyReferencedAssembliesToWorkspace>
   <ConsiderInconclusiveTestsAsPassing>false</ConsiderInconclusiveTestsAsPassing>
+  <AllowCodeContractChecking>false</AllowCodeContractChecking>
   <IgnoreThisComponentCompletely>false</IgnoreThisComponentCompletely>
   <RunPreBuildEvents>false</RunPreBuildEvents>
   <RunPostBuildEvents>false</RunPostBuildEvents>
@@ -15,31 +16,22 @@
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <IgnoredTests>
     <RegexTestSelector>
-      <RegularExpression>UnitTests\.ActiveSubscriptionsTest\..*</RegularExpression>
+      <RegularExpression>UnitTests\.UserManagerServiceTest\..*</RegularExpression>
     </RegexTestSelector>
     <RegexTestSelector>
-      <RegularExpression>UnitTests\.PublishSubscribeChannelTest\..*</RegularExpression>
+      <RegularExpression>UnitTests\.MessageReceiverTest\..*</RegularExpression>
     </RegexTestSelector>
     <RegexTestSelector>
-      <RegularExpression>Tests\.ServiceAdaptorTest\..*</RegularExpression>
+      <RegularExpression>UnitTests\.InterfaceTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.Class1Test\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.UserManagerServiceWithInterceptorTest\..*</RegularExpression>
     </RegexTestSelector>
     <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceAdaptorTest.UserManagerServiceAdaptorConstructorTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceAdaptorTest.CreateUserUsingConstructorParametersTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.MessageReceiverTest.RunPubSubTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.MessageReceiverTest.StartTestMessage</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.MessageReceiverTest.StartTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceWithInterceptorTest.SaveUserWithInterceptorTest</TestName>
+      <TestName>UnitTests.MessageServiceTest.SaveMessageTest</TestName>
     </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

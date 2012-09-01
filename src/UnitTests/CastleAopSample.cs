@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Snap;
 
@@ -19,13 +20,13 @@ namespace Snap.CastleWindsor
                 c.IncludeNamespace("UnitTests");
                 c.Bind<SampleInterceptor>().To<SampleAttribute>();
             });
-
-            _container.AddComponent("SampleClass", typeof(ISampleClass), typeof(SampleClass));
+            _container.Register(Component.For<ISampleClass>().ImplementedBy<SampleClass>().Named("SampleClass"));
         }
 
         public static void Intercept()
         {
-            var instance = (ISampleClass)_container.Kernel[typeof(ISampleClass)];
+
+            var instance = (ISampleClass)_container.Resolve<ISampleClass>();
             instance.Run();
         }
     }

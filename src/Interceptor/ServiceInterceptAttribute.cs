@@ -12,8 +12,12 @@ namespace Interceptor
         //{
         //    this.SomeProperty = someProperty;
         //}
-    
-        //public bool SomeProperty { get; set; }
 
+        public bool SomeProperty { get; set; }
+
+        public string somemethod(string we)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

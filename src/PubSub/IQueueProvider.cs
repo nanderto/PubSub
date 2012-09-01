@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
+//-----------------------------------------------------------------------
+// <copyright file="IQueueProvider.cs" company="The Phantom Coder">
+//     Copyright The Phantom Coder. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Phantom.PubSub
 {
-    public delegate void MessageHandlingCompleted(string MessageID, string SubscriberID);
-    public delegate void MessageHandlingStarted(string MessageID, string SubscriberID);
-    public delegate bool RemoveMessageFromQueue<T>(string MessageId, MessageStatus<T> StartFinishStatus);
+using System;
+using System.Collections.Generic;
 
     public interface IQueueProvider<T>
     {
-        string ConfigureQueue(string queueName);
-         
         string Name { get; set; }
         
-        void OnMessageSentEventHandler(MessageSentEventArgs e);
+        string ConfigureQueue(string queueName, QueueTransactionOption queueTransactionOption);
+       
+        void SetupWatchQueue(IQueueProvider<T> queueProvider);
         
-        T ReadQueue(out string correlationId);
+        bool RemoveFromQueue(string messageId);
         
-        string PutMessage(T message);
-        
-        void SetUpWatchQueue(IQueueProvider<T> queueProvider);
-        
-        List<ISubscriber<T>> Subscribers { get; set; }
+        void ProcessQueueAsBatch(Func<MessagePacket<T>, string, bool> messageHandlingInitiated);
 
-        bool RemoveFromQueue(string correlationId);
-        
-        void ProcessQueueAsBatch(MsmqQueueProvider<T>.MessageHandlingInitiated messageHandlingInitiated);
-        
-        bool IsQueueEmpty();
+        bool CheckItsStillInTheQueue(string messageId);
+
+        string PutMessageInTransaction(MessagePacket<T> message);
     }
-
 }

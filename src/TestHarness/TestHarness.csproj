@@ -53,10 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
-      <Project>{C9276B4B-AC6A-4E51-B457-8838712462BE}</Project>
-      <Name>BusinessLogic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{BB609803-6D30-4BC8-91AB-BE27968272FC}</Project>
       <Name>Entities</Name>

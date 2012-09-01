@@ -66,8 +66,8 @@
 //            MessageStatusTracker.Add(sub2);
 //            MessageStatusTracker.Add(sub3);
 //            ////this.Subscribers = subscribers;
-//            ////this.ActiveSubscriptions = new List<ISubscriber<User>>();
-//            ////this.ActiveSubscriptions.Add(new TestSubscriber<User>());
+//            ////this.ActiveSubscriptionsDictionary = new List<ISubscriber<User>>();
+//            ////this.ActiveSubscriptionsDictionary.Add(new TestSubscriber<User>());
 //            return base.GetSubScriberStatuses(MessageStatusTracker); 
 //        }
 //    }

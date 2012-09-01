@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 namespace UnitTests
 {
-    
-    
     /// <summary>
     ///This is a test class for Class1Test and is intended
     ///to contain all Class1Test Unit Tests
@@ -14,25 +12,6 @@ namespace UnitTests
     [TestClass()]
     public class Class1Test
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
 
         #region Additional test attributes
         // 

@@ -1,34 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Phantom.PubSub
+﻿namespace Phantom.PubSub
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     /// <summary>
-    /// This class just creates a list of I subscribers of the generic type.
-    /// It is a collection class that currently has no specialised behavior
+    /// This class creates a list of ISubscribers of the generic type.
+    /// It is a collection class that is used to hold a list of subscribers for a specific message.
+    /// It is also used to determine if all members have completed processing and to call out to removue if they have.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    //public class Subscribers<T> : List<ISubscriber<T>>
-    //{
-    //    // public List<ISubscriber<T>> GetCopyofSubscribers()
-    //    ////{
-    //    ////    int TrackIfStartedLength = 0;
-    //    ////    List<ISubscriber<T>> newSubsribers = new List<ISubscriber<T>>();
+    /// <typeparam name="T">Type that this subscription is set up for</typeparam>
+    public class Subscribers<T> : List<ISubscriber<T>>
+    {
+        private object syncLock = new object();
+        private bool allSubscribersDone = false;
 
-    //    ////    lock (this)
-    //    ////    {
-    //    ////        ISubscriber<T>[] newSubscriber = new ISubscriber<T>[this.Count];
-    //    ////        this.CopyTo(newSubscriber);
-    //    ////        TrackIfStartedLength = newSubscriber.Length;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Need Func of generic type")]
+        public bool IfAllSubscribersCompletedLockAndRemove(Func<Subscribers<T>, bool> removeFromQueue)
+        {
+            if (removeFromQueue == null) throw new ArgumentNullException("removeFromQueue");
 
-    //    ////        for (int i = 0; i < TrackIfStartedLength; i++)
-    //    ////        {
-    //    ////            newSubsribers.Add(newSubscriber[i]);
-    //    ////        }
-    //    ////    }
-    //    ////    return newSubsribers;
-    //    ////}
-    //}
+            List<ISubscriber<T>> completedSubscribers = null;
+            int completedCount = 0;
+
+            lock (this.syncLock)
+            {
+                if (!this.allSubscribersDone)
+                {
+                    completedSubscribers = this.FindAll(s => s.FinishedProcessing != true);
+                    completedCount = completedSubscribers.Count();
+
+                    if (completedCount > 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        this.allSubscribersDone = true;
+                        return removeFromQueue(this);
+                    }
+                }
+
+                return false;
+            }
+        }
+    }
 }

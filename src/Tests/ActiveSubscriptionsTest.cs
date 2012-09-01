@@ -1,4 +1,3 @@
-﻿using Phantom.PubSub;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,6 @@ using BusinessLogic;
 
 namespace UnitTests
 {
-    
-    
     /// <summary>
     ///This is a test class for ActiveSubscriptionsTest and is intended
     ///to contain all ActiveSubscriptionsTest Unit Tests
@@ -20,25 +17,6 @@ namespace UnitTests
     [TestClass()]
     public class ActiveSubscriptionsTest
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
 
         #region Additional test attributes
         // 
@@ -71,62 +49,6 @@ namespace UnitTests
         #endregion
 
 
-        /// <summary>
-        ///A test for Reprocess
-        ///</summary>
-        public void ReprocessTestParallelHelper<T>()
-        {
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>();
-            //AddTest a bunch of active subscriptions
-            int i = 0;
-            for (int j = 0; j < 1; j++)
-            {
-                foreach (ISubscriber<T> item in TestHelper.GetSubscribers<T>())
-                {
-                    item.Id = " SubScription: " + item.Name + ":: MessageID: " + i + "::";
-                    target.AddActiveSubscription(item);
-                    i++;
-                }
-            }
-
-            
-            
-            //get our subscribers
-            List<ISubscriber<T>> Subscribers = TestHelper.GetSubscribers<T>();
-            //
-            List<IMessageStatus<T>> trackIfStarted = TestHelper.GetSubscriptionsStatuses<T>();
-
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-
-            ISubscriber<T> ActiveSubscription = new TestSubscriber<T>() as ISubscriber<T>;
-            ActiveSubscription.Id = "XXXXXXXXX";
-            string SubscriptionId = "XXXXXXXXX";
-            T message = default(T);
-            string MessageId = "YYY";
-            ActiveSubscription.TimeToExpire = new TimeSpan(10000);
-            ActiveSubscription.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
-            ActiveSubscription.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
-
-            actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0],trackIfStarted);
-            Assert.AreEqual(actual, false, "should return false because the there are none in the ActiveSubscriptions collection");
-
-            //lets add it calling reprocess should now ensure that it does get reprocessed
-            target.AddActiveSubscription(ActiveSubscription);
-
-            Parallel.ForEach<ISubscriber<T>>(Subscribers, (ISubscriber<T> subscriber) =>
-            {
-                //create our List of ActiveSubscriptions for this specific message
-                List<IMessageStatus<T>> trackIfStarted2 = TestHelper.GetSubscribersStatuses<T>();
-                actual = target.Reprocess(SubscriptionId, message, MessageId, subscriber.MessageStatusTracker,trackIfStarted2);
-                //subscriber.TimeToExpire = new TimeSpan(10000);
-
-                expected = CanProcess<T>(subscriber, subscriber.StartTime + subscriber.TimeToExpire);
-                Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
-                //Assert.AreEqual(expected2, actual, "should return true because it is one in the list of ActiveSubscriptions");
-            });
-        }
-
         private bool CanProcess<T>(ISubscriber<T> subscriber, DateTime nextstart)
         {
             if (subscriber.Aborted)
@@ -146,66 +68,128 @@ namespace UnitTests
             return false;
         }
 
+        //[TestCategory("UnitTest"), TestMethod()]
+        //public void ReprocessParallelTest()
+        //{
+        //    ReprocessTestParallelHelper<GenericParameterHelper>();
+        //}
+
         [TestCategory("UnitTest"), TestMethod()]
-        public void ReprocessParallelTest()
+        public void ReprocessTestAbortedSubscriber()
         {
-            ReprocessTestParallelHelper<GenericParameterHelper>();
+            ReprocessTestAbortedSubscriberHelper<GenericParameterHelper>();
+        }
+
+
+        public void ReprocessTestAbortedSubscriberHelper<T>()
+        {
+            //create SUT
+            //ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>();
+            //string SubscriptionId = "XXXXXXXXX";
+            //T message = default(T);
+            //string MessageId = "YYY";
+            //List<IMessageStatus<T>> trackIfStarted = TestHelper.GetSubscriptionsStatusTrackers<T>();
+            //bool expected = true;
+            //bool actual;
+
+            //ISubscriber<T> ActiveSubscription = new TestSubscriber<T>() as ISubscriber<T>;
+            //ISubscriber<T> newActiveSubscription = ActiveSubscription;
+
+            
+            //ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
+            //sub.Name = "jackie";
+            //sub.Id = "XXXXXXXXX";
+            //sub.TimeToExpire = new TimeSpan(10000);
+            //sub.StartTime = DateTime.Now;
+            //sub.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
+            //sub.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
+            //target.AddActiveSubscription(sub);
+            //sub.MessageStatusTracker = trackIfStarted[0];
+            //sub.Abort();
+
+            //actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+            //expected = CanProcess<T>(sub, sub.AbortedTime + sub.TimeToExpire);
+
+            //actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+            //Assert.AreEqual(expected, actual, "should return true because abort was set to true");
+
+            ////AddTest a bunch more
+            //foreach (ISubscriber<T> item in TestHelper.GetSubscribers<T>())
+            //{
+            //    target.AddActiveSubscription(item);
+            //}
+
+            //ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
+            //sub2.Name = "jackie";
+            //sub2.Id = "XXXXXXXXX";
+            //sub2.TimeToExpire = new TimeSpan(10000);
+            //sub2.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
+            //sub2.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
+            //target.AddActiveSubscription(sub);
+            //actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+            //expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
+            //Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
+
+            //actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+            //expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
+            //Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
+
         }
 
         /// <summary>
         ///A test for Reprocess
         ///</summary>
-        public void ReprocessTestHelper<T>()
-        {
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>(); 
-            string SubscriptionId = "XXXXXXXXX";
-            T message = default(T); 
-            string MessageId = "YYY";
-            List<IMessageStatus<T>> trackIfStarted = TestHelper.GetSubscribersStatuses<T>(); 
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
+        //public void ReprocessTestHelper<T>()
+        //{
+        //    ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>(); 
+        //    string SubscriptionId = "XXXXXXXXX";
+        //    T message = default(T); 
+        //    string MessageId = "YYY";
+        //    List<IMessageStatus<T>> trackIfStarted = TestHelper.GetSubscriptionsStatusTrackers<T>(); 
+        //    bool expected = false; 
+        //    bool actual;
             
-            ISubscriber<T> ActiveSubscription = new TestSubscriber<T>() as ISubscriber<T>;
-            ISubscriber<T> newActiveSubscription = ActiveSubscription;
+        //    ISubscriber<T> ActiveSubscription = new TestSubscriber<T>() as ISubscriber<T>;
+        //    ISubscriber<T> newActiveSubscription = ActiveSubscription;
 
-            actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0],trackIfStarted);
-            Assert.AreEqual(expected, actual, "should return false because the there are none in the ActiveSubscriptions collection");
+        //    actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0],trackIfStarted);
+        //    Assert.AreEqual(expected, actual, "should return false because the there are none in the ActiveSubscriptionsDictionary collection");
 
-            ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
-            sub.Name = "jackie";
-            sub.Id = "XXXXXXXXX";
-            sub.TimeToExpire = new TimeSpan(10000);
-            sub.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
-            sub.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
-            target.AddActiveSubscription(sub); 
-            actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
-            expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
-            Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
+        //    ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
+        //    sub.Name = "jackie";
+        //    sub.Id = "XXXXXXXXX";
+        //    sub.TimeToExpire = new TimeSpan(10000);
+        //    sub.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
+        //    sub.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
+        //    target.AddActiveSubscription(sub); 
+        //    actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+        //    expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
+        //    Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
 
-            //AddTest a bunch more
-            foreach (ISubscriber<T> item in TestHelper.GetSubscribers<T>())
-            {
-                target.AddActiveSubscription(item);
-            }
+        //    //AddTest a bunch more
+        //    foreach (ISubscriber<T> item in TestHelper.GetSubscribers<T>())
+        //    {
+        //        target.AddActiveSubscription(item);
+        //    }
 
-            ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
-            sub2.Name = "jackie";
-            sub2.Id = "XXXXXXXXX";
-            sub2.TimeToExpire = new TimeSpan(10000);
-            sub2.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
-            sub2.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
-            target.AddActiveSubscription(sub);
-            actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
-            expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
-            Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
+        //    ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
+        //    sub2.Name = "jackie";
+        //    sub2.Id = "XXXXXXXXX";
+        //    sub2.TimeToExpire = new TimeSpan(10000);
+        //    sub2.OnProcessStartedEvent += new OnProcessStartedEvent(sub_OnProcessStartedEvent);
+        //    sub2.OnProcessCompletedEvent += new OnProcessCompletedEvent(sub_OnProcessCompletedEvent);
+        //    target.AddActiveSubscription(sub);
+        //    actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+        //    expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
+        //    Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
 
-            actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
-            expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
-            Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
+        //    actual = target.Reprocess(SubscriptionId, message, MessageId, trackIfStarted[0], trackIfStarted);
+        //    expected = CanProcess<T>(sub, sub.StartTime + sub.TimeToExpire);
+        //    Assert.AreEqual(expected, actual, "because reprocess should get called and it should run sucessfully");
 
-        }
+        //}
 
-        void sub_OnProcessCompletedEvent(object sender, ProcessCompletededEventArgs e)
+        void sub_OnProcessCompletedEvent(object sender, ProcessCompletedEventArgs e)
         {
 
         }
@@ -213,22 +197,13 @@ namespace UnitTests
         void sub_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
         {
             var current = e.CurrentSubscription as ISubscriber<GenericParameterHelper>;
-            current.MessageStatusTracker.StartedProcessing = true;
+            current.StartedProcessing = true;
         }
 
-        [TestCategory("UnitTest"), TestMethod()]
-        public void ReprocessTest()
-        {
-            ReprocessTestHelper<GenericParameterHelper>();
-        }
-
-        /// <summary>
-        ///A test for Add
-        ///</summary>
         public void AddTestParallelHelper<T>()
         {
             List<ISubscriber<T>> subscribers = TestHelper.GetSubscribers<T>();
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>();
+            ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>();
             Parallel.ForEach<ISubscriber<T>>(subscribers, (ISubscriber<T> subscriber) =>
             {
                 target.AddActiveSubscription(subscriber);
@@ -238,10 +213,10 @@ namespace UnitTests
            // Assert.AreEqual(expected, actual, "Method should return the same object");
         }
 
-        public ActiveSubscriptions<T> AddTestParallelHelper<T>( ActiveSubscriptions<T> SubscriptionList)
+        public ActiveSubscriptionsDictionary<T> AddTestParallelHelper<T>( ActiveSubscriptionsDictionary<T> SubscriptionList)
         {
             List<ISubscriber<T>> subscribers = TestHelper.GetSubscribers<T>();
-            ActiveSubscriptions<T> target = SubscriptionList;
+            ActiveSubscriptionsDictionary<T> target = SubscriptionList;
             int Before = target.Count;
             Parallel.ForEach<ISubscriber<T>>(subscribers, (ISubscriber<T> subscriber) =>
             {
@@ -264,7 +239,7 @@ namespace UnitTests
         ///</summary>
         public void AddTestHelper<T>()
         {
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>();
+            ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>();
             ISubscriber<T> ActiveSubscription = new TestSubscriber<T>() as ISubscriber<T>;
             ActiveSubscription.Id = "ID";
             ISubscriber<T> expected = ActiveSubscription;
@@ -281,13 +256,13 @@ namespace UnitTests
         }
 
         /// <summary>
-        ///A test for ActiveSubscriptions`1 Constructor
+        ///A test for ActiveSubscriptionsDictionary`1 Constructor
         ///</summary>
         public void ActiveSubscriptionsConstructorTestHelper<T>()
         {
-            ActiveSubscriptions<ISubscriber<T>> target = new ActiveSubscriptions<ISubscriber<T>>();
+            ActiveSubscriptionsDictionary<ISubscriber<T>> target = new ActiveSubscriptionsDictionary<ISubscriber<T>>();
             Assert.IsNotNull(target, "Did not create an object");
-            Assert.IsInstanceOfType(target,typeof(ActiveSubscriptions<ISubscriber<T>>), "did not return the correct type");
+            Assert.IsInstanceOfType(target,typeof(ActiveSubscriptionsDictionary<ISubscriber<T>>), "did not return the correct type");
         }
 
         [TestCategory("UnitTest"), TestMethod()]
@@ -303,17 +278,17 @@ namespace UnitTests
         public void AddRemoveinParallelTestHelper<T>()
         {
             
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>(); // TODO: Initialize to an appropriate value
-            ActiveSubscriptions<T> specials = TestHelper.GetSpecialSubscribers<T>();
-             List<ISubscriber<T>> specialsremove =new List<ISubscriber<T>>();
-             List<IMessageStatus<T>> specialsremovestatuses = new List<IMessageStatus<T>>();
+            ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>(); // TODO: Initialize to an appropriate value
+            ActiveSubscriptionsDictionary<T> specials = TestHelper.GetSpecialSubscribers<T>();
+             Subscribers<T> specialsremove = new Subscribers<T>();
+             //List<IMessageStatus<T>> specialsremovestatuses = new List<IMessageStatus<T>>();
             foreach (var item in TestHelper.GetSpecialSubscribers<T>())
             {
                 specialsremove.Add(item.Value);
-                specialsremovestatuses.Add(new TestSubscriber<T>
-                {
-                    Id = item.Value.Id
-                } as IMessageStatus<T>);
+                //specialsremovestatuses.Add(new MessageStatusTracker<T>
+                //{
+                //    Id = item.Value.Id
+                //} as MessageStatusTracker<T>);
             }
             //List<ISubscriber<T>> specialsremove = (List<ISubscriber<T>>)TestHelper.GetSpecialSubscribers<T>();
             foreach (var item in specials)
@@ -327,7 +302,7 @@ namespace UnitTests
                          item in target
                          where item.Value.Name == "ZZZ"
                          select item;
-             Assert.IsNotNull(result, " did not find the special beforeZZZ");
+             Assert.IsNotNull(result, " did not find the special before ZZZ");
              result = from KeyValuePair<string, ISubscriber<T>>
                           item in target
                           where item.Value.Name == "XXX"
@@ -354,7 +329,7 @@ namespace UnitTests
 
             var task2 = Task.Factory.StartNew(() =>
             {
-                result3 = target.RemoveIfExists(specialsremovestatuses);
+                result3 = target.RemoveIfExists(specialsremove);
             });
 
             Task.WaitAll(task1,task2);
@@ -396,12 +371,12 @@ namespace UnitTests
         ///</summary>
         public void RemoveIfExistsTestHelper<T>()
         {
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>();
+            ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>();
             target = AddTestParallelHelper<T>(target);
-            List<IMessageStatus<T>> SubscriptionStatus = TestHelper.GetSubscribersStatuses<T>();
+            var Subscriptions = TestHelper.GetSubscribers<T>();
             bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
-            actual = target.RemoveIfExists(SubscriptionStatus);
+            actual = target.RemoveIfExists(Subscriptions);
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(0, target.Count, "Did not remove all objects in list");
         }
@@ -417,7 +392,7 @@ namespace UnitTests
         ///</summary>
         public void ExpireOldSubscriptionsTestHelper<T>()
         {
-            ActiveSubscriptions<T> target = new ActiveSubscriptions<T>(); // TODO: Initialize to an appropriate value
+            ActiveSubscriptionsDictionary<T> target = new ActiveSubscriptionsDictionary<T>(); // TODO: Initialize to an appropriate value
             TestHelper.AddAllotofSubscriptions(target, 1000);
             DateTime now = DateTime.Now;
             int i = 0;

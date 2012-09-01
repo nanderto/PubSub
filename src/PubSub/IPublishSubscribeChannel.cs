@@ -1,21 +1,19 @@
-﻿using System;
-
 namespace Phantom.PubSub
 {
+using System;
+    using System.Collections.Generic;
+
     public interface IPublishSubscribeChannel<T>
     {
-        MessageStatus<T> GetMessageStatusTrackers();
-
-        ISubscriber<T> GetSubscription(IMessageStatus<T> subscriber);
+        Subscribers<T> GetSubscriptions();
         
         void ProcessBatch();
         
-        void Stop();
-       
-        void Start();
-       
-        void PutMessage(T message);
+        void PublishMessage(T message);
 
-        IPublishSubscribeChannel<T> AddSubscriber(Type type);
+        ISubscriberInfo<T> AddSubscriberType(Type type);
+
+        IPublishSubscribeChannel<T> AddSubscriberInfo(Tuple<string, Type, TimeSpan> tuple);
+
     }
 }

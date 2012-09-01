@@ -1,17 +1,18 @@
-﻿namespace Phantom.PubSub
+namespace Phantom.PubSub
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
     using System.Messaging;
     using System.Text;
     using System.Threading;
     using System.Transactions;
-    using Microsoft.Practices.EnterpriseLibrary.Logging;
     using Phantom.PubSub;
 
     /// <summary>
-    /// This Queue provide is specific for MSMQ queues. It encapsulates all Queue operations
+    /// This Queue provider is specific for MSMQ queues. It encapsulates all Queue operations
     /// Alternative Queue mechanisms may be substituted. Implement IQueueProvider to substitue a new queue type
     /// </summary>
     /// <typeparam name="T">Type of Message</typeparam>
@@ -19,206 +20,188 @@
     {
         private MessageQueue msgQ;
         
-        private string queueName = string.Empty;
+        private string longQueueName = string.Empty;
 
         public MsmqQueueProvider()
         {
             this.Name = CleanupName(typeof(T).ToString());
         }
 
-        public delegate void MessageSentEventHandler(object sender, MessageSentEventArgs e);
-
-        public delegate void MessageHandlingInitiated(T message, string MessageID);
-
-        public List<ISubscriber<T>> Subscribers { get; set; }
-
-        public virtual string ConfigureQueue(string queueName)
+        ~MsmqQueueProvider()
         {
-            this.Name = CleanupName(queueName);
-            this.queueName = @".\private$\" + this.Name;
-            
-            string queuename = this.Name;
-            queuename = @".\private$\" + queuename;
-            
-            if (!MessageQueue.Exists(queuename))
-            {
-                this.msgQ = MessageQueue.Create(queuename, true);
-            }
-            else
-            {
-                this.msgQ = new MessageQueue(queuename);
-            }
-
-            // create a poinson message queue
-            queuename = queuename + "PoisonMessages";
-            if (!MessageQueue.Exists(queuename))
-            {
-                var poisonMsgQ = MessageQueue.Create(queuename, true);
-                poisonMsgQ.Dispose();
-            }
-
-            return this.Name;
-        }
-
-        public virtual string PutMessage(T message)
-        {
-            if (message == null)
-                throw new ArgumentNullException("Message is null for Queue name: " + this.queueName);
-
-            string result = string.Empty;
-            
-            if (CheckQueueConfigured())
-            {
-                using (MessageQueue msgQueue = new MessageQueue(this.queueName))
-                {
-                    using (MessageQueueTransaction msgTx = new MessageQueueTransaction())
-                    {                      
-                        Message recoverableMessage = null;
-                        msgTx.Begin();
-                        try
-                        {
-                            recoverableMessage = new Message();
-                            recoverableMessage.Body = message;
-                            recoverableMessage.Formatter = new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
-                            recoverableMessage.Recoverable = true;
-
-                            msgQueue.Send(recoverableMessage, msgTx);
-                            ////this.msgQ.Send(recoverableMessage, msgTx); //whats up here??? this will teach me for taking time off. not sure whuc I shuold use
-                            msgTx.Commit();
-                            result = recoverableMessage.Id;
-                            //recoverableMessage.Dispose();
-                        }
-                        catch (Exception)
-                        {
-                            msgTx.Abort();
-                            ////recoverableMessage.Dispose();
-                        }
-                        finally
-                        {
-                            if (recoverableMessage != null)
-                            {
-                                recoverableMessage.Dispose();
-                            }
-                        }
-                    }
+            // Finalizer calls Dispose(false)
+            this.Dispose(false);
                 }
-            }
-
-            return result; 
-        }
-
-        public void OnMessageSentEventHandler(MessageSentEventArgs e)
-        {
-        }
 
         public string Name { get; set; }
 
-        public void SetUpWatchQueue(IQueueProvider<T> queueProvider)
-        {
-            this.msgQ = FindQueue(queueProvider.Name);
-        }
-
-        /// <summary>
-        /// Reads queue without removing message
-        /// </summary>
-        /// <returns>Message of type T</returns>
-        public T ReadQueue(out string messageId)
-        {
-            messageId = string.Empty;
-            if (CheckQueueConfigured())
+        public void Dispose()
             {
-                using (MessageQueue msgQueue = new MessageQueue(this.queueName))
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+            }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
+        public string PutMessageInTransaction(MessagePacket<T> message)
+        {
+            if (message == null)
+                throw new ArgumentNullException("Message is null for Queue name: " + this.Name);
+            if (string.IsNullOrEmpty(this.Name))
+                throw new ArgumentNullException("Queue provider name is null for Queue name: " + this.Name);
+
+            string result = string.Empty;
+
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+            {
+                using (MessageQueue msgQueue = new MessageQueue(@".\private$\" + this.Name))
                 {
+                    Message recoverableMessage = null;
+
                     try
                     {
-                        // this should be set to 0 why block thread at all if ther is no message
-                        Message m = msgQueue.Peek((new TimeSpan(1000)));
-                        m.Formatter = new BinaryMessageFormatter();
-                        messageId = m.Id;
-                        return (T)m.Body;
+                        recoverableMessage = new Message();
+                        recoverableMessage.Body = message;
+                        recoverableMessage.Formatter = new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
+                        recoverableMessage.Recoverable = true;
+
+                        msgQueue.Send(recoverableMessage);
+
+                        scope.Complete();
+                        result = recoverableMessage.Id;
                     }
                     catch (Exception ex)
                     {
-
-                        System.Diagnostics.Trace.WriteLine("Failed to PEEK: " + messageId + " " + ex.ToString());
+                        Trace.WriteLine(ex.ToString());
+                    }
+                    finally
+                    {
+                        if (recoverableMessage != null)
+                        {
+                            recoverableMessage.Dispose();
+                        }
                     }
                 }
             }
-            
-            return default(T);
+
+            return result;
         }
 
-        public bool RemoveFromQueue(string MessageId)
+        public void SetupWatchQueue(IQueueProvider<T> queueProvider)
         {
-            Message M = null;
-            ////if (CheckQueueConfigured())
-            ////{
-                using (MessageQueue msgQueue = FindQueue(this.Name))
+            if (queueProvider == null) throw new ArgumentNullException("queueProvider");
+            this.msgQ = FindQueue(queueProvider.Name);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
+        public bool RemoveFromQueue(string messageId)
+        {
+            Message m = null;
+            //// if (CheckQueueConfigured())
+            //// {
+            using (MessageQueue msgQueue = FindQueue(this.Name))
                 {
                     try
                     {
-                        Counter.Increment(3);
-                        System.Diagnostics.Debug.WriteLine("Calling RemoveFromQueue :: The MessageId is: " + MessageId + " Counter: " + Counter.Subscriber(3));
-                        M = msgQueue.ReceiveById(MessageId);                       
+                        Counter.Increment(5);
+                        Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Calling RemoveFromQueue :: The MessageId is: " + messageId + " Counter: " + Counter.Subscriber(3));
+                    m = msgQueue.ReceiveById(messageId);           
                     }
                     catch (MessageQueueException ex)
                     {
-                        System.Diagnostics.Trace.WriteLine("Failed to remove: " + MessageId + " " + ex.ToString());
+                        Counter.Increment(9);
+                    Trace.WriteLine(new InvalidOperationException("Message Queue Exception Failed to remove: " + messageId, ex));
                     }
                     catch (Exception ex)
                     {
-                        System.Diagnostics.Trace.WriteLine("Failed to remove: " + MessageId + " " + ex.ToString());
+                        Counter.Increment(9);
+                    Trace.WriteLine(new InvalidOperationException("general Exception Failed to remove: " + messageId, ex));
                     }
                 }
 
-            if (M == null)
+            if (m == null)
             {
                 return false;
             }
             else
             {
-                M = null;
+                m = null;
+                return true;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
+        public bool CheckItsStillInTheQueue(string messageId)
+        {
+            Message m = null;
+            using (MessageQueue msgQueue = FindQueue(this.Name))
+            {
+                try
+                {
+                    Counter.Increment(10);
+                    //// Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Calling CheckItsStillInTheQueue :: The MessageId is: " + MessageId + " Counter: " + Counter.Subscriber(3));
+                    m = msgQueue.PeekById(messageId);
+                }
+                catch (InvalidOperationException)
+                {
+                    Counter.Increment(11);
+                    return false;
+                }
+                catch (MessageQueueException ex)
+                {
+                    Trace.WriteLine(new InvalidOperationException("Message Queue Exception Peek Failed: " + messageId, ex));
+                }
+                catch (Exception ex)
+                {
+                    Counter.Increment(11);
+                    Trace.WriteLine(new InvalidOperationException("General Exception Peek Failed: " + messageId, ex));
+                    }
+                }
+
+            if (m == null)
+            {
+                return false;
+            }
+            else
+            {
+                m = null;
                 return true;
             }
         }
 
         /// <summary>
-        /// Processes all messages in Queue
+        /// Processes all messages in Queue as a batch
         /// </summary>
-        public void ProcessQueueAsBatch(MessageHandlingInitiated messageHandlingInitiated)
+        /// <param name="messageHandlingInitiated">callback to handle individual messages</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
+        public void ProcessQueueAsBatch(Func<MessagePacket<T>, string, bool> messageHandlingInitiated)
         {
-            string Id = string.Empty;
+            if (messageHandlingInitiated == null) throw new ArgumentNullException("messageHandlingInitiated");
+
+            string id = string.Empty;
             ////if (CheckQueueConfigured())
             ////{
-            using (MessageQueue msgQueue = this.FindQueue(this.Name))
+            using (MessageQueue msgQueue = FindQueue(this.Name))
             {
                 try
                 {
-                    if (!IsQueueEmpty(msgQueue))
+                    if (!MsmqQueueProvider<T>.IsQueueEmpty(msgQueue))
                     {
-                        Counter.Increment(4);
-                        LogEntry logEntry = new LogEntry();
-                        logEntry.Message = "Calling GetAllMessages::Number of times called " + Counter.Subscriber(4);
-                        Logger.Write(logEntry);
+                        // Counter.Increment(3);
                         Message[] messages = new Message[] { };
 
                         messages = msgQueue.GetAllMessages();
                         int numberOfMessages = messages.Length;
-                        logEntry.Message = "Number of messages returned:  " + numberOfMessages.ToString();
-                        Logger.Write(logEntry);
+                        Trace.WriteLine("Number of messages returned:  " + numberOfMessages.ToString(CultureInfo.InvariantCulture));
+ 
                         int i = 0;
                         foreach (Message m in messages)
                         {
-                            //lets get rid of throtteling
-                           // if (i > 20) break;
                             try
                             {
                                 i++;
                                 m.Formatter = new BinaryMessageFormatter();
-                                var message = (T)m.Body;
-                                Id = m.Id;
-
-                                messageHandlingInitiated((T)m.Body, m.Id);
+                                MessagePacket<T> messagePacket = (MessagePacket<T>)m.Body;
+                                messageHandlingInitiated(messagePacket, m.Id);
                             }
                             catch (MessageQueueException ex)
                             {
@@ -226,14 +209,16 @@
                                 // this will get retried. 
                                 // need to handle bad messages that cause this to fail 
                                 // all other exceptions allowed to traverse back up stack
-                                ///todo do this
-                                System.Diagnostics.Trace.WriteLine("Failed to read queue: dending to poison Queue" + ex.ToString());
-                                HandlePoisonMessage(Id);
+                                // todo do this
+                                Counter.Increment(6);
+                                Trace.WriteLine(ex); 
+                                this.HandlePoisonMessage(id);
                             }
                             catch (Exception ex)
                             {
                                 // these catches will ensure next message is processed
-                                System.Diagnostics.Trace.WriteLine("Swallowing General exception letting process continue" + ex.ToString());
+                                Counter.Increment(6);
+                                Trace.WriteLine(ex);
                             }
                         }
                     }
@@ -244,24 +229,23 @@
                     // this will get retried. 
                     // need to handle bad messages that cause this to fail 
                     // all other exceptions allowed to traverse back up stack
-                    ///todo do this
-                    System.Diagnostics.Trace.WriteLine("Message Queue Exception: " + ex.ToString());
-                    HandlePoisonMessage(Id);
+                    // todo do this
+                    Trace.WriteLine(ex);
+                    this.HandlePoisonMessage(id);
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Trace.WriteLine("Swallowing General exception letting process continue" + ex.ToString());
+                    Trace.WriteLine(ex);
                 }
             }
         }
 
         public void HandlePoisonMessage(string messageId)
         {
-            string PoisonQueueName = this.Name + "PoisonMessages";
+            string poisonQueueName = this.Name + "PoisonMessages";
            
             Message message;
-      
-            System.Diagnostics.Trace.WriteLine("HandlePoisonMessage with look up id: " + messageId + " to poison queue: " + PoisonQueueName);
+            Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "HandlePoisonMessage with look up id: " + messageId + " to poison queue: " + poisonQueueName);
             
             // Use a new transaction scope to remove the message from the main application queue and add it to the poison queue.
             // The poison message service processes messages from the poison queue.
@@ -280,15 +264,15 @@
                             if (message != null)
                             {
                                 // Send the message to the poison message queue.
-                                using (MessageQueue poisonMessageQueue = this.FindQueue(PoisonQueueName))
+                                using (MessageQueue poisonMessageQueue = FindQueue(poisonQueueName))
                                 {
                                    poisonMessageQueue.Send(message, System.Messaging.MessageQueueTransactionType.Automatic);                         
                                 }
                                  
                                 // complete transaction scope
                                 transactionScope.Complete();
-
-                                System.Diagnostics.Trace.WriteLine("Moved poisoned message with look up id: " + messageId + " to poison queue: " + PoisonQueueName);
+                                Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Moved poisoned message with look up id: " + messageId + " to poison queue: " + poisonQueueName);
+                                
                                 break;
                             }
                         }
@@ -298,12 +282,14 @@
                             // another node in the farm may actually have taken the message.
                             if (retryCount < 3)
                             {
-                                System.Diagnostics.Trace.WriteLine("Trying to move poison message but message is not available, sleeping for 10 seconds before retrying");
+                                Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Trying to move poison message but message is not available, sleeping for 10 seconds before retrying");
+
                                 Thread.Sleep(TimeSpan.FromSeconds(10));
                             }
                             else
                             {
-                                System.Diagnostics.Trace.WriteLine("Giving up on trying to move the message try lowering priority");
+                                Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Giving up on trying to move the message try lowering priority"); 
+
                                 try
                                 {
                                     // ToDo need to test this - lower priority or move to dead letter queue
@@ -316,7 +302,7 @@
                                 }
                                 catch (InvalidOperationException ex)
                                 {
-                                    System.Diagnostics.Trace.WriteLine("Error Policy" + ex.ToString());
+                                    Trace.WriteLine(ex);
                                 }
                             }
                         }
@@ -325,23 +311,36 @@
             }
         }
 
-        public bool IsQueueEmpty()
+        public virtual string ConfigureQueue(string queueName, QueueTransactionOption queueTransactionOption)
         {
-            return IsQueueEmpty(this.msgQ);
+            this.Name = CleanupName(queueName);
+            this.longQueueName = @".\private$\" + this.Name;
+
+            if (!MessageQueue.Exists(this.longQueueName))
+            {
+                if (queueTransactionOption == QueueTransactionOption.SupportTransactions)
+                {
+                    this.msgQ = MessageQueue.Create(this.longQueueName);
+                }
+                else
+                {
+                    this.msgQ = MessageQueue.Create(this.longQueueName, true);
+                }
+            }
+            else
+        {
+                this.msgQ = new MessageQueue(this.longQueueName);
         }
 
-        #region IDisposable Members
-
-        public void Dispose()
+            // create a poinson message queue
+            string queuename = @".\private$\" + this.Name + "PoisonMessages";
+            if (!MessageQueue.Exists(queuename))
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+                var poisonMsgQ = MessageQueue.Create(queuename, true);
+                poisonMsgQ.Dispose();
+            }
 
-        ~MsmqQueueProvider()
-        {
-            // Finalizer calls Dispose(false)
-            Dispose(false);
+            return this.Name;
         }
 
         protected virtual void Dispose(bool disposing)
@@ -352,19 +351,29 @@
             }
         }
 
-        #endregion
-
-        private bool IsQueueEmpty(MessageQueue Queue)
+        private static bool HasExpired(ISubscriberMetadata subscriberMetaData)
         {
+            var nextstart = subscriberMetaData.StartTime + subscriberMetaData.TimeToExpire;
+            if (DateTime.Compare(DateTime.Now, nextstart) > 0)
+            {
+                return true;
+        }
+
+            return false;
+        }
+
+        private static string CleanupName(string dirtyname)
+        {
+            return dirtyname.ToString().Replace("{", string.Empty).Replace("}", string.Empty).Replace("_", string.Empty).Replace(".", string.Empty);
+        }
             
+        private static bool IsQueueEmpty(MessageQueue queue)
+        {
             bool isQueueEmpty = false;
             try
             {
-                //Counter.Increment(5);
-                //LogEntry logEntry = new LogEntry();
-                //logEntry.Message = "Calling peek to check if anything in queue: " + Counter.Subscriber(5);
-                //Logger.Write(logEntry);
-                Queue.Peek(new TimeSpan(0));
+                Counter.Increment(4);
+                queue.Peek(new TimeSpan(0));
                 isQueueEmpty = false;
             }
             catch (MessageQueueException e)
@@ -378,46 +387,41 @@
                     throw;
                 }
             }
+
             return isQueueEmpty;
         }
 
-        private static string CleanupName(string dirtyname)
-        {
-            return dirtyname.ToString().Replace("{", "").Replace("}", "").Replace("_", "").Replace(".", "");
-        }
-
-        private bool CheckQueueConfigured()
-        {
-            if (this.queueName == string.Empty)
-            {
-                if (this.Name == string.Empty)
-                {
-                    this.Name = CleanupName(typeof(T).ToString());
-                }
-
-                this.queueName = @".\private$\" + this.Name;
-            }
-
-            if (!MessageQueue.Exists(this.queueName))
-            {
-                throw new Exception("Queue: " + this.queueName + " not configured");
-            }
-
-            return true;
-        }
-
-        private MessageQueue FindQueue(string queueName)
+        private static MessageQueue FindQueue(string queueName)
         {           
             queueName = @".\private$\" + queueName;
             if (!MessageQueue.Exists(queueName))
             {
-                throw new Exception("Queue: " + queueName + "does not exist");
+                throw new InvalidOperationException("Queue: " + queueName + "does not exist");
             }
             else
             {
                 return new MessageQueue(queueName);
             }
         }
+
+        private bool CheckQueueConfigured()
+        {
+            if (string.IsNullOrEmpty(this.longQueueName))
+            {
+                if (string.IsNullOrEmpty(this.Name))
+                {
+                    this.Name = CleanupName(typeof(T).ToString());
+                }
+
+                this.longQueueName = @".\private$\" + this.Name;
+            }
+
+            if (!MessageQueue.Exists(this.longQueueName))
+            {
+                throw new InvalidOperationException("Queue: " + this.longQueueName + " not configured");
+            }
+
+            return true;
+        }
     }
 }
-

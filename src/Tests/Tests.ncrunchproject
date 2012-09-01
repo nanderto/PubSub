@@ -1,6 +1,7 @@
 <ProjectConfiguration>
   <CopyReferencedAssembliesToWorkspace>false</CopyReferencedAssembliesToWorkspace>
   <ConsiderInconclusiveTestsAsPassing>false</ConsiderInconclusiveTestsAsPassing>
+  <AllowCodeContractChecking>false</AllowCodeContractChecking>
   <IgnoreThisComponentCompletely>false</IgnoreThisComponentCompletely>
   <RunPreBuildEvents>false</RunPreBuildEvents>
   <RunPostBuildEvents>false</RunPostBuildEvents>
@@ -14,14 +15,8 @@
   <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <IgnoredTests>
-    <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceAdaptorTest.CreateTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceAdaptorTest.CreateUserUsingDependencyInjectionTest</TestName>
-    </NamedTestSelector>
-    <NamedTestSelector>
-      <TestName>UnitTests.UserManagerServiceAdaptorTest.CreateUserUsingConstructorParametersTest</TestName>
-    </NamedTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>.*</RegularExpression>
+    </RegexTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

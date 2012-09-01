@@ -5,7 +5,7 @@ using System.Text;
 using Entities;
 using System.Data.Objects;
 using System.Data;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
+using System.Diagnostics;
 
 namespace BusinessLogic
 {
@@ -22,28 +22,19 @@ namespace BusinessLogic
                     context.AttachTo("Messages",m);
                     try
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log, "DataLayer");
-
+                        Trace.WriteLine("Saving Message to database::Message::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
                         result = context.SaveChanges();
                     }
                     catch (OptimisticConcurrencyException)
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
-
+                        Trace.WriteLine("Saving Message to database::Message::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
                         context.Refresh(RefreshMode.ClientWins, m);
                         result = context.SaveChanges();
                     }
                 }
                 else
                 {
-                    LogEntry log = new LogEntry();
-                    log.Message = ("Saving Message to database::Message::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                    Logger.Write(log);
-
+                    Trace.WriteLine("Saving Message to database::Message::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
                     context.Messages.AddObject(m);
                     result = context.SaveChanges();
                 }
@@ -100,17 +91,13 @@ namespace BusinessLogic
                     context.AttachTo("Message2", m2);
                     try
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message2::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message2::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         result = context.SaveChanges();
                     }
                     catch (OptimisticConcurrencyException)
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message2::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message2::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         context.Refresh(RefreshMode.ClientWins, m2);
                         result = context.SaveChanges();
@@ -118,9 +105,7 @@ namespace BusinessLogic
                 }
                 else
                 {
-                    LogEntry log = new LogEntry();
-                    log.Message = ("Saving Message to database::Message2::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                    Logger.Write(log);
+                    Trace.WriteLine("Saving Message to database::Message2::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                     context.Message2.AddObject(m2);
                     result = context.SaveChanges();
@@ -151,17 +136,13 @@ namespace BusinessLogic
                     context.AttachTo("Message3", m3);
                     try
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message3::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message3::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         result = context.SaveChanges();
                     }
                     catch (OptimisticConcurrencyException)
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message3::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message3::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         context.Refresh(RefreshMode.ClientWins, m3);
                         result = context.SaveChanges();
@@ -169,9 +150,7 @@ namespace BusinessLogic
                 }
                 else
                 {
-                    LogEntry log = new LogEntry();
-                    log.Message = ("Saving Message to database::Message3::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                    Logger.Write(log);
+                    Trace.WriteLine("Saving Message to database::Message3::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                     context.Message3.AddObject(m3);
                     result = context.SaveChanges();
@@ -203,17 +182,13 @@ namespace BusinessLogic
                     context.AttachTo("Message4", m4);
                     try
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message4::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message4::Attaching::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         result = context.SaveChanges();
                     }
                     catch (OptimisticConcurrencyException)
                     {
-                        LogEntry log = new LogEntry();
-                        log.Message = ("Saving Message to database::Message4::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                        Logger.Write(log);
+                        Trace.WriteLine("Saving Message to database::Message4::OptimisticConcurrencyException::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                         context.Refresh(RefreshMode.ClientWins, m4);
                         result = context.SaveChanges();
@@ -221,9 +196,7 @@ namespace BusinessLogic
                 }
                 else
                 {
-                    LogEntry log = new LogEntry();
-                    log.Message = ("Saving Message to database::Message4::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
-                    Logger.Write(log);
+                    Trace.WriteLine("Saving Message to database::Message4::AddObject::Guid:" + m.Guid + "::MessageID:" + m.MessageID);
 
                     context.Message4.AddObject(m4);
                     result = context.SaveChanges();

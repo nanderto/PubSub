@@ -54,7 +54,8 @@ namespace UnitTests
         public void SaveUserWithInterceptorTest()
         {
             Interceptor.SnapConfigurator.Configurator();
-            var target = (IUserManagerServiceWithInterceptor)Interceptor.SnapConfigurator._container.Kernel[typeof(IUserManagerServiceWithInterceptor)];
+
+            var target = (IUserManagerServiceWithInterceptor)Interceptor.SnapConfigurator._container.Resolve<IUserManagerServiceWithInterceptor>();
 
             var target2 = (IUserManagerServiceWithInterceptor)Interceptor.SnapConfigurator._container.Resolve<IUserManagerServiceWithInterceptor>();
             Assert.AreEqual<IUserManagerServiceWithInterceptor>(target, target2, "did not return the correct type");

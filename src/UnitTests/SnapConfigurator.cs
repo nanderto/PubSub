@@ -6,6 +6,8 @@ using Castle.Windsor;
 using Snap;
 using Snap.CastleWindsor;
 using BusinessLogic;
+using Castle.MicroKernel.Registration;
+using Entities;
 
 namespace Interceptor
 {
@@ -25,10 +27,10 @@ namespace Interceptor
             SnapConfiguration.For(new CastleAspectContainer(_container.Kernel)).Configure(c =>
             {
                 c.IncludeNamespace("Interceptor");
-                c.Bind<ServiceInterceptor>().To<ServiceAttribute>();
+                c.Bind<ServiceInterceptor<User>>().To<ServiceAttribute>();
             });
 
-            _container.AddComponent("UserManagerServiceWithInterceptor", typeof(IUserManagerServiceWithInterceptor), typeof(UserManagerServiceWithInterceptor));
+            _container.Register(Component.For<IUserManagerServiceWithInterceptor>().ImplementedBy<UserManagerServiceWithInterceptor>().Named("UserManagerServiceWithInterceptor"));
         }
     }
 

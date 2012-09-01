@@ -86,7 +86,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CastleAopSample.cs" />
     <Compile Include="DummyData.cs" />
     <Compile Include="IUserManagerServiceWithInterceptor.cs" />
     <Compile Include="Deprecated\MessagePublishSubscribeChannel.cs" />

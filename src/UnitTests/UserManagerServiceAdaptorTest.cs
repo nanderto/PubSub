@@ -59,12 +59,8 @@ namespace UnitTests
             User umToUpdate = new User(); 
             umToUpdate.FirstName = "X";
             umToUpdate.LastName = "LastName";
-
-            //Clean up if exists
-            if (MessageQueue.Exists(@".\private$\EntitiesUser"))
-                MessageQueue.Delete(@".\private$\EntitiesUser");
-
-            MessageQueue.Create(@".\private$\EntitiesUser",true);
+            umToUpdate.UserName = "XLastName2";
+            TestHelper.SetUpCleanTestQueue();
 
             target.Create(umToUpdate);
             //need to assert something
@@ -73,19 +69,16 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void CreateUserUsingDependencyInjectionTest()
         {
-            //Clean up if exists
-            if (MessageQueue.Exists(@".\private$\EntitiesUser"))
-                MessageQueue.Delete(@".\private$\EntitiesUser");
-
-            MessageQueue.Create(@".\private$\EntitiesUser", true);
+            TestHelper.SetUpCleanTestQueue();
 
             var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
             var PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
-            PubSubChannel.AddSubscriber(typeof(TestSubscriber<User>));
+            PubSubChannel.AddSubscriberType(typeof(TestSubscriber<User>));
             UserManagerServiceAdaptor target = new UserManagerServiceAdaptor(queueProvider, PubSubChannel);
             User umToUpdate = new User();
             umToUpdate.FirstName = "X";
             umToUpdate.LastName = "LastName";
+            umToUpdate.UserName = "XLastName1";
 
             target.Create(umToUpdate);
             //need to assert something
@@ -95,11 +88,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void CreateUserUsingConstructorParametersTest()
         {
-            //Clean up if exists 
-            if (MessageQueue.Exists(@".\private$\EntitiesUser"))
-                MessageQueue.Delete(@".\private$\EntitiesUser");
-
-            MessageQueue.Create(@".\private$\EntitiesUser", true);
+            TestHelper.SetUpCleanTestQueue();
 
             var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
             var PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
@@ -107,9 +96,9 @@ namespace UnitTests
             User umToUpdate = new User();
             umToUpdate.FirstName = "X";
             umToUpdate.LastName = "LastName";
-
+            umToUpdate.UserName = "XLastName";
+            umToUpdate.UserName = "XLastName4";
             target.Create(umToUpdate);
-            //need to assert something
         }
     }
 }

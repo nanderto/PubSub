@@ -64,6 +64,7 @@
   <ItemGroup>
     <EntityDeploy Include="DataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>

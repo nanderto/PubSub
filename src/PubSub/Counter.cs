@@ -1,46 +1,79 @@
-﻿namespace Phantom.PubSub
+namespace Phantom.PubSub
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
+    public enum CounterType
+    {
+        Subscribers = 0,
+        RemovedFromQueues = 3,
+        ProcessingABatch = 4,
+        IsEmptyCheck = 5,
+    }
+
     /// <summary>
-    /// This class is strictly for test perposes. Shoul implement perfomce counters instead
+    /// This class is strictly for test perposes. Should implement perfomce counters instead
     /// </summary>
     public static class Counter
     {
-        private static object TotalSubscriberLockObject = new object();
-        
-        private static object listofCountersLockObject = new object();
-        
+        /// <summary>
+        /// Lock object for the Total number of subscribers
+        /// </summary>
+        private static object totalSubscriberLockObject = new object();
+                
+        /// <summary>
+        /// Total number of subscribers associated with this specific type
+        /// </summary>
         private static int totalSubscriberCount = 0;
         
-        private static int[] listofCounters = new int[6];
+        /// <summary>
+        /// Collection of counters to monitor the usage of the component
+        /// </summary>
+        private static int[] listofCounters = new int[12];
         
-        public static int Subscriber(int counternumber)
+        /// <summary>
+        /// Locks the counter object and gets the current Total Subscriber Count
+        /// </summary>
+        /// <param name="counterNumber">Position in list of the specified counter to return</param>
+        /// <returns>List of counters for debugging purposes</returns>
+        public static int Subscriber(int counterNumber)
         {
-            lock (TotalSubscriberLockObject)
+            lock (totalSubscriberLockObject)
             {
-                return listofCounters[counternumber];
+                return listofCounters[counterNumber];
             }
         }
 
+        /// <summary>
+        /// Total number of subscribers
+        /// </summary>
+        /// <returns>Total subscriber count</returns>
         public static int TotalSubscriberCount()
         {
-            lock (TotalSubscriberLockObject)
+            lock (totalSubscriberLockObject)
             {
                 return totalSubscriberCount;
             }
         }
 
+        /// <summary>
+        /// Increment the specified counter in the collection of counters
+        /// </summary>
+        /// <param name="index">Position in list of the specified counter to update</param>
         public static void Increment(int index)
         {
-            lock (TotalSubscriberLockObject)
+            lock (totalSubscriberLockObject)
             {
                 listofCounters[index]++;
                 totalSubscriberCount++;
             }
+        }
+
+        public static void Increment(CounterType counterType)
+        {
+            Increment((int)counterType);
         }
     }
 }

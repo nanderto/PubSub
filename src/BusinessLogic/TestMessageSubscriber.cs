@@ -16,7 +16,7 @@ namespace BusinessLogic
 
         private MessageService DataService;
 
-        public override bool Process(Message message, string MessageId, string SubscriptionId, IMessageStatus<Message> SubScriptionStatus, List<IMessageStatus<Message>> TrackIfStarted)
+        public override bool Process(Message message)
         {
             if (this.DataService.SaveMessage((Message)message) > 0)
                 return true;
@@ -34,7 +34,7 @@ namespace BusinessLogic
 
         private MessageService2 DataService;
 
-        public override bool Process(Message message, string MessageId, string SubscriptionId, IMessageStatus<Message> SubScriptionStatus, List<IMessageStatus<Message>> TrackIfStarted)
+        public override bool Process(Message message)
         {
             if (this.DataService.SaveMessage((Message)message) > 0)
                 return true;
@@ -52,12 +52,12 @@ namespace BusinessLogic
 
         private MessageService3 DataService;
 
-        public override bool Process(Message message, string MessageId, string SubscriptionId, IMessageStatus<Message> SubScriptionStatus, List<IMessageStatus<Message>> TrackIfStarted)
+        public override bool Process(Message message)
         {
             var m = (Message)message;
             m.MessageID = MessageId;
-            m.SubscriptionID = SubscriptionId;
-            
+            m.SubscriptionID = this.Id;
+
             if (this.DataService.SaveMessage(m) > 0)
                 return true;
             else
@@ -74,11 +74,11 @@ namespace BusinessLogic
 
         private MessageService4 DataService;
 
-        public override bool Process(Message message, string MessageId, string SubscriptionId, IMessageStatus<Message> SubScriptionStatus, List<IMessageStatus<Message>> TrackIfStarted)
+        public override bool Process(Message message)
         {
             var m = (Message)message;
             m.MessageID = MessageId;
-            m.SubscriptionID = SubscriptionId;
+            m.SubscriptionID = this.Id;
 
             if (this.DataService.SaveMessage(m) > 0)
                 return true;
@@ -95,18 +95,18 @@ namespace BusinessLogic
         }
 
         private MessageService5 DataService;
-
-        public override bool Process(Message message, string MessageId, string SubscriptionId, IMessageStatus<Message> SubScriptionStatus, List<IMessageStatus<Message>> TrackIfStarted)
+        public override bool Process(Message message)
         {
             var m = (Message)message;
             m.MessageID = MessageId;
-            m.SubscriptionID = SubscriptionId;
+            m.SubscriptionID = this.Id;
 
             if (this.DataService.SaveMessage(m) > 0)
                 return true;
             else
                 return false;
         }
+
     }
 
 
@@ -120,10 +120,10 @@ namespace BusinessLogic
 
         private MessageService DataService;
 
-        public override bool Process(User message, string MessageId, string SubscriptionId, IMessageStatus<User> SubScriptionStatus, List<IMessageStatus<User>> TrackIfStarted)
+        public override bool Process(User message)
         {
             //if (this.DataService.SaveMessage((Message)message) > 0)
-                return true;
+            return true;
             //else
             //    return false;
         }
@@ -139,10 +139,10 @@ namespace BusinessLogic
 
         private MessageService2 DataService;
 
-        public override bool Process(User message, string MessageId, string SubscriptionId, IMessageStatus<User> SubScriptionStatus, List<IMessageStatus<User>> TrackIfStarted)
+        public override bool Process(User message)
         {
             //if (this.DataService.SaveMessage((Message)message) > 0)
-                return true;
+            return true;
             //else
             //    return false;
         }
@@ -157,14 +157,14 @@ namespace BusinessLogic
 
         private MessageService3 DataService;
 
-        public override bool Process(User message, string MessageId, string SubscriptionId, IMessageStatus<User> SubScriptionStatus, List<IMessageStatus<User>> TrackIfStarted)
+        public override bool Process(User message)
         {
             //var m = (Message)message;
             //m.MessageID = MessageId;
             //m.SubscriptionID = SubscriptionId;
 
             //if (this.DataService.SaveMessage(m) > 0)
-                return true;
+            return true;
             //else
             //    return false;
         }
@@ -172,50 +172,50 @@ namespace BusinessLogic
     }
 
 
-    public class TestMessageMessageStatusTracker<T> : IMessageStatus<T>
-    {
-        public bool FinishedProcessing { get; set; }
+    //public class TestMessageMessageStatusTracker<T> : IMessageStatus<T>
+    //{
+    //    public bool FinishedProcessing { get; set; }
 
-        public bool StartedProcessing { get; set; }
+    //    public bool StartedProcessing { get; set; }
 
-        public string Id { get; set; }
+    //    public string Id { get; set; }
 
-        public string Name { get; set; }
+    //    public string Name { get; set; }
 
-        public string MessageId { get; set; }
+    //    public string MessageId { get; set; }
 
-        public TimeSpan TimeToExpire { get; set; }
-    }
+    //    public TimeSpan TimeToExpire { get; set; }
+    //}
 
-    public class TestMessageMessageStatusTracker2<T> : IMessageStatus<T>
-    {
-        public bool FinishedProcessing { get; set; }
+    //public class TestMessageMessageStatusTracker2<T> : IMessageStatus<T>
+    //{
+    //    public bool FinishedProcessing { get; set; }
 
-        public bool StartedProcessing { get; set; }
+    //    public bool StartedProcessing { get; set; }
 
-        public string Id { get; set; }
+    //    public string Id { get; set; }
 
-        public string Name { get; set; }
+    //    public string Name { get; set; }
 
-        public string MessageId { get; set; }
+    //    public string MessageId { get; set; }
 
-        public TimeSpan TimeToExpire { get; set; }
-    }
+    //    public TimeSpan TimeToExpire { get; set; }
+    //}
 
-    public class TestMessageMessageStatusTracker3<T> : IMessageStatus<T>
-    {
-        public bool FinishedProcessing { get; set; }
+    //public class TestMessageMessageStatusTracker3<T> : IMessageStatus<T>
+    //{
+    //    public bool FinishedProcessing { get; set; }
 
-        public bool StartedProcessing { get; set; }
+    //    public bool StartedProcessing { get; set; }
 
-        public string Id { get; set; }
+    //    public string Id { get; set; }
 
-        public string Name { get; set; }
+    //    public string Name { get; set; }
 
-        public string MessageId { get; set; }
+    //    public string MessageId { get; set; }
 
-        public TimeSpan TimeToExpire { get; set; }
-    }
+    //    public TimeSpan TimeToExpire { get; set; }
+    //}
     //public class TestMessageSubscriberGenericType<T> : Subscriber<T>, IMessageStatus<T>
     //{
     //    public TestMessageSubscriberGenericType(MessageService service)

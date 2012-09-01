@@ -1,0 +1,28 @@
+﻿using System;
+using BusinessLogic;
+using Entities;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Phantom.PubSub;
+
+namespace UnitTests
+{
+    [TestClass]
+    public class BatchProcessorTests
+    {
+        [TestMethod]
+        public void BatchProcessorHasStarted()
+        {
+            Assert.IsTrue(BatchProcessor<User>.HasStarted);
+        }
+
+        [TestMethod]
+        public void ConfigureBatchProcessor()
+        {
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
+               .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
+               .AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
+            BatchProcessor<User>.ConfigureWithPubSubChannel(pubsub);
+            Assert.IsTrue(BatchProcessor<User>.IsConfigured);
+        }
+    }
+}
