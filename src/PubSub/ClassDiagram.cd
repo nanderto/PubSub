@@ -1,51 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Phantom.PubSub.ActiveSubscriptions&lt;T&gt;">
-    <Position X="4.75" Y="2.75" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAQAIgAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ActiveSubscriptions.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="System.Collections.Concurrent.ConcurrentDictionary&lt;TKey, TValue&gt;" Collapsed="true">
     <Position X="5" Y="2" Width="2" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Phantom.PubSub.IQueueProvider&lt;T&gt;" Collapsed="true">
-    <Position X="11.75" Y="1.75" Width="1.5" />
+  <Class Name="Phantom.PubSub.AssemblyLocator&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAEAAAAAAAAwEQAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>IQueueProvider.cs</FileName>
+      <HashCode>AAAEAAAAAgAAAAAAAAAAAAAAAEAAEAAAABQAAAAAAAA=</HashCode>
+      <FileName>AssemblyLocator.cs</FileName>
     </TypeIdentifier>
-  </Interface>
+  </Class>
+  <Class Name="Phantom.PubSub.MsmqStoreProvider&lt;T&gt;" Collapsed="true">
+    <Position X="13.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAgBAAAQAAgLBAACAAAAAQAQAEAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>MsmqStoreProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="Phantom.PubSub.ISubscriber&lt;T&gt;" Collapsed="true">
     <Position X="8.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAACAQAEAAAACCAAAgAAAAQAMAAAAAgEAAAEAAAAghs=</HashCode>
+      <HashCode>BAACAQAEAAAACCAAAgAAAAQAIAAAACAEAAAEAAAAghI=</HashCode>
       <FileName>ISubscriber.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Phantom.PubSub.IMessageStatus&lt;T&gt;" Collapsed="true">
-    <Position X="8.25" Y="1" Width="3.25" />
+  <Interface Name="Phantom.PubSub.IPublishSubscribeChannel&lt;T&gt;" Collapsed="true">
+    <Position X="14.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>IMessageStatus.cs</FileName>
+      <HashCode>AAAAAAAAAQAAAAAgBAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPublishSubscribeChannel.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Delegate Name="Phantom.PubSub.MessageHandlingCompleted" Collapsed="true">
-    <Position X="8.25" Y="3.25" Width="1.5" />
+  <Interface Name="Phantom.PubSub.IStoreProvider&lt;T&gt;" Collapsed="true">
+    <Position X="13" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IQueueProvider.cs</FileName>
+      <HashCode>AEAABAAAAAAgABAAAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IStoreProvider.cs</FileName>
     </TypeIdentifier>
-  </Delegate>
-  <Delegate Name="Phantom.PubSub.MessageHandlingStarted" Collapsed="true">
-    <Position X="10" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IQueueProvider.cs</FileName>
-    </TypeIdentifier>
-  </Delegate>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

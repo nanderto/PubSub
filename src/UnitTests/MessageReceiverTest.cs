@@ -18,12 +18,26 @@ namespace UnitTests
     [TestClass()]
     public class MessageReceiverTest
     {
+        [TestMethod]
+        public void HowToUsePubSubChannelwithExplicitConfigurationOfSubscribers()
+        {
+            var pubSubChannel = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())  
+                .AddSubscriberType(typeof(SpeedySubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 0, 60))
+                .AddSubscriberType(typeof(SpeedySubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 0, 60));
+            pubSubChannel.PublishMessage(new User() 
+            { 
+                FirstName = "Johnny",
+                LastName = "willson",
+                City = "Brekenridge",
+                UserName = "JohnnyUserName"
+            });         
+        }
 
         [TestMethod]
         public void CreateMSMQProvider()
         {
-            var queue = new MsmqQueueProvider<Message>();
-            Assert.IsInstanceOfType(queue, typeof(MsmqQueueProvider<Message>));
+            var queue = new MsmqStoreProvider<Message>();
+            Assert.IsInstanceOfType(queue, typeof(MsmqStoreProvider<Message>));
             Assert.AreEqual("EntitiesMessage", queue.Name);
         }
 
@@ -31,12 +45,21 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ProcessBatch_1_MessageTest()
         {
+
             TestHelper.SetUpCleanTestQueue("EntitiesMessage");
-            var MessagePubSubChannel = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>());          
-            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 1));
-            TestHelper.AddAMessageMessageWith1MillisecondTTE();
-            
+            var MessagePubSubChannel = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>());          
+            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0 ));
+            TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(MessagePubSubChannel));
+
             MessagePubSubChannel.ProcessBatch();
+
+            DateTime start = DateTime.Now;
+            while (!TestHelper.IsQueueEmpty("EntitiesMessage"))
+            {
+                System.Threading.Thread.Sleep(500);
+                var now = DateTime.Now;
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 5, 0))) < 0, "I give up spent to much time processing");
+            }
 
             Assert.IsTrue(TestHelper.IsQueueEmpty("EntitiesMessage"));
         }
@@ -45,44 +68,31 @@ namespace UnitTests
         public void ProcessBatch_2_MessageTest()
         {
             TestHelper.SetUpCleanTestQueue("EntitiesMessage");
-            var MessagePubSubChannel = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>());
-            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 1))
-                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 1));
+            var MessagePubSubChannel = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>());
+            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0,1))
+                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0,1));
 
-            TestHelper.AddAMessageMessageWith1MillisecondTTE();
-            TestHelper.AddAMessageMessageWith1MillisecondTTE();
+            TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(MessagePubSubChannel));
+            TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(MessagePubSubChannel));
 
             MessagePubSubChannel.ProcessBatch();
+            
+            DateTime start = DateTime.Now;
+            while (!TestHelper.IsQueueEmpty("EntitiesMessage"))
+            {
+                System.Threading.Thread.Sleep(500);
+                var now = DateTime.Now;
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 5, 0))) < 0, "I give up spent to much time processing");
+            }
 
             Assert.IsTrue(TestHelper.IsQueueEmpty("EntitiesMessage"));
         }
 
-        private IPublishSubscribeChannel<Message> CreateMessagePubSubChannel<T>()
-        {
-            PublishSubscribeChannel<Message> target = CreateMessageReceiver<Message>();
-            return target;
-        }
-
-        internal virtual PublishSubscribeChannel<Message> CreateMessageReceiver<T>()
-        {
-            var queue = CreateQueueProvider<Message>();
-            //queue.Name = "EntitiesUser";
-            TestHelper.SetUpCleanTestQueue(queue.Name);
-
-            queue.SetupWatchQueue(queue);
-
-            // TODO: Instantiate an appropriate concrete class.
-            //IQueueProvider<Message> queue = (IQueueProvider<Message>)new MessageQueueProvider();
-            var target = new PublishSubscribeChannel<Message>(queue);
-
-            return target;
-        }
-
-        internal virtual IQueueProvider<T> CreateQueueProvider<T>()
+        internal virtual IStoreProvider<T> CreateQueueProvider<T>()
         {
             // TODO: Instantiate an appropriate concrete class.
             //GenericParameterHelper param = new GenericParameterHelper();
-            IQueueProvider<T> target = new MsmqQueueProvider<T>();
+            IStoreProvider<T> target = new MsmqStoreProvider<T>();
             return target;
         }
 
@@ -93,6 +103,14 @@ namespace UnitTests
             PublishSubscribeChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 1));
             
             PublishSubscribeChannel.ProcessBatch();
+            var start = DateTime.Now;
+            while (!TestHelper.IsQueueEmpty("entitiesuser"))
+            {
+                System.Threading.Thread.Sleep(500);
+                var now = DateTime.Now;
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 5, 0))) < 0, "I give up spent to much time processing");
+            }
+
             Assert.IsTrue(TestHelper.IsQueueEmpty("EntitiesUser"));
         }
 
@@ -101,7 +119,6 @@ namespace UnitTests
             var queue = CreateQueueProvider();
             TestHelper.SetUpCleanTestQueue();
             TestHelper.AddAMessage("EntitiesUser");
-            queue.SetupWatchQueue(queue);
             var PubSubChannel = new PublishSubscribeChannel<User>(queue);
 
             IPublishSubscribeChannel<User> target = (IPublishSubscribeChannel<User>)PubSubChannel;
@@ -109,10 +126,9 @@ namespace UnitTests
         }
 
 
-        internal virtual IQueueProvider<User> CreateQueueProvider()
+        internal virtual IStoreProvider<User> CreateQueueProvider()
         {
-            // TODO: Instantiate an appropriate concrete class.
-            IQueueProvider<User> target = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+            IStoreProvider<User> target = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             return target;
         }
 
@@ -127,10 +143,10 @@ namespace UnitTests
         /// <summary>
         ///A test for Start
         ///</summary>
-        public void StartTestHelper<T>()
+        public async void StartTestHelper<T>()
         {
             TestHelper.SetUpCleanTestQueue("EntitiesMessage");
-            var target = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>())
+            var target = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>())
                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
 
@@ -138,8 +154,9 @@ namespace UnitTests
 
             for (int i = 0; i < 2000; i++)
             {
-                TestHelper.AddAMessageMessage();
+                TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(target));
             }
+
             Trace.WriteLine("Started processing: tIME:" + DateTime.Now);
            // List<ISubscriber<T>> Subscribers = GetSubscribers<T>();
             BatchProcessor<Message>.ConfigureWithPubSubChannel(target);
@@ -152,28 +169,32 @@ namespace UnitTests
             DateTime start = DateTime.Now;
             while (!TestHelper.IsQueueEmpty("EntitiesMessage"))
             {
-                System.Threading.Thread.Sleep(1000);
-                Assert.IsTrue(DateTime.Now > start + new TimeSpan(10000), "I give up spent to much time processing");
+                System.Threading.Thread.Sleep(500);
+                var now = DateTime.Now;
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 5, 0))) < 0, "I give up spent to much time processing");
             }
+            Debug.WriteLine("About to stop the bach processor");
             BatchProcessor<Message>.Halt();
 
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Finished processing: tIME:" + DateTime.Now);
         }
 
+
+
         internal virtual List<ISubscriber<T>> GetSubscribers<T>()
         {
             List<ISubscriber<T>> list = new List<ISubscriber<T>>();
 
-            ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
+            ISubscriber<T> sub = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub.Name = "jackie";
             sub.TimeToExpire = new TimeSpan(10000);
             sub.StartTime = DateTime.Now;
-            ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
+            ISubscriber<T> sub2 = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub2.Name = "Rube";
             sub2.TimeToExpire = new TimeSpan(1000);
             sub2.StartTime = DateTime.Now;
             sub2.Aborted = true;
-            ISubscriber<T> sub3 = new TestSubscriber<T>() as ISubscriber<T>;
+            ISubscriber<T> sub3 = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub3.Name = "Sid";
             sub3.StartTime = DateTime.Now;
             sub3.TimeToExpire = new TimeSpan(10000);
@@ -200,15 +221,17 @@ namespace UnitTests
 
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Started processing: tIME: " + DateTime.Now);
 
+            target.AddSubscriberType(typeof(SpeedySubscriber<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 10));
+            target.AddSubscriberType(typeof(SpeedySubscriber2<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 10));
+
             for (int i = 0; i < 50; i++)
             {
-                TestHelper.AddAMessageMessage();
+                TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(target));
             }
 
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Started loading msmq: tIME: " + DateTime.Now);
 
-            target.AddSubscriberType(typeof(TestSubscriber<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 100));
-            target.AddSubscriberType(typeof(TestSubscriber2<T>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 100));
+            
             
             BatchProcessor<Message>.ConfigureWithPubSubChannel(target);
             Assert.IsTrue(BatchProcessor<Message>.IsConfigured);
@@ -217,8 +240,9 @@ namespace UnitTests
             DateTime start = DateTime.Now;
             while (!TestHelper.IsQueueEmpty("EntitiesMessage"))
             {
-                System.Threading.Thread.Sleep(1000);
-                Assert.IsTrue(DateTime.Now > start + new TimeSpan(10000), "I give up spent to much time processing");
+                System.Threading.Thread.Sleep(500);
+                var now = DateTime.Now;
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 15, 0))) < 0, "I give up spent to much time processing");
             }
 
 
@@ -228,58 +252,56 @@ namespace UnitTests
             Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub.Tests", "Phantom.PubSub.Tests")).TraceInfo, "Finished processing: tIME:" + Endprocessing);
         }
 
-        [TestMethod]
-        public void ParallelsTest()
-        {
-            Message m = new Message();
-            m.Name = "Gwen";
-            m.BatchNumber = 1;
-            m.Guid = System.Guid.NewGuid();
-            m.MessageID = "MessageID";
-            m.SubscriptionID = "SubscriptionID";
-            m.MessagePutTime = DateTime.Now;
-            m.ID = 999;
+        //[TestMethod]
+        //public void ParallelsTest()
+        //{
+        //    Message m = new Message();
+        //    m.Name = "Gwen";
+        //    m.BatchNumber = 1;
+        //    m.Guid = System.Guid.NewGuid();
+        //    m.MessageID = "MessageID";
+        //    m.SubscriptionID = "SubscriptionID";
+        //    m.MessagePutTime = DateTime.Now;
+        //    m.ID = 999;
 
-            var messagePacket = TestHelper.GetMessagePacketwith1MillisecondTTE(m);
+        //    var messagePacket = TestHelper.GetMessagePacketwith1MillisecondTTE(m);
 
-            var subscribersForThisMessage = TestHelper.GetSubscribers<Message>();
-            foreach (var item in subscribersForThisMessage)
-            {
-                item.SubscribersForThisMessage = subscribersForThisMessage;
-            }
+        //    var subscribersForThisMessage = TestHelper.GetSubscribers<Message>();
+        //    foreach (var item in subscribersForThisMessage)
+        //    {
+        //        item.SubscribersForThisMessage = subscribersForThisMessage;
+        //    }
 
-            TaskWaiter taskWaiter = new TaskWaiter();
-            foreach (var subscriber in subscribersForThisMessage)
-            {
-                var parentTask = Task<bool>.Factory.StartNew(() =>
-                {
-                    var task = Task<bool>.Factory.StartNew(() =>
-                    {
-                        string newSubscriptionId = " SubScriber: " + subscriber.Name + ":: MessageID: " + messagePacket.Id + "::";
-                        subscriber.Id = newSubscriptionId;
-                        subscriber.MessageId = messagePacket.Id;
-                        //// wire up the events
-                        subscriber.OnProcessStartedEventHandler += new OnProcessStartedEventHandler(Subscriber_OnProcessStartedEvent);
-                        subscriber.OnProcessCompletedEventHandler += new OnProcessCompletedEventHandler(Subscriber_OnProcessCompletedEvent);
-                        //activeSubscriptions.AddActiveSubscription(subscriber);
-                        return subscriber.Run((Message)messagePacket.Body);
-                    });
-                    return task.Wait(subscriber.TimeToExpire);
-                });
-                taskWaiter.Add(parentTask);
-            }
-            taskWaiter.Wait();    
-        }
+        //    TaskWaiter taskWaiter = new TaskWaiter();
+        //    foreach (var subscriber in subscribersForThisMessage)
+        //    {
+        //        var parentTask = Task<bool>.Factory.StartNew(() =>
+        //        {
+        //            var task = Task<bool>.Factory.StartNew(() =>
+        //            {
+        //                string newSubscriptionId = " SubScriber: " + subscriber.Name + ":: MessageID: " + messagePacket.Id + "::";
+        //                subscriber.Id = newSubscriptionId;
+        //                subscriber.MessageId = messagePacket.Id;
+        //                //// wire up the events
+        //                //activeSubscriptions.AddActiveSubscription(subscriber);
+        //                return subscriber.Run((Message)messagePacket.Body);
+        //            });
+        //            return task.Wait(subscriber.TimeToExpire);
+        //        });
+        //        taskWaiter.Add(parentTask);
+        //    }
+        //    taskWaiter.Wait();    
+        //}
 
-        private void Subscriber_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
-        {
-           // throw new NotImplementedException();
-        }
+        //private void Subscriber_OnProcessStartedEvent(object sender, ProcessStartedEventArgs e)
+        //{
+        //   // throw new NotImplementedException();
+        //}
 
-        private void Subscriber_OnProcessCompletedEvent(object sender, ProcessCompletedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
+        //private void Subscriber_OnProcessCompletedEvent(object sender, ProcessCompletedEventArgs e)
+        //{
+        //    //throw new NotImplementedException();
+        //}
 
         [TestMethod]
         public void Publish_1_Message()
@@ -290,7 +312,7 @@ namespace UnitTests
         private void Publish_1_MessageHelper<T>() where T : Message
         {
             var stopwatch = Stopwatch.StartNew();
-            var pubsub = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>())
+            var pubsub = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>())
                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                .AddSubscriberType(typeof(BusinessLogic.TestSubscriberXXX<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 100))
                .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 30));
@@ -311,7 +333,7 @@ namespace UnitTests
         private void Publish_1_MessageWithoutSubscribersHelper<T>() where T : User
         {
            // var stopwatch = Stopwatch.StartNew();
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>());
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>());
 
             TestHelper.SetUpCleanTestQueue("EntitiesCustomer");
             User m = GetNewUser<User>();
@@ -335,7 +357,7 @@ namespace UnitTests
 
             //Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             //Trace.AutoFlush = true;
-            Trace.Listeners.Add(new TextWriterTraceListener(@"C:\\Dev\\temp\\log.txt"));
+            Trace.Listeners.Add(new TextWriterTraceListener(@"D:\\Dev\\temp\\log.txt"));
             Trace.AutoFlush = true;
             startTime = DateTime.Now;
             var stopwatch = Stopwatch.StartNew();
@@ -343,7 +365,7 @@ namespace UnitTests
             System.Diagnostics.Debug.WriteLine("Started loading msmq: tIME:" + startTime);
             Trace.WriteLine("Started loading msmq: tIME: Ticks: " + DateTime.Now.Ticks);
             ///create queue and channel
-            var pubsub = new PublishSubscribeChannel<Message>(new MsmqQueueProvider<Message>())
+            var pubsub = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>())
                 .AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                 .AddSubscriberType(typeof(BusinessLogic.TestSubscriberXXX<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 100))
                 .AddSubscriberType(typeof(BusinessLogic.TestSubscriber2<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 12));
@@ -352,7 +374,7 @@ namespace UnitTests
 
             Random r = new Random();
           
-            int numbertoinsert = 1000;
+            int numbertoinsert = 100;
             int startRange = 40;
             int endRange = 50;
             var t1 = Task<int>.Factory.StartNew(() =>

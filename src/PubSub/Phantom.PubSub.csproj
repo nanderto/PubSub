@@ -40,12 +40,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Phantom.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Esent.Interop">
+      <HintPath>..\packages\Lib\Esent.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
@@ -60,40 +64,36 @@
   <ItemGroup>
     <Compile Include="AutoConfig.cs" />
     <Compile Include="BatchProcessor.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="AssemblyLocator.cs" />
     <Compile Include="Counter.cs" />
+    <Compile Include="EsentStoreProvider.cs" />
     <Compile Include="Extensions\FilterBase.cs" />
     <Compile Include="Extensions\IFilter.cs" />
     <Compile Include="Extensions\IFilterChain.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IPublishSubscribeChannel.cs" />
-    <Compile Include="IQueueProvider.cs" />
+    <Compile Include="IStoreProvider.cs" />
     <Compile Include="ISubscriber.cs" />
     <Compile Include="ISubscriberMetadata.cs" />
     <Compile Include="locals.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="ProcessCompletededEventArgs.cs" />
-    <Compile Include="ProcessStartedEventArgs.cs" />
+    <Compile Include="MessagePacket.cs" />
     <Compile Include="Extensions\PublishMessageFilter.cs" />
     <Compile Include="PublishSubscribeChannel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MsmqQueueProvider.cs" />
+    <Compile Include="MsmqStoreProvider.cs" />
     <Compile Include="Extensions\ServiceAdaptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="SubscriberInfo.cs" />
     <Compile Include="SubscriberMetadata.cs" />
     <Compile Include="Subscribers.cs" />
-    <Compile Include="TaskWaiter.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
-    <None Include="Phantom.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

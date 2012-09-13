@@ -24,9 +24,9 @@ namespace BusinessLogic
         public UserManagerServiceAdaptor()
         {
             //Once you are commited to using an agaptor you expect at least 1 filter
-            var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+            var queueProvider = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             IPublishSubscribeChannel<User> PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
-            PubSubChannel.AddSubscriberType(typeof(TestSubscriber2<User>));
+            PubSubChannel.AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 0, 30));
             this.Register(new PublishMessageFilter<User>(PubSubChannel));
         }
 
@@ -36,12 +36,12 @@ namespace BusinessLogic
         /// </summary>
         /// <param name="MsmqQueueProvider">A specialised Queue Provider in this case it is Poly carbonite</param>
         /// <param name="PubSubChannel">A Pubsubchannel of a particular type</param>
-        public UserManagerServiceAdaptor(IQueueProvider<User> QueueProvider, IPublishSubscribeChannel<User> PubSubChannel)
+        public UserManagerServiceAdaptor(IStoreProvider<User> QueueProvider, IPublishSubscribeChannel<User> PubSubChannel)
         {
             if (QueueProvider == null)
             {
                 //provide defalut 
-                QueueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+                QueueProvider = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             }
             
             if (PubSubChannel == null)

@@ -1,7 +1,9 @@
 <ProjectConfiguration>
   <CopyReferencedAssembliesToWorkspace>false</CopyReferencedAssembliesToWorkspace>
   <ConsiderInconclusiveTestsAsPassing>false</ConsiderInconclusiveTestsAsPassing>
-  <AllowCodeContractChecking>false</AllowCodeContractChecking>
+  <PreloadReferencedAssemblies>false</PreloadReferencedAssemblies>
+  <AllowDynamicCodeContractChecking>true</AllowDynamicCodeContractChecking>
+  <AllowStaticCodeContractChecking>false</AllowStaticCodeContractChecking>
   <IgnoreThisComponentCompletely>false</IgnoreThisComponentCompletely>
   <RunPreBuildEvents>false</RunPreBuildEvents>
   <RunPostBuildEvents>false</RunPostBuildEvents>
@@ -18,5 +20,8 @@
     <RegexTestSelector>
       <RegularExpression>.*</RegularExpression>
     </RegexTestSelector>
+    <NamedTestSelector>
+      <TestName>UnitTests.SubscriberMetadataTest.CanProcessAbortedsleep2minsTest</TestName>
+    </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

@@ -14,6 +14,13 @@ namespace ReflectionTests
     public class FileHandlingTests
     {
         [TestMethod]
+        public void HowToUsePubSubChannelwithSubscribersJustDroppedinBin()
+        {
+            var pubSubChannel = new PublishSubscribeChannel<Dummy>(new MsmqStoreProvider<Dummy>());
+            pubSubChannel.PublishMessage(new Dummy() { Name = "Johnny"});  
+        }
+
+        [TestMethod]
         public void GetSubscriberInfo_For_The_Type_DummyWithDefaultTimeToExpire()
         {
             var result = GetSubscriberInfosHelper<Dummy>("DummySubscriberWithDefault");
@@ -64,7 +71,7 @@ namespace ReflectionTests
             System.Diagnostics.Debug.WriteLine("Started loading msmq: tIME:" + startTime);
             Trace.WriteLine("Started loading msmq: tIME: Ticks: " + DateTime.Now.Ticks);
 
-            var pubsub = new PublishSubscribeChannel<Dummy>(new MsmqQueueProvider<Dummy>());
+            var pubsub = new PublishSubscribeChannel<Dummy>(new MsmqStoreProvider<Dummy>());
 
             SetUpCleanTestQueue("ReflectionTestsDummy");
             

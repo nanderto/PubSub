@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Phantom.PubSub;
 using System.Threading.Tasks;
 
@@ -114,13 +113,56 @@ namespace BusinessLogic
             return true;
         }
 
-
-
         public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// does nothing returns as fast as possible
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class SpeedySubscriber<T> : Subscriber<T>
+    {
+        public override bool Process(T input)
+        {
+            return true;
+        }
+
+        public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+        {
+            return DoSomethingAsync();
+        }
+
+        private async Task<bool> DoSomethingAsync()
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// does nothing returns as fast as possible
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class SpeedySubscriber2<T> : Subscriber<T>
+    {
+        public override bool Process(T input)
+        {
+            return true;
+        }
+
+        public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+        {
+            return DoSomethingAsync();
+        }
+
+        private async Task<bool> DoSomethingAsync()
+        {
+            return true;
+        }
+    }
+
 
 
     class MyClass : Subscriber<LocalDummy>

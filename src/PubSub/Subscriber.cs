@@ -21,15 +21,10 @@
     /// <typeparam name="T">Create a subscriber for your specific type of Message</typeparam>
     public abstract class Subscriber<T> : ISubscriber<T> 
     {
-        
-        public int abortCount = 0;
+        private int abortCount = 0;
 
         private bool aborted;
         
-        public virtual event OnProcessStartedEventHandler OnProcessStartedEventHandler;
-
-        public virtual event OnProcessCompletedEventHandler OnProcessCompletedEventHandler;
-
         public string Name { get; set; }
 
         public string Id { get; set; }
@@ -49,8 +44,6 @@
         }
 
         public DateTime StartTime { get; set; }
-
-        public Subscribers<T> SubscribersForThisMessage { get; set; }
 
         public bool StartedProcessing { get; set; }
 
@@ -83,22 +76,9 @@
             }
         }
 
-        public DateTime ExpireTime
-        {
-            get
-            {
-                return this.StartTime + this.TimeToExpire;
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         /// <summary>
         /// Abstract method that must be overridden to provide your processing.
-        /// This method should not be called directly in your code. I should proably
+        /// This method should not be called directly in your code. I should probably
         /// figure out ow to make it safer from poor coding. 
         /// </summary>
         /// <param name="input">Message to be input</param>
@@ -107,6 +87,11 @@
 
         public abstract Task<bool> ProcessAsync(T input, CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Sets the status of the subscriber to the aborted state. Records the time it occured increments the abort count and sets bool values for started adn finish processing to false.
+        /// Used when timed out or an exception is thrown
+        /// </summary>
+        /// <returns></returns>
         public bool Abort()
         {
             Counter.Increment(15);
@@ -115,65 +100,13 @@
             this.abortCount = ++this.abortCount;
             this.StartedProcessing = false;
             this.FinishedProcessing = false;
+            Trace.WriteLine("This task is being Aborted for the: " + this.abortCount + " Time ");
             return true;
         }
-
-        //public virtual TimeSpan SetDefaultTimeToExpire()
-        //{
-        //    this.TimeToExpire = new TimeSpan(0, 0, 100);
-        //    return this.TimeToExpire;
-        //}
-        /// <summary>
-        /// If the subscriber has been aborted then we can check if it is time to reprocess
-        /// </summary>
-        /// <returns>True if it meets rules for reprocessing</returns>
-        public bool CanProcess()
-        {
-            if (this.Aborted)
-            {             
-                // see if it is time for a restart.
-                double time = Math.Pow(2, this.abortCount);
-                TimeSpan ts = new TimeSpan(0, Convert.ToInt32(time), 0);
-                
-                DateTime nextstart = this.AbortedTime + ts;
-
-                if (DateTime.Compare(DateTime.Now, nextstart) < 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-
-            return false; // all else fails return false to snsure it is ot restarted unnessarily
-            // it can always get picked up in the next loop
-        }
-
-        /// <summary>
-        /// Call this method to execute your custom process. It will run the PreProcess then the process method and finally Post processing
-        /// </summary>
-        /// <param name="message">Message being processed</param>
-        /// <returns>True on success</returns>
-        public bool Run(T message)
-        {
-            if (this.PreProcess()) 
-            {
-                // do some thing on false 
-            }
-
-            if (this.Process(message))
-            {
-                // do some thing on false 
-            }
-
-            return this.PostProcess();
-        }
-
+        
         public async Task<bool> RunAsync(T message, CancellationToken cancellationToken)
         {
-            //Trace.WriteLine("RunAsync About to start: MessageId: " + this.MessageId + " SubscriberID: " + this.Id);
+            ////Trace.WriteLine("RunAsync About to start: MessageId: " + this.MessageId + " SubscriberID: " + this.Id);
                     
             cancellationToken.ThrowIfCancellationRequested();
             this.PreProcess();
@@ -190,7 +123,6 @@
         private bool PostProcess()
         {
             this.FinishedProcessing = true;
-            //this.OnProcessCompletedEventHandler(this, new ProcessCompletedEventArgs(this));
             return true;
         }
 
@@ -204,7 +136,6 @@
             this.StartedProcessing = true;
             this.StartTime = DateTime.Now;
             this.Aborted = false;
-            //this.OnProcessStartedEventHandler(this, new ProcessStartedEventArgs(this));
             return true;
         }
     }

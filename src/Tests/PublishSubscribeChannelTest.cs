@@ -54,9 +54,9 @@ namespace UnitTests
         [TestCategory("UnitTest"), TestMethod()]
         public void PublishSubscribeChannelConstructorTest()
         {
-            IQueueProvider<User> Queue = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+            IStoreProvider<User> Queue = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             var target = new PublishSubscribeChannel<User>(Queue);
-            Assert.IsInstanceOfType(Queue, typeof(IQueueProvider<User>), "did not create the correct type");
+            Assert.IsInstanceOfType(Queue, typeof(IStoreProvider<User>), "did not create the correct type");
             Assert.IsInstanceOfType(target, typeof(PublishSubscribeChannel<User>), "did not create the correct type");
             //Assert.IsInstanceOfType(PublishSubscribeChannel<User>.ActiveSubscriptions, typeof(ActiveSubscriptionsDictionary<User>), "did not create the correct type");          
         }
@@ -78,8 +78,8 @@ namespace UnitTests
         [TestMethod, TestCategory("UnitTest")]
         public void AddSubscriberType_Without_WithTimeToExpire()
         {
-            var subscriberInfo = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-                .AddSubscriberType(typeof(TestSubscriber<User>));
+            var subscriberInfo = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+                .AddSubscriberType(typeof(TestSubscriberZZZ<User>));
             var pubsub = subscriberInfo.WithTimeToExpire(new TimeSpan(0, 1, 0));
             Assert.IsInstanceOfType(pubsub, typeof(PublishSubscribeChannel<User>));
 
@@ -89,8 +89,8 @@ namespace UnitTests
         [TestMethod, TestCategory("UnitTest")]
         public void PublishSubscribeChannelConstructor()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-                .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0,1,0));
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+                .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0,1,0));
             Assert.IsInstanceOfType(pubsub, typeof(PublishSubscribeChannel<User>));
             Assert.IsInstanceOfType(pubsub.GetSubscriptions()[0], typeof(ISubscriber<User>));
         }
@@ -98,21 +98,22 @@ namespace UnitTests
         [TestMethod, TestCategory("UnitTest")]
         public void PublishSubscribeChannelConstructor_Add2Subscribers()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-                .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+                .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                 .AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
             Assert.AreEqual(2, pubsub.GetSubscriptions().Count);
             Assert.IsInstanceOfType(pubsub.GetSubscriptions()[0], typeof(ISubscriber<User>));
             Assert.IsInstanceOfType(pubsub.GetSubscriptions()[1], typeof(ISubscriber<User>));
-            Assert.IsInstanceOfType(pubsub.GetSubscriptions()[0], typeof(TestSubscriber<User>));
+            Assert.IsInstanceOfType(pubsub.GetSubscriptions()[0], typeof(TestSubscriberZZZ<User>));
             Assert.IsInstanceOfType(pubsub.GetSubscriptions()[1], typeof(TestSubscriber2<User>));
+            
         }
 
         [TestMethod, TestCategory("UnitTest")]
         public void PublishSubscribeChannelConstructor_Add3Subscribers()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-                .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0,1,0))
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+                .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0,1,0))
                 .AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                 .AddSubscriberType(typeof(TestSubscriber3<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
             Assert.AreEqual(3, pubsub.GetSubscriptions().Count);
@@ -124,11 +125,11 @@ namespace UnitTests
         [TestMethod, TestCategory("UnitTest")]
         public void Get_1_Subscribers()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-             .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+             .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
             var Subscribers = pubsub.GetSubscriptions();
-            Assert.IsInstanceOfType(Subscribers[0], typeof(TestSubscriber<User>));
-            Assert.AreEqual(Subscribers[0].Name, "TestSubscriber`1");
+            Assert.IsInstanceOfType(Subscribers[0], typeof(TestSubscriberZZZ<User>));
+            Assert.AreEqual(Subscribers[0].Name, "TestSubscriberZZZ`1");
             Assert.AreEqual(Subscribers[0].TimeToExpire, new TimeSpan(0, 1, 0));
             Assert.IsTrue(Subscribers.Count == 1);
         }
@@ -136,14 +137,14 @@ namespace UnitTests
         [TestMethod, TestCategory("UnitTest")]
         public void Get_2_Subscribers()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-             .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 1, 1))
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+             .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0, 1, 1))
              .AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 0, 1));
             var Subscribers = pubsub.GetSubscriptions();
-            Assert.IsInstanceOfType(Subscribers[0], typeof(TestSubscriber<User>));
+            Assert.IsInstanceOfType(Subscribers[0], typeof(TestSubscriberZZZ<User>));
             Assert.IsInstanceOfType(Subscribers[1], typeof(TestSubscriber2<User>));
             
-            Assert.AreEqual(Subscribers[0].Name, "TestSubscriber`1");
+            Assert.AreEqual(Subscribers[0].Name, "TestSubscriberZZZ`1");
             Assert.AreEqual(Subscribers[0].TimeToExpire, new TimeSpan(0, 1, 1));
             
             Assert.AreEqual(Subscribers[1].Name, "TestSubscriber2`1");

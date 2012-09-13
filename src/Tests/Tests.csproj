@@ -62,12 +62,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ActiveSubscriptionsTest.cs" />
     <Compile Include="PublishSubscribeChannelTest.cs" />
-    <Compile Include="ReadOnlyDictionaryTest.cs" />
     <Compile Include="ServiceAdaptorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubscriberTest.cs" />
+    <Compile Include="SubscriberMetadataTest.cs" />
     <Compile Include="MessageStatusTrackerTests.cs" />
     <Compile Include="BatchProcessorTests.cs" />
     <Compile Include="AutoConfigTests.cs" />

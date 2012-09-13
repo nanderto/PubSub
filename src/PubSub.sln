@@ -28,8 +28,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interceptor", "Interceptor\Interceptor.csproj", "{D9044635-F61E-498F-80B0-44B459C1CEE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC3application", "MVC3application\MVC3application.csproj", "{5083E1CC-0A87-497A-B0EC-266A8D262A60}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phantom.PubSub", "PubSub\Phantom.PubSub.csproj", "{1D840298-368A-45F6-A40F-47A1AFF9B910}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{C3F7EEE3-AC0B-4088-A624-14C70A317DEB}"
@@ -39,6 +37,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionTests", "ReflectionTests\ReflectionTests.csproj", "{B49885E2-472E-4806-85B4-E9363A5B0545}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interface", "Interface\Interface.csproj", "{D14370AE-EE63-4CB8-8899-516B2338E459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsentTests", "EsentTests\EsentTests.csproj", "{53C1758A-D029-4078-BBC0-A85E9C0D4179}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -58,27 +58,28 @@ Global
 		SccProjectUniqueName4 = Interceptor\\Interceptor.csproj
 		SccProjectName4 = Interceptor
 		SccLocalPath4 = Interceptor
-		SccProjectUniqueName5 = MVC3application\\MVC3application.csproj
-		SccProjectName5 = MVC3application
-		SccLocalPath5 = MVC3application
-		SccProjectUniqueName6 = Tests\\Tests.csproj
+		SccProjectUniqueName5 = Tests\\Tests.csproj
+		SccProjectTopLevelParentUniqueName5 = PubSub.sln
+		SccProjectName5 = Tests
+		SccLocalPath5 = Tests
+		SccProjectUniqueName6 = UnitTests\\IntegrationTests.csproj
 		SccProjectTopLevelParentUniqueName6 = PubSub.sln
-		SccProjectName6 = Tests
-		SccLocalPath6 = Tests
-		SccProjectUniqueName7 = UnitTests\\IntegrationTests.csproj
+		SccProjectName6 = UnitTests
+		SccLocalPath6 = UnitTests
+		SccProjectUniqueName7 = ReflectionTests\\ReflectionTests.csproj
 		SccProjectTopLevelParentUniqueName7 = PubSub.sln
-		SccProjectName7 = UnitTests
-		SccLocalPath7 = UnitTests
-		SccProjectUniqueName8 = ReflectionTests\\ReflectionTests.csproj
-		SccProjectTopLevelParentUniqueName8 = PubSub.sln
-		SccProjectName8 = ReflectionTests
-		SccLocalPath8 = ReflectionTests
-		SccProjectUniqueName9 = PubSub\\Phantom.PubSub.csproj
-		SccProjectName9 = PubSub
-		SccLocalPath9 = PubSub
-		SccProjectUniqueName10 = Interface\\Interface.csproj
-		SccProjectName10 = Interface
-		SccLocalPath10 = Interface
+		SccProjectName7 = ReflectionTests
+		SccLocalPath7 = ReflectionTests
+		SccProjectUniqueName8 = PubSub\\Phantom.PubSub.csproj
+		SccProjectName8 = PubSub
+		SccLocalPath8 = PubSub
+		SccProjectUniqueName9 = Interface\\Interface.csproj
+		SccProjectName9 = Interface
+		SccLocalPath9 = Interface
+		SccProjectUniqueName10 = EsentTests\\EsentTests.csproj
+		SccProjectTopLevelParentUniqueName10 = PubSub.sln
+		SccProjectName10 = EsentTests
+		SccLocalPath10 = EsentTests
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ReferenceImplementatikon.vsmdi
@@ -142,14 +143,6 @@ Global
 		{D9044635-F61E-498F-80B0-44B459C1CEE2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D9044635-F61E-498F-80B0-44B459C1CEE2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D9044635-F61E-498F-80B0-44B459C1CEE2}.Release|x86.ActiveCfg = Release|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5083E1CC-0A87-497A-B0EC-266A8D262A60}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D840298-368A-45F6-A40F-47A1AFF9B910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D840298-368A-45F6-A40F-47A1AFF9B910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D840298-368A-45F6-A40F-47A1AFF9B910}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -190,6 +183,16 @@ Global
 		{D14370AE-EE63-4CB8-8899-516B2338E459}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D14370AE-EE63-4CB8-8899-516B2338E459}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D14370AE-EE63-4CB8-8899-516B2338E459}.Release|x86.ActiveCfg = Release|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,5 +201,6 @@ Global
 		{C3F7EEE3-AC0B-4088-A624-14C70A317DEB} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
 		{5B54063C-6E6E-4BF2-95DE-A03C225598F4} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
 		{B49885E2-472E-4806-85B4-E9363A5B0545} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
+		{53C1758A-D029-4078-BBC0-A85E9C0D4179} = {F509E802-3566-48C6-8ABF-5A5AAA604664}
 	EndGlobalSection
 EndGlobal
