@@ -18,8 +18,8 @@ namespace UnitTests
         [TestMethod]
         public void ConfigureBatchProcessor()
         {
-            var pubsub = new PublishSubscribeChannel<User>(new MsmqQueueProvider<User>())
-               .AddSubscriberType(typeof(TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
+            var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+               .AddSubscriberType(typeof(TestSubscriberZZZ<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
                .AddSubscriberType(typeof(TestSubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 1, 0));
             BatchProcessor<User>.ConfigureWithPubSubChannel(pubsub);
             Assert.IsTrue(BatchProcessor<User>.IsConfigured);

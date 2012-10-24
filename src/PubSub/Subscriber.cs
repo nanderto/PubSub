@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Threading;
+    using System.Threading.Tasks;
     using Phantom.PubSub;
 
     /// <summary>
@@ -17,29 +19,31 @@
     /// the Run command until the subscription acknowledges that it has finnished processing.
     /// </summary>
     /// <typeparam name="T">Create a subscriber for your specific type of Message</typeparam>
-    public abstract class Subscriber<T> : ISubscriber<T>
+    public abstract class Subscriber<T> : ISubscriber<T> 
     {
         private int abortCount = 0;
 
         private bool aborted;
-
-        public virtual event OnProcessStartedEventHandler OnProcessStartedEventHandler;
-
-        public virtual event OnProcessCompletedEventHandler OnProcessCompletedEventHandler;
-
+        
         public string Name { get; set; }
 
         public string Id { get; set; }
 
-        public string MessageId { get; set; }
+        public virtual string MessageId { get; set; }
 
         public DateTime AbortedTime { get; set; }
 
         public TimeSpan TimeToExpire { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public virtual TimeSpan DefaultTimeToExpire 
+        {
+            get
+            {
+                return new TimeSpan(0, 0, 100);
+            }
+        }
 
-        public Subscribers<T> SubscribersForThisMessage { get; set; }
+        public DateTime StartTime { get; set; }
 
         public bool StartedProcessing { get; set; }
 
@@ -59,83 +63,55 @@
             }
         }
 
-        public DateTime ExpireTime
+        public int AbortCount
         {
             get
             {
-                return this.StartTime + this.TimeToExpire;
+                return this.abortCount;
             }
 
             set
             {
-                throw new NotImplementedException();
+                this.abortCount = value;
             }
         }
 
         /// <summary>
         /// Abstract method that must be overridden to provide your processing.
-        /// This method should not be called directly in your code. I should proably
+        /// This method should not be called directly in your code. I should probably
         /// figure out ow to make it safer from poor coding. 
         /// </summary>
         /// <param name="input">Message to be input</param>
         /// <returns>True on success</returns>
         public abstract bool Process(T input);
 
+        public abstract Task<bool> ProcessAsync(T input, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Sets the status of the subscriber to the aborted state. Records the time it occured increments the abort count and sets bool values for started adn finish processing to false.
+        /// Used when timed out or an exception is thrown
+        /// </summary>
+        /// <returns></returns>
         public bool Abort()
         {
+            Counter.Increment(15);
             this.Aborted = true;
             this.AbortedTime = DateTime.Now;
             this.abortCount = ++this.abortCount;
             this.StartedProcessing = false;
             this.FinishedProcessing = false;
+            Trace.WriteLine("This task is being Aborted for the: " + this.abortCount + " Time ");
             return true;
         }
- 
-        /// <summary>
-        /// If the subscriber has been aborted then we can check if it is time to reprocess
-        /// </summary>
-        /// <returns>True if it meets rules for reprocessing</returns>
-        public bool CanProcess()
+        
+        public async Task<bool> RunAsync(T message, CancellationToken cancellationToken)
         {
-            if (this.Aborted)
-            {             
-                // see if it is time for a restart.
-                double time = Math.Pow(2, this.abortCount);
-                TimeSpan ts = new TimeSpan(0, Convert.ToInt32(time), 0);
-                
-                DateTime nextstart = this.AbortedTime + ts;
-
-                if (DateTime.Compare(DateTime.Now, nextstart) < 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-
-            return false; // all else fails return false to snsure it is ot restarted unnessarily
-            // it can always get picked up in the next loop
-        }
-
-        /// <summary>
-        /// Call this method to execute your custom process. It will run the PreProcess then the process method and finally Post processing
-        /// </summary>
-        /// <param name="message">Message being processed</param>
-        /// <returns>True on success</returns>
-        public bool Run(T message)
-        {
-            if (this.PreProcess()) 
-            {
-                // do some thing on false 
-            }
-
-            if (this.Process(message))
-            {
-                // do some thing on false 
-            }
-
+            ////Trace.WriteLine("RunAsync About to start: MessageId: " + this.MessageId + " SubscriberID: " + this.Id);
+                    
+            cancellationToken.ThrowIfCancellationRequested();
+            this.PreProcess();
+            cancellationToken.ThrowIfCancellationRequested();
+            var result = await this.ProcessAsync(message, cancellationToken);
             return this.PostProcess();
         }
 
@@ -147,7 +123,6 @@
         private bool PostProcess()
         {
             this.FinishedProcessing = true;
-            this.OnProcessCompletedEventHandler(this, new ProcessCompletedEventArgs(this));
             return true;
         }
 
@@ -161,7 +136,6 @@
             this.StartedProcessing = true;
             this.StartTime = DateTime.Now;
             this.Aborted = false;
-            this.OnProcessStartedEventHandler(this, new ProcessStartedEventArgs(this));
             return true;
         }
     }

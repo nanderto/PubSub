@@ -6,6 +6,10 @@ using System.Messaging;
 using Models = Entities;
 using Phantom.PubSub;
 using BusinessLogic;
+using System.Threading.Tasks;
+using IntegrationTests;
+using System.Threading;
+using System.Diagnostics;
 
 namespace UnitTests
 {
@@ -44,6 +48,20 @@ namespace UnitTests
             return msgQ;
         }
 
+        
+        public static MessageQueue FindQueue(string queueName)
+        {
+            queueName = @".\private$\" + queueName;
+            if (!MessageQueue.Exists(queueName))
+            {
+                throw new InvalidOperationException("Queue: " + queueName + "does not exist");
+            }
+            else
+            {
+                return new MessageQueue(queueName);
+            }
+        }
+
         public static bool IsQueueEmpty(string QueueName)
         {
             if (msgQ == null)
@@ -66,32 +84,106 @@ namespace UnitTests
                 }
             }
             return isQueueEmpty;
-        } 
+        }
 
-        public static bool IsQueueEmpty()
+        public static MessagePacket<Models.Message> GetAMessageMessagePacket(IPublishSubscribeChannel<Models.Message> target)
         {
-            if (msgQ == null)
+            Models.Message m = new Models.Message();
+            m.Name = "Gwen";
+            m.BatchNumber = 1;
+            m.Guid = System.Guid.NewGuid();
+            m.MessageID = "MessageID";
+            m.SubscriptionID = "SubscriptionID";
+            m.MessagePutTime = DateTime.Now;
+
+
+            var subscribersForThisMessage = target.GetSubscriptions();
+
+            List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
+
+            foreach (var item in subscribersForThisMessage)
             {
-                msgQ = new MessageQueue(@".\private$\EntitiesUser");
+                var subscribermetadata = new SubscriberMetadata()
+                {
+                    Name = item.Name,
+                    TimeToExpire = item.TimeToExpire,
+                    StartTime = DateTime.Now,
+                };
+                metadatalist.Add(subscribermetadata);
             }
 
-            bool isQueueEmpty = false;
+            var messageForQueue = new MessagePacket<Models.Message>(m, metadatalist);
+            return messageForQueue;
+        }
+
+        public static MessagePacket<Models.Message> GetAExpiredMessageMessagePacket(IPublishSubscribeChannel<Models.Message> target)
+        {
+            Models.Message m = new Models.Message();
+            m.Name = "Gwen";
+            m.BatchNumber = 1;
+            m.Guid = System.Guid.NewGuid();
+            m.MessageID = "MessageID";
+            m.SubscriptionID = "SubscriptionID";
+            m.MessagePutTime = DateTime.Now;
+
+
+            var subscribersForThisMessage = target.GetSubscriptions();
+
+            List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
+
+            foreach (var item in subscribersForThisMessage)
+            {
+                var subscribermetadata = new SubscriberMetadata()
+                {
+                    StartTime = (DateTime.Now - item.TimeToExpire) - new TimeSpan(0, 0, 5),
+                    RetryCount = 0,
+                    Name = item.Name,
+                    TimeToExpire = item.TimeToExpire
+                };
+                metadatalist.Add(subscribermetadata);
+            }
+
+            var messageForQueue = new MessagePacket<Models.Message>(m, metadatalist);
+            return messageForQueue;
+        }
+        //public static bool IsQueueEmpty()
+        //{
+        //    if (msgQ == null)
+        //    {
+        //        msgQ = new MessageQueue(@".\private$\EntitiesUser");
+        //    }
+
+        //    bool isQueueEmpty = false;
+        //    try
+        //    {
+        //       msgQ.Peek(new TimeSpan(0));
+        //        //}
+        //        isQueueEmpty = false;
+        //    }
+        //    catch (MessageQueueException e)
+        //    {
+        //        if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
+        //        {
+        //            isQueueEmpty = true;
+        //        }
+        //    }
+        //    return isQueueEmpty;
+        //} 
+        public async static Task<string> Sleep(int seconds)
+        {
             try
             {
-               msgQ.Peek(new TimeSpan(0));
-                //}
-                isQueueEmpty = false;
+                Thread.Sleep(new TimeSpan(0, 0, seconds));
+                //await Task.Delay(new TimeSpan(0, 0, seconds));
+                return "Finished";
             }
-            catch (MessageQueueException e)
+            catch (Exception e)
             {
-                if (e.MessageQueueErrorCode == MessageQueueErrorCode.IOTimeout)
-                {
-                    isQueueEmpty = true;
-                }
+                
+                Debug.WriteLine(e.ToString());
             }
-            return isQueueEmpty;
-        } 
-        
+            return "blew up";
+        }
 
         public static string AddABadMessage()
         {
@@ -118,7 +210,7 @@ namespace UnitTests
             return recoverableMessage.Id;
         }
 
-        private static MessagePacket<Models.User> GetMessagePacket(Models.User u)
+        public static MessagePacket<Models.User> GetMessagePacket(Models.User u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
@@ -140,7 +232,7 @@ namespace UnitTests
             return message;
         }
 
-        private static MessagePacket<Models.Message> GetMessagePacket(Models.Message u)
+        public static MessagePacket<Models.Message> GetMessagePacket(Models.Message u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
@@ -162,19 +254,43 @@ namespace UnitTests
             return message;
         }
 
-        private static MessagePacket<Models.Message> GetMessagePacketwith1MillisecondTTE(Models.Message u)
+        public static MessagePacket<Models.Message> GetMessagePacketwith10SecondTTE(Models.Message u)
         {
             var subscribermetadata1 = new SubscriberMetadata()
             {
                 Name = "TestSubscriber`1",
-                TimeToExpire = new TimeSpan(0, 0, 0, 0, 1),
+                TimeToExpire = new TimeSpan(0, 0, 10),
                 StartTime = DateTime.Now
             };
 
             var subscribermetadata2 = new SubscriberMetadata()
             {
                 Name = "TestSubscriber2`1",
-                TimeToExpire = new TimeSpan(0, 0, 0, 0, 1),
+                TimeToExpire = new TimeSpan(0, 0, 10),
+                StartTime = DateTime.Now
+            };
+
+            List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
+            metadatalist.Add(subscribermetadata1);
+            metadatalist.Add(subscribermetadata2);
+
+            var message = new MessagePacket<Models.Message>(u, metadatalist);
+            return message;
+        }
+
+        public static MessagePacket<Models.Message> GetMessagePacketwith1MillisecondTTE(Models.Message u)
+        {
+            var subscribermetadata1 = new SubscriberMetadata()
+            {
+                Name = "TestSubscriber`1",
+                TimeToExpire = new TimeSpan(0, 0, 0, 0, 100),
+                StartTime = DateTime.Now
+            };
+
+            var subscribermetadata2 = new SubscriberMetadata()
+            {
+                Name = "TestSubscriber2`1",
+                TimeToExpire = new TimeSpan(0, 0, 0, 0, 100),
                 StartTime = DateTime.Now
             };
 
@@ -213,18 +329,18 @@ namespace UnitTests
             return recoverableMessage.ToString();
         }
 
-        public static Subscribers<T> GetSubscribers<T>()
+        public static SubscribersCollection<T> GetSubscribers<T>()
         {
-            var subscribers = new Subscribers<T>();
-            ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
+            var subscribers = new SubscribersCollection<T>();
+            ISubscriber<T> sub = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub.Name = "jackie";
             sub.Id = "SubscriptionID::jackie::1";
             sub.TimeToExpire = new TimeSpan(0,0,2);
-            ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
+            ISubscriber<T> sub2 = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub2.Name = "Rube";
             sub2.Id = "SubscriptionID::Rube::2";
             sub2.TimeToExpire = new TimeSpan(0, 0, 20);
-            ISubscriber<T> sub3 = new TestSubscriber<T>() as ISubscriber<T>;
+            ISubscriber<T> sub3 = new TestSubscriberZZZ<T>() as ISubscriber<T>;
             sub3.Name = "Sid";
             sub3.Id = "SubscriptionID::Sid::3";
             sub3.TimeToExpire = new TimeSpan(0, 1, 20);
@@ -235,56 +351,7 @@ namespace UnitTests
             return subscribers;
         }
 
-        public static ActiveSubscriptionsDictionary<T> AddSubscribers<T> (ActiveSubscriptionsDictionary<T> input, List<ISubscriber<T>> CollecctionToAdd)
-        {
-            foreach (var item in CollecctionToAdd)
-            {
-                input.AddActiveSubscription(item);
-            }
-            return input;
-        }
-
-        public static ActiveSubscriptionsDictionary<T> GetSpecialSubscribers<T>()
-        {
-            var subscribers = new ActiveSubscriptionsDictionary<T>();
-            ISubscriber<T> sub = new TestSubscriber<T>() as ISubscriber<T>;
-            sub.Name = "XXX";
-            sub.TimeToExpire = new TimeSpan(10000);
-            sub.Id = "Subdcription ID::XXX";
-            ISubscriber<T> sub2 = new TestSubscriber<T>() as ISubscriber<T>;
-            sub2.Name = "YYY";
-            sub2.TimeToExpire = new TimeSpan(10000);
-            sub2.Id = "Subdcription ID::YYY";
-            ISubscriber<T> sub3 = new TestSubscriber<T>() as ISubscriber<T>;
-            sub3.Name = "ZZZ";
-            sub3.TimeToExpire = new TimeSpan(10000);
-            sub3.Id = "Subdcription ID::ZZZ";
-            subscribers.AddActiveSubscription(sub);
-            subscribers.AddActiveSubscription(sub2);
-            subscribers.AddActiveSubscription(sub3);
-            return subscribers;
-        }
-
-
-        public static ActiveSubscriptionsDictionary<T> AddAllotofSubscriptions<T>(ActiveSubscriptionsDictionary<T> input, int NumberToAdd)
-        {
-            //AddTest a bunch of active subscriptions
-            int i = 0;
-            for (int j = 0; j < NumberToAdd; j++)
-            {
-
-                foreach (var item in TestHelper.GetSubscribers<T>())
-                {
-                    item.Id = " SubScription: " + item.Name + j + ":: MessageID: " + i + "000::";
-                   // item.MessageStatusTracker = new MessageStatusTracker();
-                    input.AddActiveSubscription(item);
-                    i++;
-                }
-            }
-            return input;
-        }
-
-
+      
         public static string AddAMessageMessageWith1MillisecondTTE()
         {
             Models.Message m = new Models.Message();
@@ -328,7 +395,7 @@ namespace UnitTests
             m.SubscriptionID = "SubscriptionID";
             m.MessagePutTime = DateTime.Now;
 
-            var message = GetMessagePacketwith1MillisecondTTE(m);
+            var message = GetMessagePacketwith10SecondTTE(m);
 
             Message recoverableMessage = new Message();
             recoverableMessage.Body = message;
@@ -363,30 +430,55 @@ namespace UnitTests
             var queue = CreateMSMQQueueProvider<T>();
 
             TestHelper.SetUpCleanTestQueue(queue.Name);
-
-            queue.SetupWatchQueue(queue);
-
+            
             var target = new PublishSubscribeChannel<T>(queue);
 
             return target;
         }
 
-        public static IQueueProvider<T> CreateMSMQQueueProvider<T>()
+        public static IStoreProvider<T> CreateMSMQQueueProvider<T>()
         {
             // TODO: Instantiate an appropriate concrete class.
             //GenericParameterHelper param = new GenericParameterHelper();
-            IQueueProvider<T> target = new MsmqQueueProvider<T>();
+            IStoreProvider<T> target = new MsmqStoreProvider<T>();
             return target;
+        }
+
+        internal static string AddAMessageMessagePacket(MessagePacket<Models.Message> messagePacket)
+        {
+            Message recoverableMessage = new Message();
+            recoverableMessage.Body = messagePacket;
+            recoverableMessage.Formatter = new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
+            recoverableMessage.Recoverable = true;
+            var msgQ = new MessageQueue(@".\private$\EntitiesMessage");
+            try
+            {
+                msgQ.Send(recoverableMessage);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception::::::: " + ex.ToString());
+            }
+            finally
+            {
+            }
+            return recoverableMessage.Id;
         }
     }
 
-    public class TestSubscriber<T> : Subscriber<T>
+    public class TestSubscriberZZZ<T> : Subscriber<T>
     {
         #region ISubscriber Members
-                public override bool Process(T input)
+        public override bool Process(T input)
         {
             System.Diagnostics.Debug.WriteLine("Writing stuff: {0}", "");
             return true;
+        }
+
+
+        public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

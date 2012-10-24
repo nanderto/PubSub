@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------
+// <copyright file="Counter.cs" company="The Phantom Coder">
+//     Copyright The Phantom Coder. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Phantom.PubSub
 {
     using System;
@@ -5,6 +10,9 @@ namespace Phantom.PubSub
     using System.Linq;
     using System.Text;
 
+    /// <summary>
+    /// Enum CounterType
+    /// </summary>
     public enum CounterType
     {
         Subscribers = 0,
@@ -14,7 +22,7 @@ namespace Phantom.PubSub
     }
 
     /// <summary>
-    /// This class is strictly for test perposes. Should implement perfomce counters instead
+    /// This class is strictly for test purposes. Should implement perfomce counters instead
     /// </summary>
     public static class Counter
     {
@@ -31,7 +39,7 @@ namespace Phantom.PubSub
         /// <summary>
         /// Collection of counters to monitor the usage of the component
         /// </summary>
-        private static int[] listofCounters = new int[12];
+        private static int[] listofCounters = new int[30];
         
         /// <summary>
         /// Locks the counter object and gets the current Total Subscriber Count
@@ -71,6 +79,10 @@ namespace Phantom.PubSub
             }
         }
 
+        /// <summary>
+        /// Increments the specified counter type.
+        /// </summary>
+        /// <param name="counterType">Type of the counter.</param>
         public static void Increment(CounterType counterType)
         {
             Increment((int)counterType);
