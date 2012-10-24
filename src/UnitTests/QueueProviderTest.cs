@@ -8,7 +8,7 @@ using BusinessLogic;
 using System.Transactions;
 using System.Diagnostics;
 
-namespace IntegrationTests
+namespace UnitTests
 {
     
     
@@ -142,14 +142,6 @@ namespace IntegrationTests
             return target;
         }
 
-        [TestMethod, TestCategory("IntegrationTests")]
-        public void CreateMSMQProvider()
-        {
-            var queue = new MsmqStoreProvider<Models.Message>();
-            Assert.IsInstanceOfType(queue, typeof(MsmqStoreProvider<Models.Message>));
-            Assert.AreEqual("EntitiesMessage", queue.Name);
-        }
-
         /// <summary>
         ///A test for ConfigureQueue
         ///</summary>
@@ -167,7 +159,7 @@ namespace IntegrationTests
             actual = target.ConfigureStore("EntitiesUser", StoreTransactionOption.NoTransactions);
             Assert.AreEqual(expected, actual);
 
-            var q = UnitTests.TestHelper.FindQueue("EntitiesUser");
+            var q = TestHelper.FindQueue("EntitiesUser");
 
             //Check Name is set correctly
             Assert.AreEqual(@".\private$\EntitiesUser", q.Path, "Name is not set correctly");
@@ -199,7 +191,7 @@ namespace IntegrationTests
             Assert.AreEqual(expected, actual);
 
             //Get the Queue this will throw Exception if Queue does not exist
-            var q = UnitTests.TestHelper.FindQueue("EntitiesUser");
+            var q = TestHelper.FindQueue("EntitiesUser");
             //Check Name is set correctly
             Assert.AreEqual(@".\private$\EntitiesUser", q.Path, "Name is not set correctly");
 
@@ -371,7 +363,7 @@ namespace IntegrationTests
             
             target.Name = "EntitiesUser";
 
-            actual = target.SubscriberGroupCompletedForMessage(m.Id);
+            actual = target.RemoveFromStorage(m.Id);
             Assert.IsTrue(actual, "did not retrieve a message");
    
             Message[] messages =  msgQ.GetAllMessages();

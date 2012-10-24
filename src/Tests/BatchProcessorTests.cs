@@ -9,13 +9,13 @@ namespace UnitTests
     [TestClass]
     public class BatchProcessorTests
     {
-        [TestMethod, TestCategory("UnitTest")]
+        [TestMethod]
         public void BatchProcessorHasStarted()
         {
             Assert.IsTrue(BatchProcessor<User>.HasStarted);
         }
 
-        [TestMethod, TestCategory("IntegrationTest")]
+        [TestMethod]
         public void ConfigureBatchProcessor()
         {
             var pubsub = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())

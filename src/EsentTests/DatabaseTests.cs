@@ -3,30 +3,29 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Isam.Esent.Interop;
 using System.Collections.Generic;
 using System.Text;
-using Phantom.PubSub;
 
 namespace EsentTests
 {
     [TestClass]
     public class DatabaseTests
     {
-        private static string DatabaseName = "test1.esb";
+        private static string DatabaseName = "test.esb";
         private static string TableName = "messages";
 
-        [TestMethod, TestCategory("IntegrationEsent")]
+        [TestMethod]
         public void CreateDatabase()
         {
             TestHelper.CreateDatabase(DatabaseName);
         }
 
-        [TestMethod, TestCategory("IntegrationEsent")]
+        [TestMethod]
         public void AttachtoDatabaseAndVerifyColumns()
         {
-            var store = new EsentStoreProvider<Dummy>();
-            TestHelper.VerifyDatabase("EsentTestsDummy.edb");
+            TestHelper.CreateDatabase(DatabaseName);
+            TestHelper.VerifyDatabase(DatabaseName);
         }
 
-        [TestMethod, TestCategory("IntegrationEsent")]
+        [TestMethod]
         public void InsertOneMessage()
         {
             TestHelper.CreateDatabase(DatabaseName);
@@ -101,7 +100,7 @@ namespace EsentTests
             }
         }
 
-        [TestMethod, TestCategory("IntegrationEsent")]
+        [TestMethod]
         public void IinsertAndReadOneMessage()
         {
             TestHelper.CreateDatabase(DatabaseName);
@@ -127,7 +126,7 @@ namespace EsentTests
                         Assert.IsInstanceOfType(columnidMetaData, typeof(JET_COLUMNID));
                         AddMessage(session, tableid, ref columnidMessage, ref columnidMetaData);
 
-                        var results = TestHelper.DumpByIndex(session, tableid, null, columnids);
+                        var results = DumpByIndex(session, tableid, null, columnids);
                         Assert.IsNotNull(results);
                         Assert.IsTrue(results.Count == 1);
                         Assert.AreEqual("Hi this is the message", results[0]);
@@ -144,7 +143,7 @@ namespace EsentTests
                             Assert.IsInstanceOfType(columnidMetaData, typeof(JET_COLUMNID));
                             AddMessage(session, table, ref columnidMessage, ref columnidMetaData);
 
-                            var results = TestHelper.DumpByIndex(session, table, null, columnids);
+                            var results = DumpByIndex(session, table, null, columnids);
                             Assert.IsNotNull(results);
                             Assert.IsTrue(results.Count == 1);
                             Assert.AreEqual("Hi this is the message", results[0]);
@@ -155,9 +154,42 @@ namespace EsentTests
 
         }
 
+        private static List<string> DumpByIndex(JET_SESID sesid, JET_TABLEID tableid, string index, IDictionary<string, JET_COLUMNID> columnids)
+        {
+            Api.JetSetCurrentIndex(sesid, tableid, index);
+            return GetAllRecords(sesid, tableid, columnids);
+        }
+        private static List<string> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
+        {
+            List<string> results = null;
+            if (Api.TryMoveFirst(sesid, tableid))
+            {
+                results = GetRecordsToEnd(sesid, tableid, columnids);
+            }
+            return results;
+        }
+        private static List<string> GetRecordsToEnd(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
+        {
+            List<string> results = new List<string>();
+            do
+            {
+                results.Add(GetOneRow(sesid, tableid, columnids));
+            }
+            while (Api.TryMoveNext(sesid, tableid));
+            return results;
+        }
 
+        private static string GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
+        {
+            JET_COLUMNID columnidMessage = columnids["message"];
+            JET_COLUMNID columnidMetaData = columnids["metadata"];
 
-        [TestMethod, TestCategory("IntegrationEsent")]
+            string message = Api.RetrieveColumnAsString(sesid, tableid, columnidMessage);
+            string Metadata = Api.RetrieveColumnAsString(sesid, tableid, columnidMetaData);
+            return message;
+        }
+
+        [TestMethod]
         public void InsertRecordRetrieveAutoIncrement()
         {
             TestHelper.CreateDatabase(DatabaseName);

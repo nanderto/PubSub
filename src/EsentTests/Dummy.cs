@@ -5,10 +5,7 @@ using System.Text;
 
 namespace EsentTests
 {
-    [Serializable]
-    public class Dummy
+    class Dummy
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
     }
 }

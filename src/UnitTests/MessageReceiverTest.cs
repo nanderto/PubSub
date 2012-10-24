@@ -6,11 +6,8 @@ using System.Collections.Generic;
 using Phantom.PubSub;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Phantom.PubSub.Fakes;
-using System.Threading;
-using UnitTests;
 
-namespace IntegrationTests
+namespace UnitTests
 {
     
     
@@ -21,35 +18,29 @@ namespace IntegrationTests
     [TestClass()]
     public class MessageReceiverTest
     {
-
-
-        [TestMethod, TestCategory("IntegrationMsmq")]
+        [TestMethod]
         public void HowToUsePubSubChannelwithExplicitConfigurationOfSubscribers()
         {
-            var pubSubChannel = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())
+            var pubSubChannel = new PublishSubscribeChannel<User>(new MsmqStoreProvider<User>())  
                 .AddSubscriberType(typeof(SpeedySubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 0, 60))
                 .AddSubscriberType(typeof(SpeedySubscriber2<User>)).WithTimeToExpire(new TimeSpan(0, 0, 60));
-            pubSubChannel.PublishMessage(new User()
-            {
+            pubSubChannel.PublishMessage(new User() 
+            { 
                 FirstName = "Johnny",
                 LastName = "willson",
                 City = "Brekenridge",
                 UserName = "JohnnyUserName"
-            });
+            });         
         }
 
-        /// <summary>
-        ///A test for PublishSubscribeChannel Constructor
-        ///</summary>
-        [TestCategory("IntegrationMsmq"), TestMethod()]
-        public void PublishSubscribeChannelConstructorTest()
+        [TestMethod]
+        public void CreateMSMQProvider()
         {
-            IStoreProvider<User> Queue = new MsmqStoreProvider<User>() as IStoreProvider<User>;
-            var target = new PublishSubscribeChannel<User>(Queue);
-            Assert.IsInstanceOfType(Queue, typeof(IStoreProvider<User>), "did not create the correct type");
-            Assert.IsInstanceOfType(target, typeof(PublishSubscribeChannel<User>), "did not create the correct type");
-            //Assert.IsInstanceOfType(PublishSubscribeChannel<User>.ActiveSubscriptions, typeof(ActiveSubscriptionsDictionary<User>), "did not create the correct type");          
+            var queue = new MsmqStoreProvider<Message>();
+            Assert.IsInstanceOfType(queue, typeof(MsmqStoreProvider<Message>));
+            Assert.AreEqual("EntitiesMessage", queue.Name);
         }
+
 
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ProcessBatch_1_MessageTest()
@@ -57,7 +48,7 @@ namespace IntegrationTests
 
             TestHelper.SetUpCleanTestQueue("EntitiesMessage");
             var MessagePubSubChannel = new PublishSubscribeChannel<Message>(new MsmqStoreProvider<Message>());          
-            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 2));
+            MessagePubSubChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<Message>)).WithTimeToExpire(new TimeSpan(0, 1, 0 ));
             TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(MessagePubSubChannel));
 
             MessagePubSubChannel.ProcessBatch();
@@ -67,14 +58,12 @@ namespace IntegrationTests
             {
                 System.Threading.Thread.Sleep(500);
                 var now = DateTime.Now;
-                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 50, 0))) < 0, "I give up spent to much time processing");
+                Assert.IsTrue(DateTime.Compare(now, (start + new TimeSpan(0, 0, 0, 5, 0))) < 0, "I give up spent to much time processing");
             }
 
             Assert.IsTrue(TestHelper.IsQueueEmpty("EntitiesMessage"));
         }
 
-
-        
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ProcessBatch_2_MessageTest()
         {
@@ -87,7 +76,7 @@ namespace IntegrationTests
             TestHelper.AddAMessageMessagePacket(TestHelper.GetAExpiredMessageMessagePacket(MessagePubSubChannel));
 
             MessagePubSubChannel.ProcessBatch();
-
+            
             DateTime start = DateTime.Now;
             while (!TestHelper.IsQueueEmpty("EntitiesMessage"))
             {
@@ -110,14 +99,8 @@ namespace IntegrationTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ProcessBatchTest()
         {
-            var queue =  new MsmqStoreProvider<User>() as IStoreProvider<User>;
-            TestHelper.SetUpCleanTestQueue("EntitiesUser");
-            TestHelper.AddAMessage<User>().WithSubscriberMetadataFor(typeof(BusinessLogic.TestSubscriber<User>), new TimeSpan(0, 0, 0, 0, 100)).AddMessage();
-                //.WithSubscriberMetadataFor(typeof(BusinessLogic.TestSubscriber<User>), new TimeSpan(0, 0, 0, 1, 0))
-            var PublishSubscribeChannel = new PublishSubscribeChannel<User>(queue);
-
-            //IPublishSubscribeChannel<User> target = (IPublishSubscribeChannel<User>)PubSubChannel;
-            PublishSubscribeChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 100));
+            var PublishSubscribeChannel = CreatePublishSubscribeChannel();
+            PublishSubscribeChannel.AddSubscriberType(typeof(BusinessLogic.TestSubscriber<User>)).WithTimeToExpire(new TimeSpan(0, 0, 0, 0, 1));
             
             PublishSubscribeChannel.ProcessBatch();
             var start = DateTime.Now;
@@ -320,7 +303,7 @@ namespace IntegrationTests
         //    //throw new NotImplementedException();
         //}
 
-        [TestCategory("IntegrationMsmq"), TestMethod]
+        [TestMethod]
         public void Publish_1_Message()
         {
             Publish_1_MessageHelper<Message>();
@@ -341,7 +324,7 @@ namespace IntegrationTests
 
         }
 
-        [TestCategory("IntegrationMsmq"), TestMethod]
+        [TestMethod]
         public void Publish_1_MessageWithoutSubscribers()
         {
             Publish_1_MessageWithoutSubscribersHelper<User>();
@@ -481,8 +464,8 @@ namespace IntegrationTests
                 while (!TestHelper.IsQueueEmpty("entitiesmessage"))
                 {
 
-                    System.Threading.Thread.Sleep(10000);
-                    Assert.IsTrue(DateTime.Now < startTime.Add(new TimeSpan(0, 0, 100)), "I give up spent to much time processing");
+                    System.Threading.Thread.Sleep(1000);
+                    //Assert.IsTrue(DateTime.Now > start + new TimeSpan(10000), "I give up spent to much time processing");
                 }
                 return result;
             });

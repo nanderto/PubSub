@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BusinessLogic;
-using FSharpEntities;
 
 namespace Interface
 {
@@ -17,11 +16,7 @@ namespace Interface
             User user = new User();
             user.UserName = u.UserName;
             user.Email = u.aspnet_Membership.Email;
-
-            var b = new Book("Name", "Author", 3, "ISBN");
-
             return user;
-
         }
     }
 }

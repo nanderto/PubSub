@@ -13,14 +13,14 @@ namespace ReflectionTests
     [TestClass]
     public class FileHandlingTests
     {
-        [TestMethod, TestCategory("Integration")]
+        [TestMethod]
         public void HowToUsePubSubChannelwithSubscribersJustDroppedinBin()
         {
             var pubSubChannel = new PublishSubscribeChannel<Dummy>(new MsmqStoreProvider<Dummy>());
             pubSubChannel.PublishMessage(new Dummy() { Name = "Johnny"});  
         }
 
-        [TestMethod, TestCategory("Integration")]
+        [TestMethod]
         public void GetSubscriberInfo_For_The_Type_DummyWithDefaultTimeToExpire()
         {
             var result = GetSubscriberInfosHelper<Dummy>("DummySubscriberWithDefault");
@@ -30,7 +30,7 @@ namespace ReflectionTests
             //Assert.AreEqual(result.Item2, typeof(BusinessLogic.TestSubscriberXXX<Entities.Message>));
         }
 
-        [TestMethod, TestCategory("Integration")]
+        [TestMethod]
         public void GetSubscriberInfo_For_The_Type_DummyWithOutDefaultTimeToExpire()
         {
             var result = GetSubscriberInfosHelper<Dummy>("DummySubscriberWithOutDefault");
@@ -56,7 +56,7 @@ namespace ReflectionTests
         }
 
 
-        [TestMethod, TestCategory("IntegrationMSMQ")]
+        [TestMethod]
         public void Publish_1_Message_AutoConfig()
         {
             Publish_1_MessageHelper<Dummy>();
@@ -136,7 +136,7 @@ namespace ReflectionTests
         }
 
 
-        [TestMethod, TestCategory("Integration")]
+        [TestMethod]
         public void TestMethod1()
         {
             Uri uri = new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));

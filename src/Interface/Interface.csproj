@@ -49,13 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface.cs" />
-    <Compile Include="netfx\System\AmbientSingleton.cs" />
-    <Compile Include="netfx\System\Guard.cs" />
-    <Compile Include="System\Diagnostics\Tracer\ITracer.cs" />
-    <Compile Include="System\Diagnostics\Tracer\ITracerExtensions.cs" />
-    <Compile Include="System\Diagnostics\Tracer\ITracerManager.cs" />
-    <Compile Include="System\Diagnostics\Tracer\Tracer.cs" />
-    <Compile Include="System\Diagnostics\Tracer\Visibility.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,13 +65,6 @@
       <Project>{BB609803-6D30-4BC8-91AB-BE27968272FC}</Project>
       <Name>Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FSharpEntities\FSharpEntities.fsproj">
-      <Project>{32a8c673-0ce6-4247-92bd-26eb81b65d55}</Project>
-      <Name>FSharpEntities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
