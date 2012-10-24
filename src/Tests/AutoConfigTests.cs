@@ -10,7 +10,7 @@ namespace UnitTests
     [TestClass]
     public class AutoConfigTests
     {
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetSubscriberInfos()
         {
             GetSubscriberInfosHelper<User>();
@@ -18,7 +18,7 @@ namespace UnitTests
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetSubscriberInfo_For_The_Type_SubscriberXXX()
         {
             var result = GetSubscriberInfosHelper<Message>();
@@ -28,7 +28,7 @@ namespace UnitTests
             //Assert.AreEqual(result.Item2, typeof(BusinessLogic.TestSubscriberXXX<Entities.Message>));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void CheckDefaultTimeTOExpireOverride()
         {
             var target = new TestSubscriberXXX<User>();
@@ -37,7 +37,7 @@ namespace UnitTests
             //var obj = Activator.CreateInstance(typeof(TestMessageSubscriber), BindingFlags.CreateInstance | BindingFlags.Public | BindingFlags.Instance | BindingFlags.OptionalParamBinding, null, new Object[] { Type.Missing }, null); 
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetSubscriberInfo_For_The_Type_SubscriberXXXWithTimeToExpire()
         {
             

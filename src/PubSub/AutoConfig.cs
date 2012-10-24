@@ -31,17 +31,18 @@ namespace Phantom.PubSub
         /// </summary>
         static AutoConfig()
         {
-            var subscriberInfoTypes = AutoConfig<T>.GetSubscriberInfos<T>(AssemblyLocator<T>.SubscribersInBin);
+            var subscriberInfoTypes = AutoConfig<T>.GetSubscriberInfos(AssemblyLocator<T>.SubscribersInBin);
             SubscriberInfos = new ReadOnlyCollection<Tuple<string, Type, TimeSpan>>(subscriberInfoTypes);
         }
 
         /// <summary>
         /// Gets the subscriber data including name Type and time until subscriber will expire.
         /// </summary>
-        /// <typeparam name="T">Specialization for this class</typeparam>
         /// <param name="types">List of types found.</param>
-        /// <returns>List of subscriber data retrieved from input list</returns>
-        internal static List<Tuple<string, Type, TimeSpan>> GetSubscriberInfos<T>(ReadOnlyCollection<Type> types)
+        /// <returns>
+        /// List of subscriber data retrieved from input list
+        /// </returns>
+        internal static List<Tuple<string, Type, TimeSpan>> GetSubscriberInfos(ReadOnlyCollection<Type> types)
         {
             List<Tuple<string, Type, TimeSpan>> subscriberInfos = new List<Tuple<string, Type, TimeSpan>>();
 

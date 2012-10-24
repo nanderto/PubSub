@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Phantom.PubSub;
 
-namespace Tests
+namespace UnitTests
 {
     [TestClass]
     public class ServiceAdaptorTest
@@ -14,7 +14,7 @@ namespace Tests
             Assert.IsInstanceOfType(adaptor, typeof(TestAdaptor));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void Register_1_Filter()
         {
             var adaptor = new TestAdaptor();
@@ -26,7 +26,7 @@ namespace Tests
             
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("UnitTest")]
         public void Register_2_Filter()
         {
             var adaptor = new TestAdaptor();

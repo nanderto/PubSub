@@ -15,9 +15,24 @@ namespace Phantom.PubSub
     /// </summary>
     public enum CounterType
     {
+        /// <summary>
+        /// Count for subscribers
+        /// </summary>
         Subscribers = 0,
+        
+        /// <summary>
+        /// Count for The number removed from queues
+        /// </summary>
         RemovedFromQueues = 3,
+        
+        /// <summary>
+        /// Count for calling Processing A batch
+        /// </summary>
         ProcessingABatch = 4,
+        
+        /// <summary>
+        /// Count for calling is the queue empty
+        /// </summary>
         IsEmptyCheck = 5,
     }
 

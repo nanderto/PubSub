@@ -48,26 +48,6 @@ namespace UnitTests
         #endregion
 
 
-        /// <summary>
-        ///A test for CanProcess need to figure ouot how to test some thing that is time driven
-        ///</summary>
-        [TestMethod, TestCategory("UnitTest")]
-        public void CanProcessAbortedTest()
-        {
-           // int AbortCount = 0;
-
-            SubscriberMetadata target = CreateSubscriberMetadata();
-            target.RetryCount = ++target.RetryCount;
-            target.FailedOrTimedOutTime = DateTime.Now;
-            //abort count is 1 so will not reprocess until 2 mins
-
-            bool expected = false;
-            
-            bool actual = target.CanProcess();
-            Assert.AreEqual(expected, actual);
-        }
-
-
         [TestMethod, TestCategory("UnitTest")]
         public void CanProcessNotAbortedTest()
         {
@@ -89,20 +69,6 @@ namespace UnitTests
             bool actual = target.CanProcess();
             Assert.AreEqual(expected, actual);
         }
-
-        [TestMethod, TestCategory("SlowTest")]
-        public async Task CanProcessAbortedsleep2minsTest()
-        {
-            SubscriberMetadata target = CreateSubscriberMetadata();
-            target.FailedOrTimedOutTime = DateTime.Now;
-            target.RetryCount = ++target.RetryCount;
-
-            await Task.Delay(new TimeSpan(0, 2, 10));
-            bool expected = true;
-
-            bool actual = target.CanProcess();
-            Assert.AreEqual(expected, actual);
-        }
         
         internal virtual SubscriberMetadata CreateSubscriberMetadata()
         {
@@ -113,6 +79,143 @@ namespace UnitTests
                     TimeToExpire = new TimeSpan(0,0,1)
                 };
             return target;
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CanProcessRetry1Test()
+        {
+            SubscriberMetadata target = new SubscriberMetadata()
+            {
+                StartTime = DateTime.Now,
+                RetryCount = 0,
+                TimeToExpire = new TimeSpan(0, 0, 1)
+            };
+            target.FailedOrTimedOutTime = DateTime.Now;
+            target.RetryCount = 1;
+
+            var currentTimeProvider = new Phantom.PubSub.Fakes.StubICurrentTimeProvider
+            {
+                NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 2, 1))
+            };
+
+            bool expected = true;
+
+            bool actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+
+            currentTimeProvider.NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 1, 59));
+
+            expected = false;
+
+            actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CanProcessRetry2Test()
+        {
+            SubscriberMetadata target = new SubscriberMetadata()
+            {
+                StartTime = DateTime.Now,
+                RetryCount = 0,
+                TimeToExpire = new TimeSpan(0, 0, 1)
+            };
+            target.FailedOrTimedOutTime = DateTime.Now;
+            target.RetryCount = 2;
+
+            var currentTimeProvider = new Phantom.PubSub.Fakes.StubICurrentTimeProvider
+            {
+                NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 4, 1))
+            };
+
+            bool expected = true;
+
+            bool actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+
+            currentTimeProvider.NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 3, 59));
+
+            expected = false;
+
+            actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CanProcessRetry3Test()
+        {
+            SubscriberMetadata target = new SubscriberMetadata()
+            {
+                StartTime = DateTime.Now,
+                RetryCount = 0,
+                TimeToExpire = new TimeSpan(0, 0, 1)
+            };
+            target.FailedOrTimedOutTime = DateTime.Now;
+            target.RetryCount = 3;
+
+            var currentTimeProvider = new Phantom.PubSub.Fakes.StubICurrentTimeProvider
+            {
+                NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 8, 1))
+            };
+
+            bool expected = true;
+
+            bool actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+
+            currentTimeProvider.NowGet = () => target.FailedOrTimedOutTime.Add(new TimeSpan(0, 7, 59));
+
+            expected = false;
+
+            actual = target.CanProcess(currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void HasExpiredTest()
+        {
+            SubscriberMetadata target = new SubscriberMetadata()
+            {
+                StartTime = DateTime.Now,
+                RetryCount = 0,
+                TimeToExpire = new TimeSpan(0, 0, 1)
+            };
+            //target.FailedOrTimedOutTime = DateTime.Now;
+            target.RetryCount = 1;
+
+            var currentTimeProvider = new Phantom.PubSub.Fakes.StubICurrentTimeProvider
+            {
+                NowGet = () => target.StartTime.Add(target.TimeToExpire).Add(new TimeSpan(0, 0, 0, 1))
+            };
+
+            bool expected = true;
+
+            bool actual = SubscriberMetadata.HasExpired(target, currentTimeProvider);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void HasNotExpiredTest()
+        {
+            SubscriberMetadata target = new SubscriberMetadata()
+            {
+                StartTime = DateTime.Now,
+                RetryCount = 0,
+                TimeToExpire = new TimeSpan(0, 0, 1)
+            };
+            //target.FailedOrTimedOutTime = DateTime.Now;
+            target.RetryCount = 1;
+
+            var currentTimeProvider = new Phantom.PubSub.Fakes.StubICurrentTimeProvider
+            {
+                NowGet = () => target.StartTime.Add(target.TimeToExpire).Subtract(new TimeSpan(0, 0, 0, 1))
+            };
+
+            bool expected = false;
+
+            bool actual = SubscriberMetadata.HasExpired(target, currentTimeProvider);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

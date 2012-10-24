@@ -10,7 +10,7 @@ namespace IntegrationTests
     [TestClass]
     public class AssemblyLocatorTests
     {
-        [TestMethod]
+        [TestCategory("IntegrationFileIO"), TestMethod]
         public void GetAssemblies()
         {
             var assemblies = AssemblyLocator<dummy>.AllDlls;
@@ -18,7 +18,7 @@ namespace IntegrationTests
             Assert.IsTrue(assemblies.Count > 0);
         }
 
-        [TestMethod]
+        [TestCategory("IntegrationFileIO"), TestMethod]
         public void GetTypesInBin()
         {
             var types = AssemblyLocator<dummy>.SubscribersInBin;
@@ -26,7 +26,7 @@ namespace IntegrationTests
             Assert.IsTrue(types.Count > 0);
         }
 
-        [TestMethod]
+        [TestCategory("IntegrationFileIO"), TestMethod]
         public void GetMultipleTypesInBin()
         {
             var types = AssemblyLocator<dummy>.SubscribersInBin;
@@ -36,7 +36,7 @@ namespace IntegrationTests
             //Assert.IsTrue(types2.Count == 0);
         }
 
-        [TestMethod]
+        [TestCategory("IntegrationFileIO"), TestMethod]
         public void GetTypesInBinwithGenericParameter()
         {
             GetTypesInBinWithGenericParameterHelper<dummy>();

@@ -72,6 +72,7 @@ namespace BusinessLogic
 
     public class TestSubscriber2<T> : Subscriber<T>
     {
+        public static bool WasRun = false;
         #region ISubscriber Members
 
         public override bool Process(T input)
@@ -101,6 +102,7 @@ namespace BusinessLogic
             Counter.Increment(0);
             //Trace.WriteLine("yes I ranxxxx and I should not have4444444444444");
            // var result = await new Task<bool>(() => true);
+            WasRun = true;
             return true;
         }
     }

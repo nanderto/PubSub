@@ -1,4 +1,9 @@
-﻿namespace Phantom.PubSub
+﻿//-----------------------------------------------------------------------
+// <copyright file="Subscriber.cs" company="The Phantom Coder">
+//     Copyright The Phantom Coder. All rights reserved.
+// </copyright>
+//----------------------------------------------------------------
+namespace Phantom.PubSub
 {
     using System;
     using System.Collections.Concurrent;
@@ -91,7 +96,7 @@
         /// Sets the status of the subscriber to the aborted state. Records the time it occured increments the abort count and sets bool values for started adn finish processing to false.
         /// Used when timed out or an exception is thrown
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Always returns true need to change to void</returns>
         public bool Abort()
         {
             Counter.Increment(15);
@@ -100,7 +105,7 @@
             this.abortCount = ++this.abortCount;
             this.StartedProcessing = false;
             this.FinishedProcessing = false;
-            Trace.WriteLine("This task is being Aborted for the: " + this.abortCount + " Time ");
+            Trace.WriteLine("The task with the MessagId: " + this.MessageId + " and the SUbscriberID: " + this.Id + " is being Aborted for the: " + this.abortCount + " Time ");
             return true;
         }
         

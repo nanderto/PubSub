@@ -24,19 +24,34 @@ namespace Phantom.PubSub
     /// <typeparam name="T">The Type that you wish tp publish each type requires its own implementation</typeparam>
     public class PublishSubscribeChannel<T> : IPublishSubscribeChannel<T>
     {                
-        private IStoreProvider<T> storeageProvider;
-
         private Dictionary<string, Tuple<string, Type, TimeSpan>> subscriberInfos = new Dictionary<string, Tuple<string, Type, TimeSpan>>();
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PublishSubscribeChannel{T}" /> class.
+        /// </summary>
         public PublishSubscribeChannel()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PublishSubscribeChannel{T}" /> class.
+        /// </summary>
+        /// <param name="queueProvider">The queue provider.</param>
         public PublishSubscribeChannel(IStoreProvider<T> queueProvider)
         {
-            this.storeageProvider = queueProvider;
+            this.StorageProvider = queueProvider;
         }
-        
+
+        public IStoreProvider<T> StorageProvider { get; set; }
+
+        public int Count
+        {
+            get
+            {
+                return this.StorageProvider.GetMessageCount();
+            }
+        }
+
         /// <summary>
         /// Publishes a message first by placing on a durable Queue, then passing the message to a new thread for processing.
         /// Returns as soon as the message is succesfully on the Queue.
@@ -67,14 +82,14 @@ namespace Phantom.PubSub
                 {
                     Name = item.Key, 
                     TimeToExpire = item.Value.Item3,
-                    StartTime = DateTime.Now,
+                    StartTime = DateTime.Now
                 };
                 metadatalist.Add(subscribermetadata);
             }
 
             var messageForQueue = new MessagePacket<T>(message, metadatalist);
 
-            string result = this.storeageProvider.PutMessage(messageForQueue);
+            string result = this.StorageProvider.PutMessage(messageForQueue);
             Task.Factory.StartNew(() => this.HandleMessageForFirstTime(messageForQueue, result));
         }
 
@@ -83,7 +98,7 @@ namespace Phantom.PubSub
         /// </summary>
         public void ProcessBatch()
         {
-            this.storeageProvider.ProcessStoreAsBatch(this.HandleMessageForBatchProcessing);
+            this.StorageProvider.ProcessStoreAsBatch(this.HandleMessageForBatchProcessing);
         }
 
         /// <summary>
@@ -114,6 +129,17 @@ namespace Phantom.PubSub
             return true;
         }
 
+        /// <summary>
+        /// Handles the message for batch processing.
+        /// This code is called from the batch processor, which means that it has queried the store for all messages, and sent them to this method
+        /// they may or may not have finished processing, if they have then the metadata will have been updated (or updated for those subscribers that have completed or failed)
+        /// If they have not finished processing then the metadat will still reflect what was the state of the subscription at the time that the 
+        /// message was first saved to the store.
+        /// </summary>
+        /// <param name="messagePacket">The message packet.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <returns>Always returns true - need to change to void</returns>
+        /// <exception cref="System.ArgumentNullException">Argument Null Exception</exception>
         public bool HandleMessageForBatchProcessing(MessagePacket<T> messagePacket, string messageId)
         {
             if (messagePacket == null)
@@ -123,28 +149,30 @@ namespace Phantom.PubSub
 
             if (string.IsNullOrEmpty(messageId))
             {
-                throw new ArgumentNullException("messagePacket");
-            }
-            
-            if (messagePacket.SubscriberMetadataList.Count == 1)
-            {
-                return this.HandleSingleSubscriberforMessage(messagePacket, messageId);
+                throw new ArgumentNullException("messageId");
             }
 
-            ////Trace.WriteLine("In HandleMessageForBatchProcessing, Subscriber Count NOT 1 so doing nothing message: " + messageId);
-
-            ////we may see this called but it should be a timing issue
-            ////expired subscriptions get a new message in the que and the original message removed
-
+            var runnableSubscribersCollection = new SubscribersCollection<T>();
             foreach (var item in messagePacket.SubscriberMetadataList)
             {
                 if (item.CanProcess())
                 {
-                    this.HandleMessageForFirstTime(messagePacket, messageId);
-                    break;
+                    string subscriptionId = GetSubscriptionId(messageId, item.Name);
+                    Trace.WriteLine("#Whoopee I am processing: " + subscriptionId);
+                    var subscriberInfo = this.subscriberInfos.FirstOrDefault(si => si.Key == item.Name);
+                    var newSubscription = (ISubscriber<T>)Activator.CreateInstance(subscriberInfo.Value.Item2);
+                    newSubscription.Name = subscriberInfo.Value.Item1;
+                    newSubscription.TimeToExpire = subscriberInfo.Value.Item3;
+                    newSubscription.Id = subscriptionId;
+                    newSubscription.AbortCount = item.RetryCount;
+                    newSubscription.Aborted = false;
+                    newSubscription.MessageId = messageId;
+                    newSubscription.StartTime = DateTime.Now;
+                    runnableSubscribersCollection.Add(newSubscription); 
                 }
             }
 
+            this.RunSubscriptions(messagePacket, messageId, runnableSubscribersCollection);
             return true;
         }
 
@@ -201,23 +229,47 @@ namespace Phantom.PubSub
             return sb.Append(":SubScriber::").Append(subscriberName).Append("::MessageID::").Append(messageId).Append(":").ToString();
         }
 
-        private static MessagePacket<T> CreateSingleSubscriberMessagePacket(ISubscriber<T> subscriber, MessagePacket<T> messagePacket)
+        private static MessagePacket<T> CreateSingleSubscriberMessagePacket(ISubscriber<T> subscriber, MessagePacket<T> messagePacket, bool failedOrTimedOut)
         {
-            Counter.Increment(19);
-            ////Trace.WriteLine("In CreateSingleSubscriberMessagePacket ");
+            if (messagePacket == null)
+            {
+                throw new ArgumentNullException("messagePacket");
+            }
+
+            if (subscriber == null)
+            {
+                throw new ArgumentNullException("subscriber");
+            }
 
             List<ISubscriberMetadata> metadatalist = new List<ISubscriberMetadata>();
-            var subscribermetadata = new SubscriberMetadata()
+            ISubscriberMetadata subscribermetadata = new SubscriberMetadata()
             {
                 ////need to add abort count and think thru appropriate start time
                 Name = subscriber.GetType().Name,
                 TimeToExpire = subscriber.TimeToExpire,
                 StartTime = subscriber.StartTime,
-                RetryCount = ++subscriber.AbortCount,
-                FailedOrTimedOutTime = subscriber.AbortedTime
+                RetryCount = subscriber.AbortCount,
+                FailedOrTimedOutTime = subscriber.AbortedTime,
+                FailedOrTimedOut = failedOrTimedOut
             };
             metadatalist.Add(subscribermetadata);
-            return new MessagePacket<T>((T)messagePacket.Body, metadatalist);
+            var newMessagePacket = new MessagePacket<T>((T)messagePacket.Body, metadatalist);
+            
+            if ((messagePacket.MessageId != null) && (messagePacket.MessageId != 0))
+            {
+                newMessagePacket.MessageId = messagePacket.MessageId;
+            }
+            else
+            {
+                newMessagePacket.MessageId = Convert.ToInt32(subscriber.MessageId);
+            }
+
+            if (newMessagePacket.MessageId == null)
+            {
+                throw new ArgumentException("MessageId is null, and it can't be");
+            }
+
+            return newMessagePacket;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error message needs to be swallowed, next processing run will try again")]
@@ -225,17 +277,23 @@ namespace Phantom.PubSub
         {
             var metaData = messagePacket.SubscriberMetadataList[0];
             string subscriptionId = GetSubscriptionId(messageId, metaData.Name);
-            ////Trace.WriteLine("About to check if I can process: " + subscriptionId);
+            Trace.WriteLine("About to check if I can process: " + subscriptionId);
 
             ISubscriber<T> newSubscription = null;
 
             if (metaData.CanProcess())
             {
+                Trace.WriteLine("#Whoopee I am processing: " + subscriptionId);
                 var subscriberInfo = this.subscriberInfos.FirstOrDefault(si => si.Key == metaData.Name);
                 newSubscription = (ISubscriber<T>)Activator.CreateInstance(subscriberInfo.Value.Item2);
                 newSubscription.Name = subscriberInfo.Value.Item1;
                 newSubscription.TimeToExpire = subscriberInfo.Value.Item3;
                 newSubscription.Id = subscriptionId;
+                newSubscription.AbortCount = metaData.RetryCount;
+                if (metaData.FailedOrTimedOut == true)
+                {
+                    Debug.Assert(newSubscription.AbortCount > 0, "Abort count did not exceed 0 this is an invalid condition");
+                }
 
                 var cancellationTokenSource = new CancellationTokenSource(newSubscription.TimeToExpire);
 
@@ -250,12 +308,16 @@ namespace Phantom.PubSub
                     {
                         case TaskStatus.RanToCompletion:
                             Counter.Increment(16);
-                            this.storeageProvider.RemoveFromStorage(messageId);
+                            this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket, false));
+                            this.StorageProvider.SubscriberGroupCompletedForMessage(messageId);
                             break;
                         case TaskStatus.Faulted:
                             try
                             {
-                                this.storeageProvider.PutMessage(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+                                Trace.WriteLine("About to call Abort, AportCount: " + newSubscription.AbortCount.ToString());
+                                newSubscription.Abort();
+                                Trace.WriteLine("After to call Abort, AportCount: " + newSubscription.AbortCount.ToString());
+                                this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket, true));
                                 Counter.Increment(20);
                             }
                             catch
@@ -263,12 +325,15 @@ namespace Phantom.PubSub
                                 break;
                             }
 
-                            this.storeageProvider.RemoveFromStorage(messageId);
+                            this.StorageProvider.SubscriberGroupCompletedForMessage(messageId);
                             break;
                         case TaskStatus.Canceled:
                             try
                             {
-                                this.storeageProvider.PutMessage(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket));
+                                Trace.WriteLine("About to call Abort, AportCount: " + newSubscription.AbortCount.ToString());
+                                newSubscription.Abort();
+                                Trace.WriteLine("After to call Abort, AportCount: " + newSubscription.AbortCount.ToString());
+                                this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(newSubscription, messagePacket, true));
                                 Counter.Increment(18);
                                 Trace.WriteLine("Request was canceled");
                             }
@@ -277,7 +342,7 @@ namespace Phantom.PubSub
                                 break;
                             }
 
-                            this.storeageProvider.RemoveFromStorage(messageId);
+                            this.StorageProvider.SubscriberGroupCompletedForMessage(messageId);
                             break;
                     }
 
@@ -317,26 +382,31 @@ namespace Phantom.PubSub
                     try
                     {
                         bool result = await subscriber.RunAsync((T)messagePacket.Body, cancellationToken);
+                        this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(subscriber, messagePacket, false));
                         Counter.Increment(14);
                     }
                     catch (OperationCanceledException)
                     {
+                        Trace.WriteLine("About to call Abort, AportCount: " + subscriber.AbortCount.ToString());
                         subscriber.Abort();
-                        this.storeageProvider.PutMessage(CreateSingleSubscriberMessagePacket(subscriber, messagePacket));
+                        Trace.WriteLine("After to call Abort, AportCount: " + subscriber.AbortCount.ToString());
+                        this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(subscriber, messagePacket, true));
                         Counter.Increment(12);
-                        Trace.WriteLine("This task timed out : " + subscriber.Name + " The timeout timespan was: " + subscriber.TimeToExpire.TotalMilliseconds + " ms");
+                        ////Trace.WriteLine("This task timed out : " + subscriber.Name + " The timeout timespan was: " + subscriber.TimeToExpire.TotalMilliseconds + " ms");
                     }
                     catch (Exception)
                     {
+                        Trace.WriteLine("About to call Abort, AportCount: " + subscriber.AbortCount.ToString());
                         subscriber.Abort();
-                        var newMessagId = this.storeageProvider.PutMessage(CreateSingleSubscriberMessagePacket(subscriber, messagePacket));
+                        Trace.WriteLine("After to call Abort, AportCount: " + subscriber.AbortCount.ToString());
+                        this.StorageProvider.UpdateMessageStore(CreateSingleSubscriberMessagePacket(subscriber, messagePacket, true));
                         Counter.Increment(13);
                         ////Trace.WriteLine("Request failed: " + newSubscriptionId + " newMessagId" + newMessagId + " " + anticedant.Exception.InnerException.ToString());    
                     }
                 }
             }).ContinueWith((Anticedant) =>
             {
-                this.storeageProvider.RemoveFromStorage(messageId);
+                this.StorageProvider.SubscriberGroupCompletedForMessage(messageId);
             });
         }
     }
