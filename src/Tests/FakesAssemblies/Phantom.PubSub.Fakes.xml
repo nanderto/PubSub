@@ -1,0 +1,2528 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Phantom.PubSub.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Phantom.PubSub.Fakes.ShimAssemblyLocator`1">
+            <summary>Shim type of Phantom.PubSub.AssemblyLocator`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.GetAllDlls">
+            <summary>Sets the shim of AssemblyLocator`1.GetAllDlls()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.GetSubscribersInBin">
+            <summary>Sets the shim of AssemblyLocator`1.GetSubscribersInBin()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.IsAssignableToGenericTypeTypeType">
+            <summary>Sets the shim of AssemblyLocator`1.IsAssignableToGenericType(Type givenType, Type genericType)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.StaticConstructor">
+            <summary>Sets the shim of AssemblyLocator`1.AssemblyLocator`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1.TypesImplementingInterfaceAssemblyArrayType">
+            <summary>Sets the shim of AssemblyLocator`1.TypesImplementingInterface(Assembly[] assemblies, Type desiredType)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimAssemblyLocator`1._TypesImplementingInterfaceb__0Assembly">
+            <summary>Sets the shim of AssemblyLocator`1.&lt;TypesImplementingInterface&gt;b__0(Assembly assembly)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimCounter">
+            <summary>Shim type of Phantom.PubSub.Counter</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimCounter.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimCounter.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimCounter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.IncrementCounterType">
+            <summary>Sets the shim of Counter.Increment(CounterType counterType)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.IncrementInt32">
+            <summary>Sets the shim of Counter.Increment(Int32 index)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.StaticConstructor">
+            <summary>Sets the shim of Counter.Counter()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.SubscriberInt32">
+            <summary>Sets the shim of Counter.Subscriber(Int32 counterNumber)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimCounter.TotalSubscriberCount">
+            <summary>Sets the shim of Counter.TotalSubscriberCount()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentConfig">
+            <summary>Shim type of Phantom.PubSub.EsentConfig</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentConfig.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentConfig.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentConfig.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateColumnsAndIndexesForSubscriberMetadataJET_SESIDJET_TABLEID">
+            <summary>Sets the shim of EsentConfig.CreateColumnsAndIndexesForSubscriberMetadata(JET_SESID sesid, JET_TABLEID tableid)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateColumnsAndIndexesJET_SESIDJET_TABLEID">
+            <summary>Sets the shim of EsentConfig.CreateColumnsAndIndexes(JET_SESID sesid, JET_TABLEID tableid)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateMessageStoreString">
+            <summary>Sets the shim of EsentConfig.CreateMessageStore(String database)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.DoesDatabaseExistString">
+            <summary>Sets the shim of EsentConfig.DoesDatabaseExist(String databaseName)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentDatabaseException">
+            <summary>Shim type of Phantom.PubSub.EsentDatabaseException</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentDatabaseException.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentDatabaseException.#ctor(Phantom.PubSub.EsentDatabaseException)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentDatabaseException.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentDatabaseException.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentDatabaseException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentDatabaseException.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentDatabaseException.Constructor">
+            <summary>Sets the shim of EsentDatabaseException.EsentDatabaseException()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentDatabaseException.ConstructorSerializationInfoStreamingContext">
+            <summary>Sets the shim of EsentDatabaseException.EsentDatabaseException(SerializationInfo serializationInfo, StreamingContext streamingContext)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentDatabaseException.ConstructorString">
+            <summary>Sets the shim of EsentDatabaseException.EsentDatabaseException(String message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentDatabaseException.ConstructorStringException">
+            <summary>Sets the shim of EsentDatabaseException.EsentDatabaseException(String message, Exception ex)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentDatabaseException.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService`1">
+            <summary>Shim type of Phantom.PubSub.EsentInstanceService`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.#ctor(Phantom.PubSub.EsentInstanceService{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Bind(System.IDisposable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.CleanupNameString">
+            <summary>Sets the shim of EsentInstanceService`1.CleanupName(String dirtyname)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Constructor">
+            <summary>Sets the shim of EsentInstanceService`1.EsentInstanceService`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DecrementRefCount">
+            <summary>Sets the shim of EsentInstanceService`1.DecrementRefCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Dispose">
+            <summary>Sets the shim of EsentInstanceService`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeBoolean">
+            <summary>Sets the shim of EsentInstanceService`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeOfEsentInstance">
+            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstance()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeOfEsentInstanceImmediatly">
+            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstanceImmediatly()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.EsentInstanceGet">
+            <summary>Sets the shim of EsentInstanceService`1.get_EsentInstance()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.OnTimerEventObject">
+            <summary>Sets the shim of EsentInstanceService`1.OnTimerEvent(Object state)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.ScheduleDisposingOfEsent">
+            <summary>Sets the shim of EsentInstanceService`1.ScheduleDisposingOfEsent()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.ServiceGet">
+            <summary>Sets the shim of EsentInstanceService`1.get_Service()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.StaticConstructor">
+            <summary>Sets the shim of EsentInstanceService`1.EsentInstanceService`1()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.Dispose">
+            <summary>Sets the shim of EsentInstanceService`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeBoolean">
+            <summary>Sets the shim of EsentInstanceService`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeOfEsentInstance">
+            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstance()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeOfEsentInstanceImmediatly">
+            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstanceImmediatly()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.EsentInstanceGet">
+            <summary>Sets the shim of EsentInstanceService`1.get_EsentInstance()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.OnTimerEventObject">
+            <summary>Sets the shim of EsentInstanceService`1.OnTimerEvent(Object state)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.ScheduleDisposingOfEsent">
+            <summary>Sets the shim of EsentInstanceService`1.ScheduleDisposingOfEsent()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStore`1">
+            <summary>Shim type of Phantom.PubSub.EsentStore`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.#ctor(Phantom.PubSub.EsentStore{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.Bind(Phantom.PubSub.IUnitOfWork)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.Bind(Phantom.PubSub.IEsentStore{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.Bind(System.IDisposable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.DeserializeOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,System.Object})">
+            <summary>Sets the shim of EsentStore`1.Deserialize(String input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.GetAllRecordsOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},System.Collections.Generic.IEnumerable{Phantom.PubSub.MessagePacket{``0}}})">
+            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.GetOneRowOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},Phantom.PubSub.MessagePacket{``0}})">
+            <summary>Sets the shim of EsentStore`1.GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AddMessageInTransactionStringString">
+            <summary>Sets the shim of EsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AddMetadataNullableOfInt32ListOfISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.AddMetadata(Nullable`1&lt;Int32&gt; messageId, List`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.CleanupNameString">
+            <summary>Sets the shim of EsentStore`1.CleanupName(String dirtyname)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.CloseSession">
+            <summary>Sets the shim of EsentStore`1.CloseSession()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Commit">
+            <summary>Sets the shim of EsentStore`1.Commit()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Constructor">
+            <summary>Sets the shim of EsentStore`1.EsentStore`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.ConstructorBoolean">
+            <summary>Sets the shim of EsentStore`1.EsentStore`1(Boolean forWrite)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DeleteMessageString">
+            <summary>Sets the shim of EsentStore`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DeleteMetadataIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.DeleteMetadata(IEnumerable`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Dispose">
+            <summary>Sets the shim of EsentStore`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DisposeBoolean">
+            <summary>Sets the shim of EsentStore`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetAllMessages">
+            <summary>Sets the shim of EsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMessageInt32">
+            <summary>Sets the shim of EsentStore`1.GetMessage(Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMetadataInt32">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMetadataInt32Int32">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId, Int32 metadataId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMetadataInt32Table">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId, Table table)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetRecordCount">
+            <summary>Sets the shim of EsentStore`1.GetRecordCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetRecordCountJET_SESIDJET_TABLEID">
+            <summary>Sets the shim of EsentStore`1.GetRecordCount(JET_SESID sesid, JET_TABLEID tableid)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.OpenSession">
+            <summary>Sets the shim of EsentStore`1.OpenSession()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.OpenTransaction">
+            <summary>Sets the shim of EsentStore`1.OpenTransaction()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.PeekForMessageString">
+            <summary>Sets the shim of EsentStore`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.RelatedRecordJET_TABLEIDJET_COLUMNIDInt32">
+            <summary>Sets the shim of EsentStore`1.RelatedRecord(JET_TABLEID tableid, JET_COLUMNID messageColumnId, Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Rollback">
+            <summary>Sets the shim of EsentStore`1.Rollback()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Save">
+            <summary>Sets the shim of EsentStore`1.Save()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.SeekToIdJET_SESIDJET_TABLEIDInt32String">
+            <summary>Sets the shim of EsentStore`1.SeekToId(JET_SESID sesid, JET_TABLEID tableid, Int32 id, String indexName)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.UpdateMetadataISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.UpdateMetadata(ISubscriberMetadata subscriberMetadata)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetAllRecordsOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Phantom.PubSub.EsentStore{`0},Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},System.Collections.Generic.IEnumerable{Phantom.PubSub.MessagePacket{``0}}})">
+            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.AddMessageInTransactionStringString">
+            <summary>Sets the shim of EsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.AddMetadataNullableOfInt32ListOfISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.AddMetadata(Nullable`1&lt;Int32&gt; messageId, List`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.CloseSession">
+            <summary>Sets the shim of EsentStore`1.CloseSession()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.Commit">
+            <summary>Sets the shim of EsentStore`1.Commit()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.DeleteMessageString">
+            <summary>Sets the shim of EsentStore`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.DeleteMetadataIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.DeleteMetadata(IEnumerable`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.Dispose">
+            <summary>Sets the shim of EsentStore`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.DisposeBoolean">
+            <summary>Sets the shim of EsentStore`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetAllMessages">
+            <summary>Sets the shim of EsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetMessageInt32">
+            <summary>Sets the shim of EsentStore`1.GetMessage(Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetMetadataInt32">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetMetadataInt32Int32">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId, Int32 metadataId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetMetadataInt32Table">
+            <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId, Table table)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetRecordCount">
+            <summary>Sets the shim of EsentStore`1.GetRecordCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.OpenSession">
+            <summary>Sets the shim of EsentStore`1.OpenSession()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.OpenTransaction">
+            <summary>Sets the shim of EsentStore`1.OpenTransaction()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.PeekForMessageString">
+            <summary>Sets the shim of EsentStore`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.RelatedRecordJET_TABLEIDJET_COLUMNIDInt32">
+            <summary>Sets the shim of EsentStore`1.RelatedRecord(JET_TABLEID tableid, JET_COLUMNID messageColumnId, Int32 messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.Rollback">
+            <summary>Sets the shim of EsentStore`1.Rollback()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.Save">
+            <summary>Sets the shim of EsentStore`1.Save()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.UpdateMetadataISubscriberMetadata">
+            <summary>Sets the shim of EsentStore`1.UpdateMetadata(ISubscriberMetadata subscriberMetadata)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1">
+            <summary>Shim type of Phantom.PubSub.EsentStoreProvider`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.#ctor(Phantom.PubSub.EsentStoreProvider{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.Bind(Phantom.PubSub.IStoreProvider{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.CheckItsStillInTheStoreString">
+            <summary>Sets the shim of EsentStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.CleanupNameString">
+            <summary>Sets the shim of EsentStoreProvider`1.CleanupName(String dirtyname)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.ConfigureStoreStringStoreTransactionOption">
+            <summary>Sets the shim of EsentStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.Constructor">
+            <summary>Sets the shim of EsentStoreProvider`1.EsentStoreProvider`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.DeleteMessageString">
+            <summary>Sets the shim of EsentStoreProvider`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.GetAllMessages">
+            <summary>Sets the shim of EsentStoreProvider`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.GetMessageCount">
+            <summary>Sets the shim of EsentStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.NameGet">
+            <summary>Sets the shim of EsentStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.NameSetString">
+            <summary>Sets the shim of EsentStoreProvider`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.ProcessStoreAsBatchFuncOfMessagePacketOfT0StringBoolean">
+            <summary>Sets the shim of EsentStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.PutMessageMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.StaticConstructor">
+            <summary>Sets the shim of EsentStoreProvider`1.EsentStoreProvider`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.SubscriberGroupCompletedForMessageString">
+            <summary>Sets the shim of EsentStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.UpdateMessageMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.UpdateMessage(MessagePacket`1&lt;!0&gt; message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.UpdateMessageStoreMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.CheckItsStillInTheStoreString">
+            <summary>Sets the shim of EsentStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.ConfigureStoreStringStoreTransactionOption">
+            <summary>Sets the shim of EsentStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.DeleteMessageString">
+            <summary>Sets the shim of EsentStoreProvider`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.GetAllMessages">
+            <summary>Sets the shim of EsentStoreProvider`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.GetMessageCount">
+            <summary>Sets the shim of EsentStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.NameGet">
+            <summary>Sets the shim of EsentStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.NameSetString">
+            <summary>Sets the shim of EsentStoreProvider`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.ProcessStoreAsBatchFuncOfMessagePacketOfT0StringBoolean">
+            <summary>Sets the shim of EsentStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.PutMessageMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.SubscriberGroupCompletedForMessageString">
+            <summary>Sets the shim of EsentStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.UpdateMessageMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.UpdateMessage(MessagePacket`1&lt;!0&gt; message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.UpdateMessageStoreMessagePacketOfT0">
+            <summary>Sets the shim of EsentStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimFilterBase`1">
+            <summary>Shim type of Phantom.PubSub.FilterBase`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimFilterBase`1.#ctor(Phantom.PubSub.FilterBase{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimFilterBase`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimFilterBase`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimFilterBase`1.Bind(Phantom.PubSub.IFilter{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.Constructor">
+            <summary>Sets the shim of FilterBase`1.FilterBase`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.ExecuteT0">
+            <summary>Sets the shim of FilterBase`1.Execute(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.RegisterIFilterOfT0">
+            <summary>Sets the shim of FilterBase`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimFilterBase`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.AllInstances.ExecuteT0">
+            <summary>Sets the shim of FilterBase`1.Execute(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimFilterBase`1.AllInstances.RegisterIFilterOfT0">
+            <summary>Sets the shim of FilterBase`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimMessagePacket`1">
+            <summary>Shim type of Phantom.PubSub.MessagePacket`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMessagePacket`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMessagePacket`1.#ctor(Phantom.PubSub.MessagePacket{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMessagePacket`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMessagePacket`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AddRangeIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.AddRange(IEnumerable`1&lt;ISubscriberMetadata&gt; metaDatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.BodyGet">
+            <summary>Sets the shim of MessagePacket`1.get_Body()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.BodySetT0">
+            <summary>Sets the shim of MessagePacket`1.set_Body(!0 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.Constructor">
+            <summary>Sets the shim of MessagePacket`1.MessagePacket`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.ConstructorT0">
+            <summary>Sets the shim of MessagePacket`1.MessagePacket`1(!0 message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.ConstructorT0ListOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.MessagePacket`1(!0 message, List`1&lt;ISubscriberMetadata&gt; subscriberMetadataList)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.IdGet">
+            <summary>Sets the shim of MessagePacket`1.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.IdSetString">
+            <summary>Sets the shim of MessagePacket`1.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.MessageIdGet">
+            <summary>Sets the shim of MessagePacket`1.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.MessageIdSetNullableOfInt32">
+            <summary>Sets the shim of MessagePacket`1.set_MessageId(Nullable`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.NameGet">
+            <summary>Sets the shim of MessagePacket`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.NameSetString">
+            <summary>Sets the shim of MessagePacket`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.ReplaceMetadatasIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.ReplaceMetadatas(IEnumerable`1&lt;ISubscriberMetadata&gt; metaDatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.SubscriberMetadataListGet">
+            <summary>Sets the shim of MessagePacket`1.get_SubscriberMetadataList()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.SubscriberMetadataListSetListOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.set_SubscriberMetadataList(List`1&lt;ISubscriberMetadata&gt; value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.AddRangeIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.AddRange(IEnumerable`1&lt;ISubscriberMetadata&gt; metaDatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.BodyGet">
+            <summary>Sets the shim of MessagePacket`1.get_Body()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.BodySetT0">
+            <summary>Sets the shim of MessagePacket`1.set_Body(!0 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.IdGet">
+            <summary>Sets the shim of MessagePacket`1.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.IdSetString">
+            <summary>Sets the shim of MessagePacket`1.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.MessageIdGet">
+            <summary>Sets the shim of MessagePacket`1.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.MessageIdSetNullableOfInt32">
+            <summary>Sets the shim of MessagePacket`1.set_MessageId(Nullable`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.NameGet">
+            <summary>Sets the shim of MessagePacket`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.NameSetString">
+            <summary>Sets the shim of MessagePacket`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.ReplaceMetadatasIEnumerableOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.ReplaceMetadatas(IEnumerable`1&lt;ISubscriberMetadata&gt; metaDatas)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.SubscriberMetadataListGet">
+            <summary>Sets the shim of MessagePacket`1.get_SubscriberMetadataList()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMessagePacket`1.AllInstances.SubscriberMetadataListSetListOfISubscriberMetadata">
+            <summary>Sets the shim of MessagePacket`1.set_SubscriberMetadataList(List`1&lt;ISubscriberMetadata&gt; value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1">
+            <summary>Shim type of Phantom.PubSub.MsmqStoreProvider`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.#ctor(Phantom.PubSub.MsmqStoreProvider{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.Bind(Phantom.PubSub.IStoreProvider{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.CheckItsStillInTheStoreString">
+            <summary>Sets the shim of MsmqStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.CheckQueueConfigured">
+            <summary>Sets the shim of MsmqStoreProvider`1.CheckQueueConfigured()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.CleanupNameString">
+            <summary>Sets the shim of MsmqStoreProvider`1.CleanupName(String dirtyname)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.ConfigureStoreStringStoreTransactionOption">
+            <summary>Sets the shim of MsmqStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.Constructor">
+            <summary>Sets the shim of MsmqStoreProvider`1.MsmqStoreProvider`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.FindQueueString">
+            <summary>Sets the shim of MsmqStoreProvider`1.FindQueue(String queueName)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.GetMessageCount">
+            <summary>Sets the shim of MsmqStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.HandlePoisonMessageString">
+            <summary>Sets the shim of MsmqStoreProvider`1.HandlePoisonMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.IsQueueEmptyMessageQueue">
+            <summary>Sets the shim of MsmqStoreProvider`1.IsQueueEmpty(MessageQueue queue)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.NameGet">
+            <summary>Sets the shim of MsmqStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.NameSetString">
+            <summary>Sets the shim of MsmqStoreProvider`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.ProcessStoreAsBatchFuncOfMessagePacketOfT0StringBoolean">
+            <summary>Sets the shim of MsmqStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.PutMessageMessagePacketOfT0">
+            <summary>Sets the shim of MsmqStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.StaticConstructor">
+            <summary>Sets the shim of MsmqStoreProvider`1.MsmqStoreProvider`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.SubscriberGroupCompletedForMessageString">
+            <summary>Sets the shim of MsmqStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.UpdateMessageStoreMessagePacketOfT0">
+            <summary>Sets the shim of MsmqStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.CheckItsStillInTheStoreString">
+            <summary>Sets the shim of MsmqStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.CheckQueueConfigured">
+            <summary>Sets the shim of MsmqStoreProvider`1.CheckQueueConfigured()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.ConfigureStoreStringStoreTransactionOption">
+            <summary>Sets the shim of MsmqStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.GetMessageCount">
+            <summary>Sets the shim of MsmqStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.HandlePoisonMessageString">
+            <summary>Sets the shim of MsmqStoreProvider`1.HandlePoisonMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.NameGet">
+            <summary>Sets the shim of MsmqStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.NameSetString">
+            <summary>Sets the shim of MsmqStoreProvider`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.ProcessStoreAsBatchFuncOfMessagePacketOfT0StringBoolean">
+            <summary>Sets the shim of MsmqStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.PutMessageMessagePacketOfT0">
+            <summary>Sets the shim of MsmqStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.SubscriberGroupCompletedForMessageString">
+            <summary>Sets the shim of MsmqStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimMsmqStoreProvider`1.AllInstances.UpdateMessageStoreMessagePacketOfT0">
+            <summary>Sets the shim of MsmqStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1">
+            <summary>Shim type of Phantom.PubSub.PublishMessageFilter`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.#ctor(Phantom.PubSub.PublishMessageFilter{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.Bind(Phantom.PubSub.IFilter{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.ConstructorIPublishSubscribeChannelOfT0">
+            <summary>Sets the shim of PublishMessageFilter`1.PublishMessageFilter`1(IPublishSubscribeChannel`1&lt;!0&gt; publishSubscribeChannel)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.ProcessT0">
+            <summary>Sets the shim of PublishMessageFilter`1.Process(!0 input)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishMessageFilter`1.AllInstances.ProcessT0">
+            <summary>Sets the shim of PublishMessageFilter`1.Process(!0 input)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1">
+            <summary>Shim type of Phantom.PubSub.PublishSubscribeChannel`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.#ctor(Phantom.PubSub.PublishSubscribeChannel{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.Bind(Phantom.PubSub.IPublishSubscribeChannel{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AddSubscriberInfoTupleOfStringTypeTimeSpan">
+            <summary>Sets the shim of PublishSubscribeChannel`1.AddSubscriberInfo(Tuple`3&lt;String,Type,TimeSpan&gt; tuple)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AddSubscriberTypeType">
+            <summary>Sets the shim of PublishSubscribeChannel`1.AddSubscriberType(Type type)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.Constructor">
+            <summary>Sets the shim of PublishSubscribeChannel`1.PublishSubscribeChannel`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.ConstructorIStoreProviderOfT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.PublishSubscribeChannel`1(IStoreProvider`1&lt;!0&gt; queueProvider)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.CountGet">
+            <summary>Sets the shim of PublishSubscribeChannel`1.get_Count()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.CreateSingleSubscriberMessagePacketISubscriberOfT0MessagePacketOfT0Boolean">
+            <summary>Sets the shim of PublishSubscribeChannel`1.CreateSingleSubscriberMessagePacket(ISubscriber`1&lt;!0&gt; subscriber, MessagePacket`1&lt;!0&gt; messagePacket, Boolean failedOrTimedOut)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.GetSubscriptionIdStringString">
+            <summary>Sets the shim of PublishSubscribeChannel`1.GetSubscriptionId(String messageId, String subscriberName)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.GetSubscriptions">
+            <summary>Sets the shim of PublishSubscribeChannel`1.GetSubscriptions()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.HandleMessageForBatchProcessingMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleMessageForBatchProcessing(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.HandleMessageForFirstTimeMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleMessageForFirstTime(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.HandleSingleSubscriberforMessageMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleSingleSubscriberforMessage(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.ProcessBatch">
+            <summary>Sets the shim of PublishSubscribeChannel`1.ProcessBatch()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.PublishMessageT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.PublishMessage(!0 message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.RunSubscriptionsMessagePacketOfT0StringSubscribersCollectionOfT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.RunSubscriptions(MessagePacket`1&lt;!0&gt; messagePacket, String messageId, SubscribersCollection`1&lt;!0&gt; subscribersForThisMessage)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.StorageProviderGet">
+            <summary>Sets the shim of PublishSubscribeChannel`1.get_StorageProvider()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.StorageProviderSetIStoreProviderOfT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.set_StorageProvider(IStoreProvider`1&lt;!0&gt; value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.AddSubscriberInfoTupleOfStringTypeTimeSpan">
+            <summary>Sets the shim of PublishSubscribeChannel`1.AddSubscriberInfo(Tuple`3&lt;String,Type,TimeSpan&gt; tuple)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.AddSubscriberTypeType">
+            <summary>Sets the shim of PublishSubscribeChannel`1.AddSubscriberType(Type type)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.CountGet">
+            <summary>Sets the shim of PublishSubscribeChannel`1.get_Count()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.GetSubscriptions">
+            <summary>Sets the shim of PublishSubscribeChannel`1.GetSubscriptions()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.HandleMessageForBatchProcessingMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleMessageForBatchProcessing(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.HandleMessageForFirstTimeMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleMessageForFirstTime(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.HandleSingleSubscriberforMessageMessagePacketOfT0String">
+            <summary>Sets the shim of PublishSubscribeChannel`1.HandleSingleSubscriberforMessage(MessagePacket`1&lt;!0&gt; messagePacket, String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.ProcessBatch">
+            <summary>Sets the shim of PublishSubscribeChannel`1.ProcessBatch()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.PublishMessageT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.PublishMessage(!0 message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.RunSubscriptionsMessagePacketOfT0StringSubscribersCollectionOfT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.RunSubscriptions(MessagePacket`1&lt;!0&gt; messagePacket, String messageId, SubscribersCollection`1&lt;!0&gt; subscribersForThisMessage)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.StorageProviderGet">
+            <summary>Sets the shim of PublishSubscribeChannel`1.get_StorageProvider()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimPublishSubscribeChannel`1.AllInstances.StorageProviderSetIStoreProviderOfT0">
+            <summary>Sets the shim of PublishSubscribeChannel`1.set_StorageProvider(IStoreProvider`1&lt;!0&gt; value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimRepository`1">
+            <summary>Shim type of Phantom.PubSub.Repository`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimRepository`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimRepository`1.#ctor(Phantom.PubSub.Repository{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimRepository`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimRepository`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AddMessageMessagePacketOfT0">
+            <summary>Sets the shim of Repository`1.AddMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.ConstructorIEsentStoreOfT0">
+            <summary>Sets the shim of Repository`1.Repository`1(IEsentStore`1&lt;!0&gt; store)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.DeleteString">
+            <summary>Sets the shim of Repository`1.Delete(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.GetAllMessages">
+            <summary>Sets the shim of Repository`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.GetRecordCount">
+            <summary>Sets the shim of Repository`1.GetRecordCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.PeekForMessageString">
+            <summary>Sets the shim of Repository`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.UpdateMessageMessagePacketOfT0">
+            <summary>Sets the shim of Repository`1.UpdateMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1._UpdateMessageb__1ISubscriberMetadata">
+            <summary>Sets the shim of Repository`1.&lt;UpdateMessage&gt;b__1(ISubscriberMetadata md)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.AddMessageMessagePacketOfT0">
+            <summary>Sets the shim of Repository`1.AddMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.DeleteString">
+            <summary>Sets the shim of Repository`1.Delete(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.GetAllMessages">
+            <summary>Sets the shim of Repository`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.GetRecordCount">
+            <summary>Sets the shim of Repository`1.GetRecordCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.PeekForMessageString">
+            <summary>Sets the shim of Repository`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.AllInstances.UpdateMessageMessagePacketOfT0">
+            <summary>Sets the shim of Repository`1.UpdateMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSerializer">
+            <summary>Shim type of Phantom.PubSub.Serializer</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.DeserializeMessagePacketOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,Phantom.PubSub.MessagePacket{``0}})">
+            <summary>Sets the shim of Serializer.DeserializeMessagePacket(String body)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.DeserializeMessagePacketOf1StringString``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,System.String,Phantom.PubSub.MessagePacket{``0}})">
+            <summary>Sets the shim of Serializer.DeserializeMessagePacket(String body, String metadata)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.DeserializerOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,``0})">
+            <summary>Sets the shim of Serializer.Deserializer(String input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.GetSerializedBodyOf1MessagePacketOfM0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Phantom.PubSub.MessagePacket{``0},System.String})">
+            <summary>Sets the shim of Serializer.GetSerializedBody(MessagePacket`1&lt;!!0&gt; input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSerializer.SerializeOf1M0``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{``0,System.String})">
+            <summary>Sets the shim of Serializer.Serialize(!!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSerializer.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSerializer.GetSerializedMetadataListOfISubscriberMetadata">
+            <summary>Sets the shim of Serializer.GetSerializedMetadata(List`1&lt;ISubscriberMetadata&gt; input)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimServiceAdaptor`1">
+            <summary>Shim type of Phantom.PubSub.ServiceAdaptor`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.#ctor(Phantom.PubSub.ServiceAdaptor{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.Bind(Phantom.PubSub.IFilterChain{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.Constructor">
+            <summary>Sets the shim of ServiceAdaptor`1.ServiceAdaptor`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.ExecuteT0">
+            <summary>Sets the shim of ServiceAdaptor`1.Execute(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.RegisterIFilterOfT0">
+            <summary>Sets the shim of ServiceAdaptor`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.AllInstances.ExecuteT0">
+            <summary>Sets the shim of ServiceAdaptor`1.Execute(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimServiceAdaptor`1.AllInstances.RegisterIFilterOfT0">
+            <summary>Sets the shim of ServiceAdaptor`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimStore`1">
+            <summary>Shim type of Phantom.PubSub.Store`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimStore`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimStore`1.#ctor(Phantom.PubSub.Store{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimStore`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimStore`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimStore`1.Bind(System.IDisposable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.ConstructorIStoreProviderOfT0">
+            <summary>Sets the shim of Store`1.Store`1(IStoreProvider`1&lt;!0&gt; storeProvider)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.Dispose">
+            <summary>Sets the shim of Store`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.DisposeBoolean">
+            <summary>Sets the shim of Store`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimStore`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.AllInstances.Dispose">
+            <summary>Sets the shim of Store`1.Dispose()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimStore`1.AllInstances.DisposeBoolean">
+            <summary>Sets the shim of Store`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriber`1">
+            <summary>Shim type of Phantom.PubSub.Subscriber`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriber`1.#ctor(Phantom.PubSub.Subscriber{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriber`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriber`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriber`1.Bind(Phantom.PubSub.ISubscriber{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.Abort">
+            <summary>Sets the shim of Subscriber`1.Abort()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortCountGet">
+            <summary>Sets the shim of Subscriber`1.get_AbortCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortCountSetInt32">
+            <summary>Sets the shim of Subscriber`1.set_AbortCount(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortedGet">
+            <summary>Sets the shim of Subscriber`1.get_Aborted()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortedSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_Aborted(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortedTimeGet">
+            <summary>Sets the shim of Subscriber`1.get_AbortedTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AbortedTimeSetDateTime">
+            <summary>Sets the shim of Subscriber`1.set_AbortedTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.Constructor">
+            <summary>Sets the shim of Subscriber`1.Subscriber`1()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.DefaultTimeToExpireGet">
+            <summary>Sets the shim of Subscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.FinishedProcessingGet">
+            <summary>Sets the shim of Subscriber`1.get_FinishedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.FinishedProcessingSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_FinishedProcessing(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.IdGet">
+            <summary>Sets the shim of Subscriber`1.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.IdSetString">
+            <summary>Sets the shim of Subscriber`1.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.MessageIdGet">
+            <summary>Sets the shim of Subscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.MessageIdSetString">
+            <summary>Sets the shim of Subscriber`1.set_MessageId(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.NameGet">
+            <summary>Sets the shim of Subscriber`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.NameSetString">
+            <summary>Sets the shim of Subscriber`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.PostProcess">
+            <summary>Sets the shim of Subscriber`1.PostProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.PreProcess">
+            <summary>Sets the shim of Subscriber`1.PreProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.RunAsyncT0CancellationToken">
+            <summary>Sets the shim of Subscriber`1.RunAsync(!0 message, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.StartTimeGet">
+            <summary>Sets the shim of Subscriber`1.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.StartTimeSetDateTime">
+            <summary>Sets the shim of Subscriber`1.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.StartedProcessingGet">
+            <summary>Sets the shim of Subscriber`1.get_StartedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.StartedProcessingSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_StartedProcessing(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.TimeToExpireGet">
+            <summary>Sets the shim of Subscriber`1.get_TimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.TimeToExpireSetTimeSpan">
+            <summary>Sets the shim of Subscriber`1.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.Abort">
+            <summary>Sets the shim of Subscriber`1.Abort()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortCountGet">
+            <summary>Sets the shim of Subscriber`1.get_AbortCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortCountSetInt32">
+            <summary>Sets the shim of Subscriber`1.set_AbortCount(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortedGet">
+            <summary>Sets the shim of Subscriber`1.get_Aborted()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortedSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_Aborted(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortedTimeGet">
+            <summary>Sets the shim of Subscriber`1.get_AbortedTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.AbortedTimeSetDateTime">
+            <summary>Sets the shim of Subscriber`1.set_AbortedTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.DefaultTimeToExpireGet">
+            <summary>Sets the shim of Subscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.FinishedProcessingGet">
+            <summary>Sets the shim of Subscriber`1.get_FinishedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.FinishedProcessingSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_FinishedProcessing(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.IdGet">
+            <summary>Sets the shim of Subscriber`1.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.IdSetString">
+            <summary>Sets the shim of Subscriber`1.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.MessageIdGet">
+            <summary>Sets the shim of Subscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.MessageIdSetString">
+            <summary>Sets the shim of Subscriber`1.set_MessageId(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.NameGet">
+            <summary>Sets the shim of Subscriber`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.NameSetString">
+            <summary>Sets the shim of Subscriber`1.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.PostProcess">
+            <summary>Sets the shim of Subscriber`1.PostProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.PreProcess">
+            <summary>Sets the shim of Subscriber`1.PreProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.RunAsyncT0CancellationToken">
+            <summary>Sets the shim of Subscriber`1.RunAsync(!0 message, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.StartTimeGet">
+            <summary>Sets the shim of Subscriber`1.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.StartTimeSetDateTime">
+            <summary>Sets the shim of Subscriber`1.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.StartedProcessingGet">
+            <summary>Sets the shim of Subscriber`1.get_StartedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.StartedProcessingSetBoolean">
+            <summary>Sets the shim of Subscriber`1.set_StartedProcessing(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.TimeToExpireGet">
+            <summary>Sets the shim of Subscriber`1.get_TimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriber`1.AllInstances.TimeToExpireSetTimeSpan">
+            <summary>Sets the shim of Subscriber`1.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberInfo`1">
+            <summary>Shim type of Phantom.PubSub.SubscriberInfo`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.#ctor(Phantom.PubSub.SubscriberInfo{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.Bind(Phantom.PubSub.ISubscriberInfo{`0})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.ConstructorTypeIPublishSubscribeChannelOfT0">
+            <summary>Sets the shim of SubscriberInfo`1.SubscriberInfo`1(Type subscriberType, IPublishSubscribeChannel`1&lt;!0&gt; publishSubscribeChannel)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.WithTimeToExpireTimeSpan">
+            <summary>Sets the shim of SubscriberInfo`1.WithTimeToExpire(TimeSpan timeSpan)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberInfo`1.AllInstances.WithTimeToExpireTimeSpan">
+            <summary>Sets the shim of SubscriberInfo`1.WithTimeToExpire(TimeSpan timeSpan)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberMetadata">
+            <summary>Shim type of Phantom.PubSub.SubscriberMetadata</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadata.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadata.#ctor(Phantom.PubSub.SubscriberMetadata)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadata.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadata.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadata.Bind(Phantom.PubSub.ISubscriberMetadata)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.CanProcess">
+            <summary>Sets the shim of SubscriberMetadata.CanProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.CanProcessICurrentTimeProvider">
+            <summary>Sets the shim of SubscriberMetadata.CanProcess(ICurrentTimeProvider currentTime)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.CompletedGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Completed()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.CompletedSetBoolean">
+            <summary>Sets the shim of SubscriberMetadata.set_Completed(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.Constructor">
+            <summary>Sets the shim of SubscriberMetadata.SubscriberMetadata()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.FailedOrTimedOutGet">
+            <summary>Sets the shim of SubscriberMetadata.get_FailedOrTimedOut()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.FailedOrTimedOutSetBoolean">
+            <summary>Sets the shim of SubscriberMetadata.set_FailedOrTimedOut(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.FailedOrTimedOutTimeGet">
+            <summary>Sets the shim of SubscriberMetadata.get_FailedOrTimedOutTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.FailedOrTimedOutTimeSetDateTime">
+            <summary>Sets the shim of SubscriberMetadata.set_FailedOrTimedOutTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.HasExpiredISubscriberMetadataICurrentTimeProvider">
+            <summary>Sets the shim of SubscriberMetadata.HasExpired(ISubscriberMetadata subscriberMetadata, ICurrentTimeProvider currentTime)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.IdGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.IdSetString">
+            <summary>Sets the shim of SubscriberMetadata.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.MessageIdGet">
+            <summary>Sets the shim of SubscriberMetadata.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.MessageIdSetInt32">
+            <summary>Sets the shim of SubscriberMetadata.set_MessageId(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.NameGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.NameSetString">
+            <summary>Sets the shim of SubscriberMetadata.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.RetryCountGet">
+            <summary>Sets the shim of SubscriberMetadata.get_RetryCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.RetryCountSetInt32">
+            <summary>Sets the shim of SubscriberMetadata.set_RetryCount(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.StartTimeGet">
+            <summary>Sets the shim of SubscriberMetadata.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.StartTimeSetDateTime">
+            <summary>Sets the shim of SubscriberMetadata.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.TimeToExpireGet">
+            <summary>Sets the shim of SubscriberMetadata.get_TimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.TimeToExpireSetTimeSpan">
+            <summary>Sets the shim of SubscriberMetadata.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.CanProcess">
+            <summary>Sets the shim of SubscriberMetadata.CanProcess()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.CanProcessICurrentTimeProvider">
+            <summary>Sets the shim of SubscriberMetadata.CanProcess(ICurrentTimeProvider currentTime)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.CompletedGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Completed()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.CompletedSetBoolean">
+            <summary>Sets the shim of SubscriberMetadata.set_Completed(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.FailedOrTimedOutGet">
+            <summary>Sets the shim of SubscriberMetadata.get_FailedOrTimedOut()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.FailedOrTimedOutSetBoolean">
+            <summary>Sets the shim of SubscriberMetadata.set_FailedOrTimedOut(Boolean value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.FailedOrTimedOutTimeGet">
+            <summary>Sets the shim of SubscriberMetadata.get_FailedOrTimedOutTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.FailedOrTimedOutTimeSetDateTime">
+            <summary>Sets the shim of SubscriberMetadata.set_FailedOrTimedOutTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.IdGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.IdSetString">
+            <summary>Sets the shim of SubscriberMetadata.set_Id(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.MessageIdGet">
+            <summary>Sets the shim of SubscriberMetadata.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.MessageIdSetInt32">
+            <summary>Sets the shim of SubscriberMetadata.set_MessageId(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.NameGet">
+            <summary>Sets the shim of SubscriberMetadata.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.NameSetString">
+            <summary>Sets the shim of SubscriberMetadata.set_Name(String value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.RetryCountGet">
+            <summary>Sets the shim of SubscriberMetadata.get_RetryCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.RetryCountSetInt32">
+            <summary>Sets the shim of SubscriberMetadata.set_RetryCount(Int32 value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.StartTimeGet">
+            <summary>Sets the shim of SubscriberMetadata.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.StartTimeSetDateTime">
+            <summary>Sets the shim of SubscriberMetadata.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.TimeToExpireGet">
+            <summary>Sets the shim of SubscriberMetadata.get_TimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadata.AllInstances.TimeToExpireSetTimeSpan">
+            <summary>Sets the shim of SubscriberMetadata.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter">
+            <summary>Shim type of Phantom.PubSub.SubscriberMetadataConverter</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.#ctor(Phantom.PubSub.SubscriberMetadataConverter)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.Constructor">
+            <summary>Sets the shim of SubscriberMetadataConverter.SubscriberMetadataConverter()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.CreateType">
+            <summary>Sets the shim of SubscriberMetadataConverter.Create(Type objectType)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscriberMetadataConverter.AllInstances.CreateType">
+            <summary>Sets the shim of SubscriberMetadataConverter.Create(Type objectType)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscribersCollection`1">
+            <summary>Shim type of Phantom.PubSub.SubscribersCollection`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.#ctor(Phantom.PubSub.SubscribersCollection{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.ICollection)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.IEnumerable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.IList)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.Generic.ICollection{Phantom.PubSub.ISubscriber{`0}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.Generic.IEnumerable{Phantom.PubSub.ISubscriber{`0}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.Generic.IList{Phantom.PubSub.ISubscriber{`0}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.Generic.IReadOnlyCollection{Phantom.PubSub.ISubscriber{`0}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Bind(System.Collections.Generic.IReadOnlyList{Phantom.PubSub.ISubscriber{`0}})">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.Constructor">
+            <summary>Sets the shim of SubscribersCollection`1.SubscribersCollection`1()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimSubscribersCollection`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimUtils">
+            <summary>Shim type of Phantom.PubSub.Utils</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimUtils.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimUtils.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimUtils.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimUtils.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimUtils.OutputStack">
+            <summary>Sets the shim of Utils.OutputStack()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimUtils.StaticConstructor">
+            <summary>Sets the shim of Utils.Utils()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubEsentDatabaseException">
+            <summary>Stub type of Phantom.PubSub.EsentDatabaseException</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.#ctor(System.String)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.#ctor(System.String,System.Exception)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.AttachBackingFieldToHelpLink">
+            <summary>Attaches delegates to emulate StubEsentDatabaseException.HelpLink as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.AttachBackingFieldToSource">
+            <summary>Attaches delegates to emulate StubEsentDatabaseException.Source as a property with a backing field.</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.DataGet">
+            <summary>Sets the stub of Exception.get_Data()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.GetBaseException">
+            <summary>Sets the stub of Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.GetBaseException01">
+            <summary>Sets the stub of Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Sets the stub of Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Sets the stub of Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.HelpLinkGet">
+            <summary>Sets the stub of Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.HelpLinkSetString">
+            <summary>Sets the stub of Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.InitializeStub">
+            <summary>Initializes a new instance of type StubEsentDatabaseException</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.MessageGet">
+            <summary>Sets the stub of Exception.get_Message()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.SourceGet">
+            <summary>Sets the stub of Exception.get_Source()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.SourceSetString">
+            <summary>Sets the stub of Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.StackTraceGet">
+            <summary>Sets the stub of Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentDatabaseException.ToString">
+            <summary>Sets the stub of Exception.ToString()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentDatabaseException.ToString01">
+            <summary>Sets the stub of Exception.ToString()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.Data">
+            <summary>Sets the stub of Exception.get_Data()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.HelpLink">
+            <summary>Sets the stub of Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.Message">
+            <summary>Sets the stub of Exception.get_Message()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.Source">
+            <summary>Sets the stub of Exception.get_Source()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentDatabaseException.StackTrace">
+            <summary>Sets the stub of Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubEsentStore`1">
+            <summary>Stub type of Phantom.PubSub.EsentStore`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStore`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStore`1.#ctor(System.Boolean)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStore`1.Dispose(System.Boolean)">
+            <summary>Sets the stub of EsentStore`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubEsentStore`1.DisposeBoolean">
+            <summary>Sets the stub of EsentStore`1.Dispose(Boolean disposing)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStore`1.InitializeStub">
+            <summary>Initializes a new instance of type StubEsentStore</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStore`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStore`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStore`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubEsentStoreProvider`1">
+            <summary>Stub type of Phantom.PubSub.EsentStoreProvider`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.InitializeStub">
+            <summary>Initializes a new instance of type StubEsentStoreProvider</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubFilterBase`1">
+            <summary>Stub type of Phantom.PubSub.FilterBase`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubFilterBase`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubFilterBase`1.InitializeStub">
+            <summary>Initializes a new instance of type StubFilterBase</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubFilterBase`1.Process(`0)">
+            <summary>Sets the stub of FilterBase`1.Process(!0 input)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubFilterBase`1.ProcessT0">
+            <summary>Sets the stub of FilterBase`1.Process(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubFilterBase`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubFilterBase`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubFilterBase`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubICurrentTimeProvider">
+            <summary>Stub type of Phantom.PubSub.ICurrentTimeProvider</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubICurrentTimeProvider.#ctor">
+            <summary>Initializes a new instance of type StubICurrentTimeProvider</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubICurrentTimeProvider.NowGet">
+            <summary>Sets the stub of ICurrentTimeProvider.get_Now()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubICurrentTimeProvider.pps::Phantom#PubSub#ICurrentTimeProvider#Now">
+            <summary>Sets the stub of ICurrentTimeProvider.get_Now()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIEsentStore`1">
+            <summary>Stub type of Phantom.PubSub.IEsentStore`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.#ctor">
+            <summary>Initializes a new instance of type StubIEsentStore</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.AddMessageInTransactionStringString">
+            <summary>Sets the stub of IEsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.AddMetadataNullableOfInt32ListOfISubscriberMetadata">
+            <summary>Sets the stub of IEsentStore`1.AddMetadata(Nullable`1&lt;Int32&gt; messageId, List`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.CloseSession">
+            <summary>Sets the stub of IEsentStore`1.CloseSession()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.Commit">
+            <summary>Sets the stub of IEsentStore`1.Commit()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.DeleteMessageString">
+            <summary>Sets the stub of IEsentStore`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.DeleteMetadataIEnumerableOfISubscriberMetadata">
+            <summary>Sets the stub of IEsentStore`1.DeleteMetadata(IEnumerable`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.Dispose">
+            <summary>Sets the stub of IEsentStore`1.Dispose()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.GetAllMessages">
+            <summary>Sets the stub of IEsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.GetMetadataInt32">
+            <summary>Sets the stub of IEsentStore`1.GetMetadata(Int32 messageId)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.GetMetadataInt32Int32">
+            <summary>Sets the stub of IEsentStore`1.GetMetadata(Int32 messageId, Int32 metadataId)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.GetRecordCount">
+            <summary>Sets the stub of IEsentStore`1.GetRecordCount()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.OpenSession">
+            <summary>Sets the stub of IEsentStore`1.OpenSession()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.OpenTransaction">
+            <summary>Sets the stub of IEsentStore`1.OpenTransaction()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.PeekForMessageString">
+            <summary>Sets the stub of IEsentStore`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#AddMessageInTransaction(System.String,System.String)">
+            <summary>Sets the stub of IEsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#AddMetadata(System.Nullable{System.Int32},System.Collections.Generic.List{Phantom.PubSub.ISubscriberMetadata})">
+            <summary>Sets the stub of IEsentStore`1.AddMetadata(Nullable`1&lt;Int32&gt; messageId, List`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#CloseSession">
+            <summary>Sets the stub of IEsentStore`1.CloseSession()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#Commit">
+            <summary>Sets the stub of IEsentStore`1.Commit()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#DeleteMessage(System.String)">
+            <summary>Sets the stub of IEsentStore`1.DeleteMessage(String messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#DeleteMetadata(System.Collections.Generic.IEnumerable{Phantom.PubSub.ISubscriberMetadata})">
+            <summary>Sets the stub of IEsentStore`1.DeleteMetadata(IEnumerable`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#Dispose">
+            <summary>Sets the stub of IEsentStore`1.Dispose()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#GetAllMessages">
+            <summary>Sets the stub of IEsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#GetMetadata(System.Int32,System.Int32)">
+            <summary>Sets the stub of IEsentStore`1.GetMetadata(Int32 messageId, Int32 metadataId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#GetMetadata(System.Int32)">
+            <summary>Sets the stub of IEsentStore`1.GetMetadata(Int32 messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#GetRecordCount">
+            <summary>Sets the stub of IEsentStore`1.GetRecordCount()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#OpenSession">
+            <summary>Sets the stub of IEsentStore`1.OpenSession()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#OpenTransaction">
+            <summary>Sets the stub of IEsentStore`1.OpenTransaction()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#PeekForMessage(System.String)">
+            <summary>Sets the stub of IEsentStore`1.PeekForMessage(String messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#Rollback">
+            <summary>Sets the stub of IEsentStore`1.Rollback()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#Save">
+            <summary>Sets the stub of IEsentStore`1.Save()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIEsentStore`1.pps::Phantom#PubSub#IEsentStore{T}#UpdateMetadata(Phantom.PubSub.ISubscriberMetadata)">
+            <summary>Sets the stub of IEsentStore`1.UpdateMetadata(ISubscriberMetadata subscriberMetadata)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.Rollback">
+            <summary>Sets the stub of IEsentStore`1.Rollback()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.Save">
+            <summary>Sets the stub of IEsentStore`1.Save()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIEsentStore`1.UpdateMetadataISubscriberMetadata">
+            <summary>Sets the stub of IEsentStore`1.UpdateMetadata(ISubscriberMetadata subscriberMetadata)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIFilter`1">
+            <summary>Stub type of Phantom.PubSub.IFilter`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilter`1.#ctor">
+            <summary>Initializes a new instance of type StubIFilter</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIFilter`1.ExecuteT0">
+            <summary>Sets the stub of IFilter`1.Execute(!0 input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilter`1.pps::Phantom#PubSub#IFilter{T}#Execute(`0)">
+            <summary>Sets the stub of IFilter`1.Execute(!0 input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilter`1.pps::Phantom#PubSub#IFilter{T}#Register(Phantom.PubSub.IFilter{`0})">
+            <summary>Sets the stub of IFilter`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIFilter`1.RegisterIFilterOfT0">
+            <summary>Sets the stub of IFilter`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIFilterChain`1">
+            <summary>Stub type of Phantom.PubSub.IFilterChain`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilterChain`1.#ctor">
+            <summary>Initializes a new instance of type StubIFilterChain</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIFilterChain`1.ExecuteT0">
+            <summary>Sets the stub of IFilterChain`1.Execute(!0 input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilterChain`1.pps::Phantom#PubSub#IFilterChain{T}#Execute(`0)">
+            <summary>Sets the stub of IFilterChain`1.Execute(!0 input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIFilterChain`1.pps::Phantom#PubSub#IFilterChain{T}#Register(Phantom.PubSub.IFilter{`0})">
+            <summary>Sets the stub of IFilterChain`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIFilterChain`1.RegisterIFilterOfT0">
+            <summary>Sets the stub of IFilterChain`1.Register(IFilter`1&lt;!0&gt; filter)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1">
+            <summary>Stub type of Phantom.PubSub.IPublishSubscribeChannel`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.#ctor">
+            <summary>Initializes a new instance of type StubIPublishSubscribeChannel</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.AddSubscriberTypeType">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.AddSubscriberType(Type type)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.CountGet">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.get_Count()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.GetSubscriptions">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.GetSubscriptions()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.pps::Phantom#PubSub#IPublishSubscribeChannel{T}#AddSubscriberType(System.Type)">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.AddSubscriberType(Type type)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.pps::Phantom#PubSub#IPublishSubscribeChannel{T}#GetSubscriptions">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.GetSubscriptions()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.pps::Phantom#PubSub#IPublishSubscribeChannel{T}#ProcessBatch">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.ProcessBatch()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.pps::Phantom#PubSub#IPublishSubscribeChannel{T}#PublishMessage(`0)">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.PublishMessage(!0 message)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.ProcessBatch">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.ProcessBatch()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.PublishMessageT0">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.PublishMessage(!0 message)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubIPublishSubscribeChannel`1.pps::Phantom#PubSub#IPublishSubscribeChannel{T}#Count">
+            <summary>Sets the stub of IPublishSubscribeChannel`1.get_Count()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIStoreProvider`1">
+            <summary>Stub type of Phantom.PubSub.IStoreProvider`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.#ctor">
+            <summary>Initializes a new instance of type StubIStoreProvider</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.AttachBackingFieldToName">
+            <summary>Attaches delegates to emulate StubIStoreProvider.Name as a property with a backing field.</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.CheckItsStillInTheStoreString">
+            <summary>Sets the stub of IStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.ConfigureStoreStringStoreTransactionOption">
+            <summary>Sets the stub of IStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.GetMessageCount">
+            <summary>Sets the stub of IStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.NameGet">
+            <summary>Sets the stub of IStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.NameSetString">
+            <summary>Sets the stub of IStoreProvider`1.set_Name(String value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#CheckItsStillInTheStore(System.String)">
+            <summary>Sets the stub of IStoreProvider`1.CheckItsStillInTheStore(String messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#ConfigureStore(System.String,Phantom.PubSub.StoreTransactionOption)">
+            <summary>Sets the stub of IStoreProvider`1.ConfigureStore(String storeName, StoreTransactionOption storeTransactionOption)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#GetMessageCount">
+            <summary>Sets the stub of IStoreProvider`1.GetMessageCount()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#ProcessStoreAsBatch(System.Func{Phantom.PubSub.MessagePacket{`0},System.String,System.Boolean})">
+            <summary>Sets the stub of IStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#PutMessage(Phantom.PubSub.MessagePacket{`0})">
+            <summary>Sets the stub of IStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#SubscriberGroupCompletedForMessage(System.String)">
+            <summary>Sets the stub of IStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#UpdateMessageStore(Phantom.PubSub.MessagePacket{`0})">
+            <summary>Sets the stub of IStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.ProcessStoreAsBatchFuncOfMessagePacketOfT0StringBoolean">
+            <summary>Sets the stub of IStoreProvider`1.ProcessStoreAsBatch(Func`3&lt;MessagePacket`1&lt;!0&gt;,String,Boolean&gt; messageHandlingInitiated)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.PutMessageMessagePacketOfT0">
+            <summary>Sets the stub of IStoreProvider`1.PutMessage(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.SubscriberGroupCompletedForMessageString">
+            <summary>Sets the stub of IStoreProvider`1.SubscriberGroupCompletedForMessage(String messageId)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIStoreProvider`1.UpdateMessageStoreMessagePacketOfT0">
+            <summary>Sets the stub of IStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubIStoreProvider`1.pps::Phantom#PubSub#IStoreProvider{T}#Name">
+            <summary>Sets the stub of IStoreProvider`1.get_Name()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubISubscriber`1">
+            <summary>Stub type of Phantom.PubSub.ISubscriber`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.#ctor">
+            <summary>Initializes a new instance of type StubISubscriber</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.Abort">
+            <summary>Sets the stub of ISubscriber`1.Abort()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortCountGet">
+            <summary>Sets the stub of ISubscriber`1.get_AbortCount()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortCountSetInt32">
+            <summary>Sets the stub of ISubscriber`1.set_AbortCount(Int32 value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortedGet">
+            <summary>Sets the stub of ISubscriber`1.get_Aborted()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortedSetBoolean">
+            <summary>Sets the stub of ISubscriber`1.set_Aborted(Boolean value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortedTimeGet">
+            <summary>Sets the stub of ISubscriber`1.get_AbortedTime()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.AbortedTimeSetDateTime">
+            <summary>Sets the stub of ISubscriber`1.set_AbortedTime(DateTime value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToAbortCount">
+            <summary>Attaches delegates to emulate StubISubscriber.AbortCount as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToAborted">
+            <summary>Attaches delegates to emulate StubISubscriber.Aborted as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToAbortedTime">
+            <summary>Attaches delegates to emulate StubISubscriber.AbortedTime as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToFinishedProcessing">
+            <summary>Attaches delegates to emulate StubISubscriber.FinishedProcessing as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToId">
+            <summary>Attaches delegates to emulate StubISubscriber.Id as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToMessageId">
+            <summary>Attaches delegates to emulate StubISubscriber.MessageId as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToName">
+            <summary>Attaches delegates to emulate StubISubscriber.Name as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToStartTime">
+            <summary>Attaches delegates to emulate StubISubscriber.StartTime as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToStartedProcessing">
+            <summary>Attaches delegates to emulate StubISubscriber.StartedProcessing as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.AttachBackingFieldToTimeToExpire">
+            <summary>Attaches delegates to emulate StubISubscriber.TimeToExpire as a property with a backing field.</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.DefaultTimeToExpireGet">
+            <summary>Sets the stub of ISubscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.FinishedProcessingGet">
+            <summary>Sets the stub of ISubscriber`1.get_FinishedProcessing()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.FinishedProcessingSetBoolean">
+            <summary>Sets the stub of ISubscriber`1.set_FinishedProcessing(Boolean value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.IdGet">
+            <summary>Sets the stub of ISubscriber`1.get_Id()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.IdSetString">
+            <summary>Sets the stub of ISubscriber`1.set_Id(String value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.MessageIdGet">
+            <summary>Sets the stub of ISubscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.MessageIdSetString">
+            <summary>Sets the stub of ISubscriber`1.set_MessageId(String value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.NameGet">
+            <summary>Sets the stub of ISubscriber`1.get_Name()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.NameSetString">
+            <summary>Sets the stub of ISubscriber`1.set_Name(String value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#Abort">
+            <summary>Sets the stub of ISubscriber`1.Abort()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#RunAsync(`0,System.Threading.CancellationToken)">
+            <summary>Sets the stub of ISubscriber`1.RunAsync(!0 message, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.RunAsyncT0CancellationToken">
+            <summary>Sets the stub of ISubscriber`1.RunAsync(!0 message, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.StartTimeGet">
+            <summary>Sets the stub of ISubscriber`1.get_StartTime()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.StartTimeSetDateTime">
+            <summary>Sets the stub of ISubscriber`1.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.StartedProcessingGet">
+            <summary>Sets the stub of ISubscriber`1.get_StartedProcessing()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.StartedProcessingSetBoolean">
+            <summary>Sets the stub of ISubscriber`1.set_StartedProcessing(Boolean value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.TimeToExpireGet">
+            <summary>Sets the stub of ISubscriber`1.get_TimeToExpire()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriber`1.TimeToExpireSetTimeSpan">
+            <summary>Sets the stub of ISubscriber`1.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#AbortCount">
+            <summary>Sets the stub of ISubscriber`1.get_AbortCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#Aborted">
+            <summary>Sets the stub of ISubscriber`1.get_Aborted()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#AbortedTime">
+            <summary>Sets the stub of ISubscriber`1.get_AbortedTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#DefaultTimeToExpire">
+            <summary>Sets the stub of ISubscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#FinishedProcessing">
+            <summary>Sets the stub of ISubscriber`1.get_FinishedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#Id">
+            <summary>Sets the stub of ISubscriber`1.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#MessageId">
+            <summary>Sets the stub of ISubscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#Name">
+            <summary>Sets the stub of ISubscriber`1.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#StartTime">
+            <summary>Sets the stub of ISubscriber`1.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#StartedProcessing">
+            <summary>Sets the stub of ISubscriber`1.get_StartedProcessing()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriber`1.pps::Phantom#PubSub#ISubscriber{T}#TimeToExpire">
+            <summary>Sets the stub of ISubscriber`1.get_TimeToExpire()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubISubscriberInfo`1">
+            <summary>Stub type of Phantom.PubSub.ISubscriberInfo`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberInfo`1.#ctor">
+            <summary>Initializes a new instance of type StubISubscriberInfo</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberInfo`1.pps::Phantom#PubSub#ISubscriberInfo{T}#WithTimeToExpire(System.TimeSpan)">
+            <summary>Sets the stub of ISubscriberInfo`1.WithTimeToExpire(TimeSpan timeSpan)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberInfo`1.WithTimeToExpireTimeSpan">
+            <summary>Sets the stub of ISubscriberInfo`1.WithTimeToExpire(TimeSpan timeSpan)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubISubscriberMetadata">
+            <summary>Stub type of Phantom.PubSub.ISubscriberMetadata</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.#ctor">
+            <summary>Initializes a new instance of type StubISubscriberMetadata</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToCompleted">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.Completed as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToFailedOrTimedOut">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.FailedOrTimedOut as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToFailedOrTimedOutTime">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.FailedOrTimedOutTime as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToId">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.Id as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToMessageId">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.MessageId as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToName">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.Name as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToRetryCount">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.RetryCount as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToStartTime">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.StartTime as a property with a backing field.</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.AttachBackingFieldToTimeToExpire">
+            <summary>Attaches delegates to emulate StubISubscriberMetadata.TimeToExpire as a property with a backing field.</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.CanProcess">
+            <summary>Sets the stub of ISubscriberMetadata.CanProcess()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.CanProcessICurrentTimeProvider">
+            <summary>Sets the stub of ISubscriberMetadata.CanProcess(ICurrentTimeProvider currentTime)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.CompletedGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_Completed()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.CompletedSetBoolean">
+            <summary>Sets the stub of ISubscriberMetadata.set_Completed(Boolean value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.FailedOrTimedOutGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_FailedOrTimedOut()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.FailedOrTimedOutSetBoolean">
+            <summary>Sets the stub of ISubscriberMetadata.set_FailedOrTimedOut(Boolean value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.FailedOrTimedOutTimeGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_FailedOrTimedOutTime()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.FailedOrTimedOutTimeSetDateTime">
+            <summary>Sets the stub of ISubscriberMetadata.set_FailedOrTimedOutTime(DateTime value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.IdGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_Id()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.IdSetString">
+            <summary>Sets the stub of ISubscriberMetadata.set_Id(String value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.MessageIdGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_MessageId()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.MessageIdSetInt32">
+            <summary>Sets the stub of ISubscriberMetadata.set_MessageId(Int32 value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.NameGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_Name()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.NameSetString">
+            <summary>Sets the stub of ISubscriberMetadata.set_Name(String value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#CanProcess">
+            <summary>Sets the stub of ISubscriberMetadata.CanProcess()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#CanProcess(Phantom.PubSub.ICurrentTimeProvider)">
+            <summary>Sets the stub of ISubscriberMetadata.CanProcess(ICurrentTimeProvider currentTime)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.RetryCountGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_RetryCount()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.RetryCountSetInt32">
+            <summary>Sets the stub of ISubscriberMetadata.set_RetryCount(Int32 value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.StartTimeGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_StartTime()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.StartTimeSetDateTime">
+            <summary>Sets the stub of ISubscriberMetadata.set_StartTime(DateTime value)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.TimeToExpireGet">
+            <summary>Sets the stub of ISubscriberMetadata.get_TimeToExpire()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubISubscriberMetadata.TimeToExpireSetTimeSpan">
+            <summary>Sets the stub of ISubscriberMetadata.set_TimeToExpire(TimeSpan value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#Completed">
+            <summary>Sets the stub of ISubscriberMetadata.get_Completed()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#FailedOrTimedOut">
+            <summary>Sets the stub of ISubscriberMetadata.get_FailedOrTimedOut()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#FailedOrTimedOutTime">
+            <summary>Sets the stub of ISubscriberMetadata.get_FailedOrTimedOutTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#Id">
+            <summary>Sets the stub of ISubscriberMetadata.get_Id()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#MessageId">
+            <summary>Sets the stub of ISubscriberMetadata.get_MessageId()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#Name">
+            <summary>Sets the stub of ISubscriberMetadata.get_Name()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#RetryCount">
+            <summary>Sets the stub of ISubscriberMetadata.get_RetryCount()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#StartTime">
+            <summary>Sets the stub of ISubscriberMetadata.get_StartTime()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubISubscriberMetadata.pps::Phantom#PubSub#ISubscriberMetadata#TimeToExpire">
+            <summary>Sets the stub of ISubscriberMetadata.get_TimeToExpire()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubIUnitOfWork">
+            <summary>Stub type of Phantom.PubSub.IUnitOfWork</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIUnitOfWork.#ctor">
+            <summary>Initializes a new instance of type StubIUnitOfWork</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIUnitOfWork.Commit">
+            <summary>Sets the stub of IUnitOfWork.Commit()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIUnitOfWork.pps::Phantom#PubSub#IUnitOfWork#Commit">
+            <summary>Sets the stub of IUnitOfWork.Commit()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubIUnitOfWork.pps::Phantom#PubSub#IUnitOfWork#Rollback">
+            <summary>Sets the stub of IUnitOfWork.Rollback()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubIUnitOfWork.Rollback">
+            <summary>Sets the stub of IUnitOfWork.Rollback()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubMessagePacket`1">
+            <summary>Stub type of Phantom.PubSub.MessagePacket`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMessagePacket`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMessagePacket`1.#ctor(`0)">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMessagePacket`1.#ctor(`0,System.Collections.Generic.List{Phantom.PubSub.ISubscriberMetadata})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMessagePacket`1.InitializeStub">
+            <summary>Initializes a new instance of type StubMessagePacket</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMessagePacket`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMessagePacket`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMessagePacket`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1">
+            <summary>Stub type of Phantom.PubSub.MsmqStoreProvider`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1.InitializeStub">
+            <summary>Initializes a new instance of type StubMsmqStoreProvider</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubMsmqStoreProvider`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubPublishMessageFilter`1">
+            <summary>Stub type of Phantom.PubSub.PublishMessageFilter`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.#ctor(Phantom.PubSub.IPublishSubscribeChannel{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.InitializeStub">
+            <summary>Initializes a new instance of type StubPublishMessageFilter</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.Process(`0)">
+            <summary>Sets the stub of PublishMessageFilter`1.Process(!0 input)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.ProcessT0">
+            <summary>Sets the stub of PublishMessageFilter`1.Process(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishMessageFilter`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1">
+            <summary>Stub type of Phantom.PubSub.PublishSubscribeChannel`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.#ctor(Phantom.PubSub.IStoreProvider{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.InitializeStub">
+            <summary>Initializes a new instance of type StubPublishSubscribeChannel</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubPublishSubscribeChannel`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubRepository`1">
+            <summary>Stub type of Phantom.PubSub.Repository`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubRepository`1.#ctor(Phantom.PubSub.IEsentStore{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubRepository`1.InitializeStub">
+            <summary>Initializes a new instance of type StubRepository</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubRepository`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubRepository`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubRepository`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubServiceAdaptor`1">
+            <summary>Stub type of Phantom.PubSub.ServiceAdaptor`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubServiceAdaptor`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubServiceAdaptor`1.InitializeStub">
+            <summary>Initializes a new instance of type StubServiceAdaptor</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubServiceAdaptor`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubServiceAdaptor`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubServiceAdaptor`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubStore`1">
+            <summary>Stub type of Phantom.PubSub.Store`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubStore`1.#ctor(Phantom.PubSub.IStoreProvider{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubStore`1.InitializeStub">
+            <summary>Initializes a new instance of type StubStore</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubStore`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubStore`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubStore`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubSubscriber`1">
+            <summary>Stub type of Phantom.PubSub.Subscriber`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriber`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriber`1.AttachBackingFieldToMessageId">
+            <summary>Attaches delegates to emulate StubSubscriber.MessageId as a property with a backing field.</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriber`1.DefaultTimeToExpireGet">
+            <summary>Sets the stub of Subscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriber`1.InitializeStub">
+            <summary>Initializes a new instance of type StubSubscriber</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriber`1.MessageIdGet">
+            <summary>Sets the stub of Subscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriber`1.MessageIdSetString">
+            <summary>Sets the stub of Subscriber`1.set_MessageId(String value)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriber`1.Process(`0)">
+            <summary>Sets the stub of Subscriber`1.Process(!0 input)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriber`1.ProcessAsync(`0,System.Threading.CancellationToken)">
+            <summary>Sets the stub of Subscriber`1.ProcessAsync(!0 input, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriber`1.ProcessAsyncT0CancellationToken">
+            <summary>Sets the stub of Subscriber`1.ProcessAsync(!0 input, CancellationToken cancellationToken)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriber`1.ProcessT0">
+            <summary>Sets the stub of Subscriber`1.Process(!0 input)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriber`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriber`1.DefaultTimeToExpire">
+            <summary>Sets the stub of Subscriber`1.get_DefaultTimeToExpire()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriber`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriber`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriber`1.MessageId">
+            <summary>Sets the stub of Subscriber`1.get_MessageId()</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubSubscriberInfo`1">
+            <summary>Stub type of Phantom.PubSub.SubscriberInfo`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberInfo`1.#ctor(System.Type,Phantom.PubSub.IPublishSubscribeChannel{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberInfo`1.InitializeStub">
+            <summary>Initializes a new instance of type StubSubscriberInfo</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberInfo`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberInfo`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberInfo`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubSubscriberMetadata">
+            <summary>Stub type of Phantom.PubSub.SubscriberMetadata</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadata.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadata.InitializeStub">
+            <summary>Initializes a new instance of type StubSubscriberMetadata</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadata.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadata.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadata.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter">
+            <summary>Stub type of Phantom.PubSub.SubscriberMetadataConverter</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanConvert(System.Type)">
+            <summary>Sets the stub of CustomCreationConverter`1.CanConvert(Type objectType)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanConvertType">
+            <summary>Sets the stub of CustomCreationConverter`1.CanConvert(Type objectType)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanReadGet">
+            <summary>Sets the stub of JsonConverter.get_CanRead()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanWriteGet">
+            <summary>Sets the stub of CustomCreationConverter`1.get_CanWrite()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.Create(System.Type)">
+            <summary>Sets the stub of SubscriberMetadataConverter.Create(Type objectType)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CreateType">
+            <summary>Sets the stub of SubscriberMetadataConverter.Create(Type objectType)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.GetSchema">
+            <summary>Sets the stub of JsonConverter.GetSchema()</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.GetSchema01">
+            <summary>Sets the stub of JsonConverter.GetSchema()</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.InitializeStub">
+            <summary>Initializes a new instance of type StubSubscriberMetadataConverter</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Sets the stub of CustomCreationConverter`1.ReadJson(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.ReadJsonJsonReaderTypeObjectJsonSerializer">
+            <summary>Sets the stub of CustomCreationConverter`1.ReadJson(JsonReader reader, Type objectType, Object existingValue, JsonSerializer serializer)</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <summary>Sets the stub of CustomCreationConverter`1.WriteJson(JsonWriter writer, Object value, JsonSerializer serializer)</summary>
+        </member>
+        <member name="F:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.WriteJsonJsonWriterObjectJsonSerializer">
+            <summary>Sets the stub of CustomCreationConverter`1.WriteJson(JsonWriter writer, Object value, JsonSerializer serializer)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanRead">
+            <summary>Sets the stub of JsonConverter.get_CanRead()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.CanWrite">
+            <summary>Sets the stub of CustomCreationConverter`1.get_CanWrite()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscriberMetadataConverter.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.StubSubscribersCollection`1">
+            <summary>Stub type of Phantom.PubSub.SubscribersCollection`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscribersCollection`1.#ctor">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubSubscribersCollection`1.InitializeStub">
+            <summary>Initializes a new instance of type StubSubscribersCollection</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscribersCollection`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscribersCollection`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubSubscribersCollection`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
+    </members>
+</doc>
