@@ -135,10 +135,10 @@ namespace UnitTests
             return u;
         }
 
-        internal virtual IQueueProvider<Models.User> CreateQueueProvider()
+        internal virtual IStoreProvider<Models.User> CreateQueueProvider()
         {
             // TODO: Instantiate an appropriate concrete class.
-            IQueueProvider<Models.User> target = new MsmqQueueProvider<Models.User>() as IQueueProvider<Models.User>;
+            IStoreProvider<Models.User> target = new MsmqStoreProvider<Models.User>() as IStoreProvider<Models.User>;
             return target;
         }
 
@@ -148,24 +148,26 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ConfigureQueueTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
-            string expected = "EntitiesUser"; 
-            string actual ;
+            bool expected = true; 
+            bool actual ;
 
             //Clean up if exists
-            CleanUpQueues();
-
-            actual = target.ConfigureQueue("EntitiesUser", QueueTransactionOption.NoTransactions);
+            CleanUpQueues();       
+            
+            actual = target.ConfigureStore("EntitiesUser", StoreTransactionOption.NoTransactions);
             Assert.AreEqual(expected, actual);
 
-            //Check Name is set correctly
-            Assert.AreEqual("EntitiesUser", target.Name, "Name is not set correctly");
+            var q = TestHelper.FindQueue("EntitiesUser");
 
-            MessageQueue msgQ = new MessageQueue(@".\private$\" + target.Name);
-            Assert.IsTrue(msgQ.Transactional);
+            //Check Name is set correctly
+            Assert.AreEqual(@".\private$\EntitiesUser", q.Path, "Name is not set correctly");
+
+            //MessageQueue msgQ = new MessageQueue(@".\private$\" + target.Name);
+            Assert.IsTrue(!q.Transactional);
             //ok it exists now try to create again, should not throw error
-            actual = target.ConfigureQueue("EntitiesUser", QueueTransactionOption.NoTransactions);
+            actual = target.ConfigureStore("EntitiesUser", StoreTransactionOption.NoTransactions);
             Assert.IsTrue(MessageQueue.Exists(@".\private$\EntitiesUser"), " Message queue no longer exists");
 
             //Clean up if exists
@@ -179,22 +181,23 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void ConfigureQueueSupportTransactionsTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = new Models.User();
-            string expected = "EntitiesUser";
-            string actual;
+            bool expected = true;
+            bool actual;
             CleanUpQueues();
 
-            actual = target.ConfigureQueue("EntitiesUser", QueueTransactionOption.SupportTransactions);
+            actual = target.ConfigureStore("EntitiesUser", StoreTransactionOption.SupportTransactions);
             Assert.AreEqual(expected, actual);
 
+            //Get the Queue this will throw Exception if Queue does not exist
+            var q = TestHelper.FindQueue("EntitiesUser");
             //Check Name is set correctly
-            Assert.AreEqual("EntitiesUser", target.Name, "Name is not set correctly");
+            Assert.AreEqual(@".\private$\EntitiesUser", q.Path, "Name is not set correctly");
 
-            MessageQueue msgQ = new MessageQueue(@".\private$\" + target.Name);
-            Assert.IsFalse(msgQ.Transactional);
+            Assert.IsTrue(q.Transactional);
             //ok it exists now try to create again, should not throw error
-            actual = target.ConfigureQueue("EntitiesUser", QueueTransactionOption.SupportTransactions);
+            actual = target.ConfigureStore("EntitiesUser", StoreTransactionOption.SupportTransactions);
             Assert.IsTrue(MessageQueue.Exists(@".\private$\EntitiesUser"), " Message queue no longer exists");
 
             CleanUpQueues();
@@ -206,13 +209,13 @@ namespace UnitTests
         [TestMethod(), TestCategory("IntegrationMsmq")]
         public void SaveMessageTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
             SetUpCleanTestQueueForEntitiesUser();
             
             var message = GetMessagePacket(u);
 
-            target.PutMessageInTransaction(message);
+            target.PutMessage(message);
 
             //read queue to find the message
             MessageQueue msgQ = new MessageQueue(@".\private$\EntitiesUser");
@@ -226,7 +229,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void MSMQPutMessageInTransactionProviderTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
             SetUpCleanTestQueueForEntitiesUser();
             var message = GetMessagePacket(u);
@@ -235,7 +238,7 @@ namespace UnitTests
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    target.PutMessageInTransaction(message);
+                    target.PutMessage(message);
                     scope.Complete();
                 }
             }
@@ -251,7 +254,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void MSMQPutMessageInTransactionProviderAbortedTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
             SetUpCleanTestQueueForEntitiesUser();
             var message = GetMessagePacket(u);
@@ -260,7 +263,7 @@ namespace UnitTests
             {
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    target.PutMessageInTransaction(message);
+                    target.PutMessage(message);
                     scope.Complete();
                 }
             }
@@ -280,13 +283,13 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void PutMessageInTransactionbutDontuseTransactionTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
 
-            target.ConfigureQueue("EntitiesUser", QueueTransactionOption.SupportTransactions);
+            target.ConfigureStore("EntitiesUser", StoreTransactionOption.SupportTransactions);
             var message = GetMessagePacket(u);
 
-            target.PutMessageInTransaction(message);
+            target.PutMessage(message);
 
             try
             {
@@ -304,7 +307,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void PutMessageInTransactionbutDontCommitTransactionTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             Models.User u = GetUserBob();
             SetUpCleanTestQueueForEntitiesUser();
 
@@ -315,7 +318,7 @@ namespace UnitTests
                 var currentTx = System.Transactions.Transaction.Current;
                 using (TransactionScope scope = new TransactionScope())
                 {
-                    target.PutMessageInTransaction(message);
+                    target.PutMessage(message);
                 }
             }
             catch (TransactionAbortedException ex)
@@ -341,47 +344,7 @@ namespace UnitTests
             }
             //Assert.IsFalse(true, "should not have got here");
             return;
-        }
-
-        [TestCategory("IntegrationMsmq"), TestMethod()]
-        public void WatchQueueTest()
-        {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
-
-            string actual;
-            CleanUpQueues();
-            Models.User u = GetUserBob();
-            actual = target.ConfigureQueue("EntitiesUser", QueueTransactionOption.SupportTransactions);
-
-           target.SetupWatchQueue(target);
-           //well this is a waist of time I need to assert something
-        }
-
-        //no longer needed we read queue as a batch only
-        //[TestCategory("IntegrationMsmq"), TestMethod()]
-        //public void ReadQueueTest()
-        //{
-        //    IQueueProvider<Models.User> target = CreateQueueProvider();
-        //    Models.User u = GetUserGwen();
-        //    SetUpCleanTestQueueForEntitiesUser();//Clean up if exists
-        //    string recoverableMessageID = AddAMessage();
-            
-        //    var msgQ = new MessageQueue(@".\private$\EntitiesUser");
-        //    target.Name = "EntitiesUser";
-        //    target.SetUpWatchQueue(target);
-        //    string CorrelationId = string.Empty;
-        //    var returnedMessage = target.ReadQueue(out CorrelationId);
-            
-
-        //    var message = msgQ.ReceiveById(recoverableMessageID);
-        //    Assert.IsNotNull(message, "Message was removed when it should not have been");
-
-        //    message.Formatter =  new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
-        //    Models.User returned = (Models.User)message.Body;
-        //    Assert.AreEqual(returnedMessage.FirstName, returned.FirstName, "did not return expected message");
-        //}
-
-       
+        }     
 
         /// <summary>
         ///A test for RemoveFromQueue
@@ -389,7 +352,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void RemoveFromQueueTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             string CorrelationId = string.Empty; 
             bool actual;
             SetUpCleanTestQueueForEntitiesUser();
@@ -399,9 +362,8 @@ namespace UnitTests
             Message m = msgQ.Peek();
             
             target.Name = "EntitiesUser";
-            target.SetupWatchQueue(target);
 
-            actual = target.RemoveFromQueue(m.Id);
+            actual = target.RemoveFromStorage(m.Id);
             Assert.IsTrue(actual, "did not retrieve a message");
    
             Message[] messages =  msgQ.GetAllMessages();
@@ -415,7 +377,7 @@ namespace UnitTests
         [TestCategory("IntegrationMsmq"), TestMethod()]
         public void SaveandRetrieveMessageWithMetadataTest()
         {
-            IQueueProvider<Models.User> target = CreateQueueProvider();
+            IStoreProvider<Models.User> target = CreateQueueProvider();
             string CorrelationId = string.Empty;
             SetUpCleanTestQueueForEntitiesUser();
             AddAMessage();
@@ -468,17 +430,17 @@ namespace UnitTests
             Assert.AreEqual("Joe", returned.SubscriberMetadataList[1].Name);
         }
 
-        private void callback(Models.User message, string MessageID)
-        {
-            ISubscriber<Models.User> m = (ISubscriber<Models.User>)message;
-            var now = DateTime.Now;
+        //private void callback(Models.User message, string MessageID)
+        //{
+        //    ISubscriber<Models.User> m = (ISubscriber<Models.User>)message;
+        //    var now = DateTime.Now;
             
-            if (DateTime.Compare(m.ExpireTime, now) < 0)
-            {
-                Assert.AreEqual("ExpiredSubscription", message.UserName);
-            }
-            Assert.AreNotEqual("ExpiredSubscription", message.UserName);
-        }
+        //    if (DateTime.Compare(m.ExpireTime, now) < 0)
+        //    {
+        //        Assert.AreEqual("ExpiredSubscription", message.UserName);
+        //    }
+        //    Assert.AreNotEqual("ExpiredSubscription", message.UserName);
+        //}
 
     }
 }

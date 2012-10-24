@@ -49,6 +49,9 @@ namespace Phantom.PubSub
             if (string.IsNullOrEmpty(this.Name))
                 throw new ArgumentNullException("Queue provider name is null for Queue name: " + this.Name);
 
+            Counter.Increment(17);
+           // Trace.WriteLine("Putting in Queue: " + message.Id);
+
             string result = string.Empty;
 
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -103,18 +106,20 @@ namespace Phantom.PubSub
                     try
                     {
                         Counter.Increment(5);
-                        Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Calling RemoveFromQueue :: The MessageId is: " + messageId + " Counter: " + Counter.Subscriber(3));
-                    m = msgQueue.ReceiveById(messageId);           
+                        //Trace.WriteLineIf((new TraceSwitch("Phantom.PubSub", "Phantom.PubSub")).TraceInfo, "Calling RemoveFromQueue :: The MessageId is: " + messageId + " Counter: " + Counter.Subscriber(3));
+                        //Trace.WriteLine("Just about to remove subscription from Queue: " + messageId);
+                        m = msgQueue.ReceiveById(messageId);
+                        //Trace.WriteLine("Just removed subscription from Queue: " + messageId);
                     }
                     catch (MessageQueueException ex)
                     {
                         Counter.Increment(9);
-                    Trace.WriteLine(new InvalidOperationException("Message Queue Exception Failed to remove: " + messageId, ex));
+                        Trace.WriteLine(new InvalidOperationException("Message Queue Exception Failed to remove: " + messageId, ex));
                     }
                     catch (Exception ex)
                     {
                         Counter.Increment(9);
-                    Trace.WriteLine(new InvalidOperationException("general Exception Failed to remove: " + messageId, ex));
+                        Trace.WriteLine(new InvalidOperationException("general Exception Failed to remove: " + messageId, ex));
                     }
                 }
 
@@ -191,7 +196,7 @@ namespace Phantom.PubSub
 
                         messages = msgQueue.GetAllMessages();
                         int numberOfMessages = messages.Length;
-                        Trace.WriteLine("Number of messages returned:  " + numberOfMessages.ToString(CultureInfo.InvariantCulture));
+                        //Trace.WriteLine("Number of messages returned:  " + numberOfMessages.ToString(CultureInfo.InvariantCulture));
  
                         int i = 0;
                         foreach (Message m in messages)

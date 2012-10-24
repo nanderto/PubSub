@@ -4,11 +4,20 @@ using System.Linq;
 using System.Text;
 using Phantom.PubSub;
 using Entities;
+using System.Threading;
 
 namespace BusinessLogic
 {
     public class TestMessageSubscriber : Subscriber<Message>, ISubscriber<Message>
     {
+        public override TimeSpan DefaultTimeToExpire
+        {
+            get
+            {
+                return new TimeSpan(0, 0, 20);
+            }
+        }
+
         public TestMessageSubscriber(MessageService service)
         {
             this.DataService = service;
@@ -23,9 +32,14 @@ namespace BusinessLogic
             else
                 return false;
         }
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(Message input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public class TestMessageSubscriber2 : Subscriber<Message>, ISubscriber<Message>
+    public class TestMessageSubscriber2 : Subscriber<Message>
     {
         public TestMessageSubscriber2(MessageService2 service)
         {
@@ -40,6 +54,11 @@ namespace BusinessLogic
                 return true;
             else
                 return false;
+        }
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(Message input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -63,6 +82,11 @@ namespace BusinessLogic
             else
                 return false;
         }
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(Message input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TestMessageSubscriber4 : Subscriber<Message>, ISubscriber<Message>
@@ -85,10 +109,23 @@ namespace BusinessLogic
             else
                 return false;
         }
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(Message input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TestMessageSubscriber5 : Subscriber<Message>, ISubscriber<Message>
     {
+        public override TimeSpan DefaultTimeToExpire
+        {
+            get
+            {
+                return new TimeSpan(0, 0, 20);
+            }
+        }
+
         public TestMessageSubscriber5(MessageService5 service)
         {
             this.DataService = service;
@@ -107,12 +144,21 @@ namespace BusinessLogic
                 return false;
         }
 
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(Message input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
 
     public class TestMessageSubscriberUserType : Subscriber<User>, ISubscriber<User>
     {
+        public TestMessageSubscriberUserType()
+        {
+
+        }
         public TestMessageSubscriberUserType(MessageService service)
         {
             this.DataService = service;
@@ -128,10 +174,19 @@ namespace BusinessLogic
             //    return false;
         }
 
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(User input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TestMessageSubscriberUserType2 : Subscriber<User>, ISubscriber<User>
     {
+        public TestMessageSubscriberUserType2()
+        {
+
+        }
         public TestMessageSubscriberUserType2(MessageService2 service)
         {
             this.DataService = service;
@@ -146,10 +201,19 @@ namespace BusinessLogic
             //else
             //    return false;
         }
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(User input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TestMessageSubscriberUserType3 : Subscriber<User>, ISubscriber<User>
     {
+        public TestMessageSubscriberUserType3()
+        {
+
+        }
         public TestMessageSubscriberUserType3(MessageService3 service)
         {
             this.DataService = service;
@@ -169,125 +233,11 @@ namespace BusinessLogic
             //    return false;
         }
 
+
+        public override System.Threading.Tasks.Task<bool> ProcessAsync(User input, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-
-    //public class TestMessageMessageStatusTracker<T> : IMessageStatus<T>
-    //{
-    //    public bool FinishedProcessing { get; set; }
-
-    //    public bool StartedProcessing { get; set; }
-
-    //    public string Id { get; set; }
-
-    //    public string Name { get; set; }
-
-    //    public string MessageId { get; set; }
-
-    //    public TimeSpan TimeToExpire { get; set; }
-    //}
-
-    //public class TestMessageMessageStatusTracker2<T> : IMessageStatus<T>
-    //{
-    //    public bool FinishedProcessing { get; set; }
-
-    //    public bool StartedProcessing { get; set; }
-
-    //    public string Id { get; set; }
-
-    //    public string Name { get; set; }
-
-    //    public string MessageId { get; set; }
-
-    //    public TimeSpan TimeToExpire { get; set; }
-    //}
-
-    //public class TestMessageMessageStatusTracker3<T> : IMessageStatus<T>
-    //{
-    //    public bool FinishedProcessing { get; set; }
-
-    //    public bool StartedProcessing { get; set; }
-
-    //    public string Id { get; set; }
-
-    //    public string Name { get; set; }
-
-    //    public string MessageId { get; set; }
-
-    //    public TimeSpan TimeToExpire { get; set; }
-    //}
-    //public class TestMessageSubscriberGenericType<T> : Subscriber<T>, IMessageStatus<T>
-    //{
-    //    public TestMessageSubscriberGenericType(MessageService service)
-    //    {
-    //        this.DataService = service;
-    //    }
-
-    //    public bool StartedProcessing { get; set; }
-    //    public bool FinishedProcessing { get; set; }
-    //    private MessageService DataService;
-
-    //    public override bool Process(T message, string MessageId, string SubscriptionId, IMessageStatus<T> SubScriptionStatus, List<IMessageStatus<T>> TrackIfStarted)
-    //    {
-    //        //test subscriber does nothing
-    //        //if (this.DataService.SaveMessage((Message)message) > 0)
-    //        return true;
-    //        //else
-    //        //    return false;
-    //    }
-    //}
-
-    //public class TestMessageSubscriberGenericType2<T> : Subscriber<T>, IMessageStatus<T>
-    //{
-    //    public TestMessageSubscriberGenericType2(MessageService2 service)
-    //    {
-    //        this.DataService = service;
-    //    }
-    //    public bool FinishedProcessing { get; set; }
-    //    private MessageService2 DataService;
-
-    //    public override bool Process(T message, string MessageId, string SubscriptionId, IMessageStatus<T> SubScriptionStatus, List<IMessageStatus<T>> TrackIfStarted)
-    //    {
-    //        //if (this.DataService.SaveMessage((Message)message) > 0)
-    //        return true;
-    //        //else
-    //        //    return false;
-    //    }
-
-
-    //    #region IMessageStatus<T> Members
-
-
-    //    public bool StartedProcessing { get; set; }
-
-
-    //    #endregion
-    //}
-
-    //public class TestMessageSubscriberGenericType3<T> : Subscriber<T>, IMessageStatus<T>
-    //{
-    //    public TestMessageSubscriberGenericType3(MessageService3 service)
-    //    {
-    //        this.DataService = service;
-    //    }
-
-    //    private MessageService3 DataService;
-
-    //    public override bool Process(T message, string MessageId, string SubscriptionId, IMessageStatus<T> SubScriptionStatus, List<IMessageStatus<T>> TrackIfStarted)
-    //    {
-    //        //var m = (Message)message;
-    //        //m.MessageID = MessageId;
-    //        //m.SubscriptionID = SubscriptionId;
-
-    //        //if (this.DataService.SaveMessage(m) > 0)
-    //        return true;
-    //        //else
-    //        //    return false;
-    //    }
-
-    //    public bool StartedProcessing { get; set; }
-    //    public bool FinishedProcessing { get; set; }
-    //}
-
 
 }

@@ -71,9 +71,9 @@ namespace UnitTests
         {
             TestHelper.SetUpCleanTestQueue();
 
-            var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+            var queueProvider = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             var PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
-            PubSubChannel.AddSubscriberType(typeof(TestSubscriber<User>));
+            PubSubChannel.AddSubscriberType(typeof(TestSubscriberZZZ<User>));
             UserManagerServiceAdaptor target = new UserManagerServiceAdaptor(queueProvider, PubSubChannel);
             User umToUpdate = new User();
             umToUpdate.FirstName = "X";
@@ -90,7 +90,7 @@ namespace UnitTests
         {
             TestHelper.SetUpCleanTestQueue();
 
-            var queueProvider = new MsmqQueueProvider<User>() as IQueueProvider<User>;
+            var queueProvider = new MsmqStoreProvider<User>() as IStoreProvider<User>;
             var PubSubChannel = new PublishSubscribeChannel<User>(queueProvider) as IPublishSubscribeChannel<User>;
             UserManagerServiceAdaptor target = new UserManagerServiceAdaptor(queueProvider, PubSubChannel);
             User umToUpdate = new User();
