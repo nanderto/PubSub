@@ -1,4 +1,4 @@
-This library is a light weight publish subscribe mechanism...Ha ha just kidding what library is not light weight.
+This library is a light weight publish subscribe mechanism...Ha ha just kidding everyone always claims their component is light weight.
 
 This component is a publish subscribe mechanism with guaranteed delivery backed by some form of disk storage. 
 Currently it is supporting Msmq and ESENT as storage mechanisms.
