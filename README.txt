@@ -6,6 +6,7 @@ It is not a message bus! and does not abstract the transportation of the message
 guarantees your message will be published to all subscribers.
 
 Usage
+-----
 It is designed to be used like a generic List, or Stack. In the end I chose not to create a default storage mechanism but thats mainly because I could not decide
 what the best default store would be. 
 
