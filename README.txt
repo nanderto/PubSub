@@ -5,7 +5,7 @@ Currently it is supporting Msmq and ESENT as storage mechanisms.
 It is not a message bus! and does not abstract the transportation of the messages, only a Publish subscribe component that 
 guarantees your message will be published to all subscribers.
 
-Usage
+##Usage
 It is designed to be used like a generic List, or Stack. In the end I chose not to create a default storage mechanism but thats mainly because I could not decide
 what the best default store would be. 
 
@@ -22,7 +22,7 @@ var pubsub = new PublishSubscribeChannel<Customer>(new EsentStoreProvider<Custom
 4. Now just publish your messages.
        pubsub.PublishMessage(new Customer());
 
-Notes:
+**Notes:**
 - The subscribers need to inherit from ISubscriber
 - The creation of the store and channels hides alot of complexity. If you are using the MSMQ then it will check if you have queues set up and create them for you, if you dont.
 You get a Msmq Queue for each Messsage type.
@@ -37,7 +37,7 @@ your database and to the pubsub store and guarantee either both or neither will 
 - Most things are not configurable, that is to make it easy to use.
 - It is also possible to use a IoC container to wire up you objects. In this case you need to hold a reference to the store for the life of the application. 
 
-Using IoC (Ninject)
+**Using IoC (Ninject)**
 
 for a "User"
 IKernel kernel = new StandardKernel();
@@ -53,7 +53,7 @@ var publishSubscribeChannel = kernel.Get<IPublishSubscribeChannel<User>>();
 
 store.Dispose();
 
-Features A couple of additional features
+**Features** A couple of additional features
 1) You dont need to add subscribers!! 
 When a PubSubChannel is instantiated for the first time if you do not specify a subscriber
 then it will search through the executing folder for all components that implement the ISubscriber<YourmatchingType>. It will create a list and save the list for building
