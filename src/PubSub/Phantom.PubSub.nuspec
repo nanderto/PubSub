@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/nanderto/PubSub</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Added Transactional support to Publishing messages using the ESENT store.</releaseNotes>
+    <copyright>Copyright The Phantom Coder. All rights reserved.</copyright>
+    <tags>Publish Subscribe PubSub</tags>
+  </metadata>
+</package>

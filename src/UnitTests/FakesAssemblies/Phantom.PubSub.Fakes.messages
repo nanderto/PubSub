@@ -1,0 +1,33 @@
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.AutoConfig`1: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.BatchProcessor`1: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.AssemblyLocator`1: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.CounterType: type is a value type.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.Counter: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.EsentConfig: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.EsentInstanceService: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.StoreTransactionOption: type is a value type.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.Utils: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate stub for Phantom.PubSub.Serializer: type is sealed.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.AutoConfig`1: type is not visible to exported or assembly(Phantom.PubSub.Fakes).
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.BatchProcessor`1: type is not visible to exported or assembly(Phantom.PubSub.Fakes).
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.AssemblyLocator`1+<>c__DisplayClass3: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.CounterType: type is an enum.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IUnitOfWork: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IEsentStore`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IStoreProvider`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IFilter`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IFilterChain`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.ICurrentTimeProvider: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.IPublishSubscribeChannel`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.ISubscriber`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.ISubscriberInfo`1: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.ISubscriberMetadata: type is an interface.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.StoreTransactionOption: type is an enum.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.PublishSubscribeChannel`1+<>c__DisplayClass16: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.PublishSubscribeChannel`1+<>c__DisplayClass2: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.PublishSubscribeChannel`1+<>c__DisplayClass6: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.PublishSubscribeChannel`1+<>c__DisplayClassd: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.PublishSubscribeChannel`1+<>c__DisplayClassf: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.Repository`1+<>c__DisplayClass3: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.Subscriber`1+<RunAsync>d__0: type is not supported because of internal limitations.
+C:\Dev\GitHub\PubSub\src\UnitTests\Fakes\Phantom.PubSub.fakes : warning : Cannot generate shim for Phantom.PubSub.SubscriberMetadata+DefaultCurrentTimeProvider: type is not visible to exported or assembly(Phantom.PubSub.Fakes).
