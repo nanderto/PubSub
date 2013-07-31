@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------
+// <copyright file="MsmqStoreProvider.cs" company="The Phantom Coder">
+//     Copyright The Phantom Coder. All rights reserved.
+// </copyright>
+//----------------------------------------------------------------
 namespace Phantom.PubSub
 {
     using System;
@@ -20,9 +25,14 @@ namespace Phantom.PubSub
     public class MsmqStoreProvider<T> : IStoreProvider<T>
     {
         private static readonly object SyncLock = new object();
+        
         private static volatile bool isQueueConfigured = false;
+        
         private string longStoreName = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MsmqStoreProvider{T}" /> class.
+        /// </summary>
         public MsmqStoreProvider()
         {
             this.Name = CleanupName(typeof(T).ToString());
@@ -37,10 +47,15 @@ namespace Phantom.PubSub
 
         public string Name { get; set; }
 
+        /// <summary>
+        /// Puts a message into the store with associated metadata about the subscribers and run time information, when started, retry count etc
+        /// </summary>
+        /// <param name="messagePacket">Message Packet (Message wrapped in Metadata about message)</param>
+        /// <returns>Message Id</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
-        public string PutMessage(MessagePacket<T> message)
+        public string PutMessage(MessagePacket<T> messagePacket)
         {
-            if (message == null)
+            if (messagePacket == null)
             {
                 throw new ArgumentNullException("Message is null for Queue name: " + this.Name);
             }
@@ -64,7 +79,7 @@ namespace Phantom.PubSub
                     try
                     {
                         recoverableMessage = new Message();
-                        recoverableMessage.Body = message;
+                        recoverableMessage.Body = messagePacket;
                         recoverableMessage.Formatter = new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
                         recoverableMessage.Recoverable = true;
 
@@ -89,9 +104,31 @@ namespace Phantom.PubSub
 
             return result;
         }
+
+        /// <summary>
+        /// Updates the message store. calls put message to put a new message in the store with a single subscriber.
+        /// </summary>
+        /// <param name="messagePacket">The message packet.</param>
+        /// <exception cref="System.ArgumentNullException">Argument Null Exception</exception>
+        public void UpdateMessageStore(MessagePacket<T> messagePacket)
+        {
+            if (messagePacket == null)
+            {
+                throw new ArgumentNullException("messagePacket");
+            }
+
+            if (messagePacket.SubscriberMetadataList[0].FailedOrTimedOut == false)
+            {
+                ////currently do nothing the clean up is handled by the call to SubscriberGroupCompletedForMessage which is made after all subscriber tasks are completed;
+            }
+            else
+            {
+                this.PutMessage(messagePacket);
+            }
+        }
         
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Want to swallow all exceptions and allow code to continuing to execute")]
-        public bool RemoveFromStorage(string messageId)
+        public bool SubscriberGroupCompletedForMessage(string messageId)
         {
             Message m = null;
             //// if (CheckQueueConfigured())
@@ -340,6 +377,33 @@ namespace Phantom.PubSub
             }
 
             return true;
+        }
+
+        public int GetMessageCount()
+        {
+            int count = 0;
+            using (MessageQueue msgQueue = FindQueue(this.Name))
+            {
+                try
+                {
+                    if (!MsmqStoreProvider<T>.IsQueueEmpty(msgQueue))
+                    {
+                        Message[] messages = new Message[] { };
+
+                        messages = msgQueue.GetAllMessages();
+                        count = messages.Length;
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
+                }
+                catch (ApplicationException) 
+                { 
+                }
+            }
+
+            return count;
         }
 
         private static string CleanupName(string dirtyname)

@@ -6,7 +6,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Phantom.PubSub.AssemblyLocator&lt;T&gt;" Collapsed="true">
-    <Position X="12.25" Y="4.25" Width="1.5" />
+    <Position X="11.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAgAAAAAAAAAAAAAAAEAAEAAAABQAAAAAAAA=</HashCode>
       <FileName>AssemblyLocator.cs</FileName>
@@ -15,27 +15,50 @@
   <Class Name="Phantom.PubSub.MsmqStoreProvider&lt;T&gt;" Collapsed="true">
     <Position X="13.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AGAgBAAAQAAgLBAACAAAAAQAQAEAAAAAAAAAAAAQAAA=</HashCode>
+      <HashCode>AGAABAAAQAAgJBAACAAAEAQAQAEAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>MsmqStoreProvider.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="Phantom.PubSub.ISubscriber&lt;T&gt;" Collapsed="true">
-    <Position X="8.25" Y="2.25" Width="1.5" />
+  <Class Name="Phantom.PubSub.EsentInstanceService&lt;T&gt;">
+    <Position X="7.25" Y="2" Width="2" />
     <TypeIdentifier>
-      <HashCode>BAACAQAEAAAACCAAAgAAAAQAIAAAACAEAAAEAAAAghI=</HashCode>
+      <HashCode>AAAAgAAAQKAAAAAQAAgEAAAAAABAQAAEAAEQgAAAAAA=</HashCode>
+      <FileName>EsentInstance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Phantom.PubSub.EsentStore" Collapsed="true">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAIAAgAAAABAAAAQAAABCAAAAEAAAAACAAAA=</HashCode>
+      <FileName>EsentStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Phantom.PubSub.EsentStoreProvider&lt;T&gt;">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEABABAQKAgABAACAAAEAQAACFAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EsentStoreProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Phantom.PubSub.ISubscriber&lt;T&gt;" Collapsed="true">
+    <Position X="9.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAQAAAAAACCAAAAAAAAQAIAAAACAEAAAEAAAAghA=</HashCode>
       <FileName>ISubscriber.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Phantom.PubSub.IPublishSubscribeChannel&lt;T&gt;" Collapsed="true">
-    <Position X="14.5" Y="2.25" Width="1.5" />
+    <Position X="14.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAgBAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPublishSubscribeChannel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Phantom.PubSub.IStoreProvider&lt;T&gt;" Collapsed="true">
-    <Position X="13" Y="3" Width="1.5" />
+    <Position X="11.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAABAAAAAAgABAAAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IStoreProvider.cs</FileName>

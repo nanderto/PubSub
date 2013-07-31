@@ -79,6 +79,9 @@
         <member name="M:Phantom.PubSub.Fakes.ShimEsentConfig.BehaveAsNotImplemented">
             <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
         </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentConfig.DoesStoreExistOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,System.Boolean})">
+            <summary>Sets the shim of EsentConfig.DoesStoreExist(String storeName)</summary>
+        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.Behavior">
             <summary>Assigns the behavior for all methods of the shimmed type</summary>
         </member>
@@ -88,8 +91,17 @@
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateColumnsAndIndexesJET_SESIDJET_TABLEID">
             <summary>Sets the shim of EsentConfig.CreateColumnsAndIndexes(JET_SESID sesid, JET_TABLEID tableid)</summary>
         </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateDatabaseandMessageStoreString">
+            <summary>Sets the shim of EsentConfig.CreateDatabaseandMessageStore(String MessageTypeName)</summary>
+        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateMessageStoreString">
-            <summary>Sets the shim of EsentConfig.CreateMessageStore(String database)</summary>
+            <summary>Sets the shim of EsentConfig.CreateMessageStore(String MessageTypeName)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateMessageTableStringSessionJET_DBID">
+            <summary>Sets the shim of EsentConfig.CreateMessageTable(String tableName, Session session, JET_DBID dbid)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateSubscriberMetadataTableStringSessionJET_DBID">
+            <summary>Sets the shim of EsentConfig.CreateSubscriberMetadataTable(String tableName, Session session, JET_DBID dbid)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.DoesDatabaseExistString">
             <summary>Sets the shim of EsentConfig.DoesDatabaseExist(String databaseName)</summary>
@@ -130,86 +142,86 @@
         <member name="T:Phantom.PubSub.Fakes.ShimEsentDatabaseException.AllInstances">
             <summary>Define shims for all instances members</summary>
         </member>
-        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService`1">
-            <summary>Shim type of Phantom.PubSub.EsentInstanceService`1</summary>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService">
+            <summary>Shim type of Phantom.PubSub.EsentInstanceService</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.#ctor">
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService.#ctor">
             <summary>Initializes a new shim instance</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.#ctor(Phantom.PubSub.EsentInstanceService{`0})">
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService.#ctor(Phantom.PubSub.EsentInstanceService)">
             <summary>Initializes a new shim for the given instance</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.BehaveAsCurrent">
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService.BehaveAsCurrent">
             <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.BehaveAsNotImplemented">
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService.BehaveAsNotImplemented">
             <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Bind(System.IDisposable)">
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentInstanceService.Bind(System.IDisposable)">
             <summary>Binds the members of the interface to the shim.</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Behavior">
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.Behavior">
             <summary>Assigns the behavior for all methods of the shimmed type</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.CleanupNameString">
-            <summary>Sets the shim of EsentInstanceService`1.CleanupName(String dirtyname)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.CleanupNameString">
+            <summary>Sets the shim of EsentInstanceService.CleanupName(String dirtyname)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Constructor">
-            <summary>Sets the shim of EsentInstanceService`1.EsentInstanceService`1()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.Constructor">
+            <summary>Sets the shim of EsentInstanceService.EsentInstanceService()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DecrementRefCount">
-            <summary>Sets the shim of EsentInstanceService`1.DecrementRefCount()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.DecrementRefCount">
+            <summary>Sets the shim of EsentInstanceService.DecrementRefCount()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.Dispose">
-            <summary>Sets the shim of EsentInstanceService`1.Dispose()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.Dispose">
+            <summary>Sets the shim of EsentInstanceService.Dispose()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeBoolean">
-            <summary>Sets the shim of EsentInstanceService`1.Dispose(Boolean disposing)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.DisposeBoolean">
+            <summary>Sets the shim of EsentInstanceService.Dispose(Boolean disposing)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeOfEsentInstance">
-            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstance()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.DisposeOfEsentInstance">
+            <summary>Sets the shim of EsentInstanceService.DisposeOfEsentInstance()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.DisposeOfEsentInstanceImmediatly">
-            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstanceImmediatly()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.DisposeOfEsentInstanceImmediatly">
+            <summary>Sets the shim of EsentInstanceService.DisposeOfEsentInstanceImmediatly()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.EsentInstanceGet">
-            <summary>Sets the shim of EsentInstanceService`1.get_EsentInstance()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.EsentInstanceGet">
+            <summary>Sets the shim of EsentInstanceService.get_EsentInstance()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.OnTimerEventObject">
-            <summary>Sets the shim of EsentInstanceService`1.OnTimerEvent(Object state)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.OnTimerEventObject">
+            <summary>Sets the shim of EsentInstanceService.OnTimerEvent(Object state)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.ScheduleDisposingOfEsent">
-            <summary>Sets the shim of EsentInstanceService`1.ScheduleDisposingOfEsent()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.ScheduleDisposingOfEsent">
+            <summary>Sets the shim of EsentInstanceService.ScheduleDisposingOfEsent()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.ServiceGet">
-            <summary>Sets the shim of EsentInstanceService`1.get_Service()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.ServiceGet">
+            <summary>Sets the shim of EsentInstanceService.get_Service()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.StaticConstructor">
-            <summary>Sets the shim of EsentInstanceService`1.EsentInstanceService`1()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.StaticConstructor">
+            <summary>Sets the shim of EsentInstanceService.EsentInstanceService()</summary>
         </member>
-        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances">
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances">
             <summary>Define shims for all instances members</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.Dispose">
-            <summary>Sets the shim of EsentInstanceService`1.Dispose()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.Dispose">
+            <summary>Sets the shim of EsentInstanceService.Dispose()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeBoolean">
-            <summary>Sets the shim of EsentInstanceService`1.Dispose(Boolean disposing)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.DisposeBoolean">
+            <summary>Sets the shim of EsentInstanceService.Dispose(Boolean disposing)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeOfEsentInstance">
-            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstance()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.DisposeOfEsentInstance">
+            <summary>Sets the shim of EsentInstanceService.DisposeOfEsentInstance()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.DisposeOfEsentInstanceImmediatly">
-            <summary>Sets the shim of EsentInstanceService`1.DisposeOfEsentInstanceImmediatly()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.DisposeOfEsentInstanceImmediatly">
+            <summary>Sets the shim of EsentInstanceService.DisposeOfEsentInstanceImmediatly()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.EsentInstanceGet">
-            <summary>Sets the shim of EsentInstanceService`1.get_EsentInstance()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.EsentInstanceGet">
+            <summary>Sets the shim of EsentInstanceService.get_EsentInstance()</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.OnTimerEventObject">
-            <summary>Sets the shim of EsentInstanceService`1.OnTimerEvent(Object state)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.OnTimerEventObject">
+            <summary>Sets the shim of EsentInstanceService.OnTimerEvent(Object state)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService`1.AllInstances.ScheduleDisposingOfEsent">
-            <summary>Sets the shim of EsentInstanceService`1.ScheduleDisposingOfEsent()</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentInstanceService.AllInstances.ScheduleDisposingOfEsent">
+            <summary>Sets the shim of EsentInstanceService.ScheduleDisposingOfEsent()</summary>
         </member>
         <member name="T:Phantom.PubSub.Fakes.ShimEsentStore`1">
             <summary>Shim type of Phantom.PubSub.EsentStore`1</summary>
@@ -234,15 +246,6 @@
         </member>
         <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.Bind(System.IDisposable)">
             <summary>Binds the members of the interface to the shim.</summary>
-        </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.DeserializeOf1String``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.String,System.Object})">
-            <summary>Sets the shim of EsentStore`1.Deserialize(String input)</summary>
-        </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.GetAllRecordsOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},System.Collections.Generic.IEnumerable{Phantom.PubSub.MessagePacket{``0}}})">
-            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
-        </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.GetOneRowOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},Phantom.PubSub.MessagePacket{``0}})">
-            <summary>Sets the shim of EsentStore`1.GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AddMessageInTransactionStringString">
             <summary>Sets the shim of EsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
@@ -274,14 +277,23 @@
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DeleteMetadataIEnumerableOfISubscriberMetadata">
             <summary>Sets the shim of EsentStore`1.DeleteMetadata(IEnumerable`1&lt;ISubscriberMetadata&gt; metadatas)</summary>
         </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DeserializeString">
+            <summary>Sets the shim of EsentStore`1.Deserialize(String input)</summary>
+        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.Dispose">
             <summary>Sets the shim of EsentStore`1.Dispose()</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DisposeBoolean">
             <summary>Sets the shim of EsentStore`1.Dispose(Boolean disposing)</summary>
         </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.DoesStoreExist">
+            <summary>Sets the shim of EsentStore`1.DoesStoreExist()</summary>
+        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetAllMessages">
             <summary>Sets the shim of EsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetAllRecordsJET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID">
+            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMessageInt32">
             <summary>Sets the shim of EsentStore`1.GetMessage(Int32 messageId)</summary>
@@ -294,6 +306,9 @@
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetMetadataInt32Table">
             <summary>Sets the shim of EsentStore`1.GetMetadata(Int32 messageId, Table table)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetOneRowJET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID">
+            <summary>Sets the shim of EsentStore`1.GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.GetRecordCount">
             <summary>Sets the shim of EsentStore`1.GetRecordCount()</summary>
@@ -328,9 +343,6 @@
         <member name="T:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances">
             <summary>Define shims for all instances members</summary>
         </member>
-        <member name="M:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetAllRecordsOf1JET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Phantom.PubSub.EsentStore{`0},Microsoft.Isam.Esent.Interop.JET_SESID,Microsoft.Isam.Esent.Interop.JET_TABLEID,System.Collections.Generic.IDictionary{System.String,Microsoft.Isam.Esent.Interop.JET_COLUMNID},System.Collections.Generic.IEnumerable{Phantom.PubSub.MessagePacket{``0}}})">
-            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
-        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.AddMessageInTransactionStringString">
             <summary>Sets the shim of EsentStore`1.AddMessageInTransaction(String body, String metadata)</summary>
         </member>
@@ -355,8 +367,14 @@
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.DisposeBoolean">
             <summary>Sets the shim of EsentStore`1.Dispose(Boolean disposing)</summary>
         </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.DoesStoreExist">
+            <summary>Sets the shim of EsentStore`1.DoesStoreExist()</summary>
+        </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetAllMessages">
             <summary>Sets the shim of EsentStore`1.GetAllMessages()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetAllRecordsJET_SESIDJET_TABLEIDIDictionaryOfStringJET_COLUMNID">
+            <summary>Sets the shim of EsentStore`1.GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary`2&lt;String,JET_COLUMNID&gt; columnids)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStore`1.AllInstances.GetMessageInt32">
             <summary>Sets the shim of EsentStore`1.GetMessage(Int32 messageId)</summary>
@@ -498,6 +516,81 @@
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreProvider`1.AllInstances.UpdateMessageStoreMessagePacketOfT0">
             <summary>Sets the shim of EsentStoreProvider`1.UpdateMessageStore(MessagePacket`1&lt;!0&gt; messagePacket)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1">
+            <summary>Shim type of Phantom.PubSub.EsentStoreResourceManager`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.#ctor(Phantom.PubSub.EsentStoreResourceManager{`0})">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.Bind(System.Transactions.IEnlistmentNotification)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.CommitEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Commit(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.ConstructorIEsentStoreOfT0">
+            <summary>Sets the shim of EsentStoreResourceManager`1.EsentStoreResourceManager`1(IEsentStore`1&lt;!0&gt; store)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.EnlistmentGet">
+            <summary>Sets the shim of EsentStoreResourceManager`1.get_Enlistment()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.EnlistmentSetEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.set_Enlistment(Enlistment value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.InDoubtEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.InDoubt(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.PreparePreparingEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Prepare(PreparingEnlistment preparingEnlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.RollbackEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Rollback(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.StoreGet">
+            <summary>Sets the shim of EsentStoreResourceManager`1.get_Store()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.StoreSetIEsentStoreOfT0">
+            <summary>Sets the shim of EsentStoreResourceManager`1.set_Store(IEsentStore`1&lt;!0&gt; value)</summary>
+        </member>
+        <member name="T:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.CommitEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Commit(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.EnlistmentGet">
+            <summary>Sets the shim of EsentStoreResourceManager`1.get_Enlistment()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.EnlistmentSetEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.set_Enlistment(Enlistment value)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.InDoubtEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.InDoubt(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.PreparePreparingEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Prepare(PreparingEnlistment preparingEnlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.RollbackEnlistment">
+            <summary>Sets the shim of EsentStoreResourceManager`1.Rollback(Enlistment enlistment)</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.StoreGet">
+            <summary>Sets the shim of EsentStoreResourceManager`1.get_Store()</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentStoreResourceManager`1.AllInstances.StoreSetIEsentStoreOfT0">
+            <summary>Sets the shim of EsentStoreResourceManager`1.set_Store(IEsentStore`1&lt;!0&gt; value)</summary>
         </member>
         <member name="T:Phantom.PubSub.Fakes.ShimFilterBase`1">
             <summary>Shim type of Phantom.PubSub.FilterBase`1</summary>
@@ -903,6 +996,9 @@
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.Behavior">
             <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.ConstructorEsentStoreResourceManagerOfT0">
+            <summary>Sets the shim of Repository`1.Repository`1(EsentStoreResourceManager`1&lt;!0&gt; resourceManager)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimRepository`1.ConstructorIEsentStoreOfT0">
             <summary>Sets the shim of Repository`1.Repository`1(IEsentStore`1&lt;!0&gt; store)</summary>
@@ -1645,6 +1741,24 @@
         <member name="P:Phantom.PubSub.Fakes.StubEsentStoreProvider`1.InstanceObserver">
             <summary>Gets or sets the instance observer.</summary>
         </member>
+        <member name="T:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1">
+            <summary>Stub type of Phantom.PubSub.EsentStoreResourceManager`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1.#ctor(Phantom.PubSub.IEsentStore{`0})">
+            <summary>Initializes a new instance</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1.InitializeStub">
+            <summary>Initializes a new instance of type StubEsentStoreResourceManager</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1.CallBase">
+            <summary>Gets or sets a value that indicates if the base method should be called instead of the fallback behavior</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1.InstanceBehavior">
+            <summary>Gets or sets the instance behavior.</summary>
+        </member>
+        <member name="P:Phantom.PubSub.Fakes.StubEsentStoreResourceManager`1.InstanceObserver">
+            <summary>Gets or sets the instance observer.</summary>
+        </member>
         <member name="T:Phantom.PubSub.Fakes.StubFilterBase`1">
             <summary>Stub type of Phantom.PubSub.FilterBase`1</summary>
         </member>
@@ -2310,6 +2424,9 @@
         </member>
         <member name="T:Phantom.PubSub.Fakes.StubRepository`1">
             <summary>Stub type of Phantom.PubSub.Repository`1</summary>
+        </member>
+        <member name="M:Phantom.PubSub.Fakes.StubRepository`1.#ctor(Phantom.PubSub.EsentStoreResourceManager{`0})">
+            <summary>Initializes a new instance</summary>
         </member>
         <member name="M:Phantom.PubSub.Fakes.StubRepository`1.#ctor(Phantom.PubSub.IEsentStore{`0})">
             <summary>Initializes a new instance</summary>

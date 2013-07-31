@@ -116,21 +116,21 @@ namespace Phantom.PubSub
         {
             try
             {
-                Trace.WriteLine("ProcessBatch Should fire every 10 seconds: " + DateTime.Now.ToString() + " In Batch Processor About to check if process is still running");
-                Counter.Increment(7);
                 if (!processRunning)
                 {
                     var sw = Stopwatch.StartNew();
-                    Counter.Increment(8);
-                    Trace.WriteLine("Starting new process");
+#if DEBUG
+                    Counter.Increment(8); 
+#endif
+                    Trace.WriteLineIf(Utils.GeneralSwitch.TraceInfo, "Starting new process");
                     processRunning = true;
                     ProcessBatch();
                     processRunning = false;
-                    Trace.WriteLine(string.Format(CultureInfo.InvariantCulture, "Batch process ran for {0:#,#} ms", sw.ElapsedMilliseconds));
+                    Trace.WriteLineIf(Utils.GeneralSwitch.TraceInfo, string.Format(CultureInfo.InvariantCulture, "Batch process ran for {0:#,#} ms", sw.ElapsedMilliseconds));
                 }
                 else
                 {
-                    Trace.WriteLine("Yes it is");
+                    Trace.WriteLine("Batch process is still running");
                 }
             }
             catch (Exception ex)

@@ -27,7 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Pubsub.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -47,8 +47,16 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Esent.Interop">
-      <HintPath>..\packages\Lib\Esent.Interop.dll</HintPath>
+    <Reference Include="Esent.Collections">
+      <HintPath>..\packages\ManagedEsent.1.6\lib\net20\Esent.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Esent.Interop, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ManagedEsent.1.6\lib\net20\Esent.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,16 +74,25 @@
     <Compile Include="BatchProcessor.cs" />
     <Compile Include="AssemblyLocator.cs" />
     <Compile Include="Counter.cs" />
+    <Compile Include="EsentConfig.cs" />
+    <Compile Include="EsentDatabaseException.cs" />
+    <Compile Include="EsentInstanceService.cs" />
+    <Compile Include="EsentStore.cs" />
     <Compile Include="EsentStoreProvider.cs" />
+    <Compile Include="EsentStoreResourceManager.cs" />
     <Compile Include="Extensions\FilterBase.cs" />
     <Compile Include="Extensions\IFilter.cs" />
     <Compile Include="Extensions\IFilterChain.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="ICurrentTimeProvider.cs" />
+    <Compile Include="IEsentStore.cs" />
     <Compile Include="IPublishSubscribeChannel.cs" />
     <Compile Include="IStoreProvider.cs" />
     <Compile Include="ISubscriber.cs" />
+    <Compile Include="ISubscriberInfo.cs" />
     <Compile Include="ISubscriberMetadata.cs" />
-    <Compile Include="locals.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="MessagePacket.cs" />
     <Compile Include="Extensions\PublishMessageFilter.cs" />
     <Compile Include="PublishSubscribeChannel.cs">
@@ -84,16 +101,26 @@
     <Compile Include="MsmqStoreProvider.cs" />
     <Compile Include="Extensions\ServiceAdaptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="Store.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="SubscriberInfo.cs" />
     <Compile Include="SubscriberMetadata.cs" />
-    <Compile Include="Subscribers.cs" />
+    <Compile Include="SubscriberMetadataConverter.cs" />
+    <Compile Include="SubscribersCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
+    <None Include="Phantom.PubSub.nuspec" />
+    <None Include="Pubsub.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Diagnostics\Tracer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

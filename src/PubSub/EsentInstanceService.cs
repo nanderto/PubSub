@@ -21,12 +21,12 @@ namespace Phantom.PubSub
     /// implemented as a singleton provides access to it
     /// </summary>
     /// <typeparam name="T">The type that this component handles</typeparam>
-    public sealed class EsentInstanceService<T> : IDisposable
+    public sealed class EsentInstanceService : IDisposable
     {
         /// <summary>
         /// The esent instance service
         /// </summary>
-        private static volatile EsentInstanceService<T> esentInstanceService;
+        private static volatile EsentInstanceService esentInstanceService;
 
         private static object syncRoot = new object();
         
@@ -47,8 +47,7 @@ namespace Phantom.PubSub
         /// </summary>
         private EsentInstanceService() 
         {
-            this.typeName = CleanupName(typeof(T).ToString());
-            this.databaseName = this.typeName + ".edb";
+            this.databaseName = "PhantomPubSub.edb";
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Phantom.PubSub
             this.Dispose(false);
         }
 
-        public static EsentInstanceService<T> Service
+        public static EsentInstanceService Service
         {
             get
             {
@@ -69,7 +68,7 @@ namespace Phantom.PubSub
                     {
                         if (esentInstanceService == null)
                         {
-                            esentInstanceService = new EsentInstanceService<T>();
+                            esentInstanceService = new EsentInstanceService();
                         }
                     }
                 }
@@ -87,9 +86,9 @@ namespace Phantom.PubSub
                     if (this.esentInstance == null)
                     {
                         refCount = ++refCount;
-                        Trace.WriteLineIf(Utils.EsentSwitch.TraceInfo, "Creating new instance");
+                        Trace.WriteLineIf(Utils.EsentSwitch.TraceVerbose, "Creating new instance");
                         Trace.WriteLineIf(Utils.EsentSwitch.TraceVerbose, "RefCount: " + refCount.ToString(CultureInfo.CurrentCulture));
-                        this.esentInstance = new Instance(this.typeName + "Instance");
+                        this.esentInstance = new Instance("Instance");
                         this.esentInstance.Parameters.CircularLog = true;
                         this.esentInstance.Init();
                         using (var session = new Session(this.esentInstance))

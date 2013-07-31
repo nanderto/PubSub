@@ -58,7 +58,7 @@ namespace Phantom.PubSub
             if (disposing)
             {
                 this.store.Dispose();
-                EsentInstanceService<T>.Service.DisposeOfEsentInstanceImmediatly();
+                EsentInstanceService.Service.DisposeOfEsentInstanceImmediatly();
             }
         }
     }

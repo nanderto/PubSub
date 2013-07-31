@@ -68,7 +68,7 @@ namespace UnitTests
         /// <summary>
         ///A test for UserManagerServiceAdaptor Constructor
         ///</summary>
-        [TestCategory("UnitTest"), TestMethod()]
+        [TestMethod, TestCategory("IntegrationMsmq")]
         public void UserManagerServiceAdaptorConstructorTest()
         {
             UserManagerServiceAdaptor target = new UserManagerServiceAdaptor();

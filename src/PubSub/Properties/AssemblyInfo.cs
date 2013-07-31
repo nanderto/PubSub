@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Phantom.PubSub")]
-[assembly: AssemblyDescription("Light weight publish subscribe implementation")]
+[assembly: AssemblyDescription("Publish subscribe implementation")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Phantom")]
+[assembly: AssemblyCompany("The Phantom Coder")]
 [assembly: AssemblyProduct("PublishSubscribeComponent")]
 [assembly: AssemblyCopyright("Copyright © The Phantom Coder 2010")]
 [assembly: AssemblyTrademark("")]
@@ -39,8 +39,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 [assembly: InternalsVisibleTo("ReflectionTests")]
 [assembly: InternalsVisibleTo("UnitTests")]
 [assembly: InternalsVisibleTo("IntegrationTests")]

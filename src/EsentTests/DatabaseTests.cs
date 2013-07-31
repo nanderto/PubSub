@@ -3,32 +3,33 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Isam.Esent.Interop;
 using System.Collections.Generic;
 using System.Text;
+using Phantom.PubSub;
 
 namespace EsentTests
 {
     [TestClass]
     public class DatabaseTests
     {
-        private static string DatabaseName = "test.esb";
+        private static string DatabaseName = "PhantomPubSub.edb";
         private static string TableName = "messages";
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void CreateDatabase()
         {
             TestHelper.CreateDatabase(DatabaseName);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void AttachtoDatabaseAndVerifyColumns()
         {
-            TestHelper.CreateDatabase(DatabaseName);
-            TestHelper.VerifyDatabase(DatabaseName);
+            var store = new EsentStoreProvider<Dummy>();
+            TestHelper.VerifyDatabase("EsentTestsDummy");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void InsertOneMessage()
         {
-            TestHelper.CreateDatabase(DatabaseName);
+            TestHelper.CreateDatabase("EsentTestsDummy");
             using (var instance = new Instance("MyInstanceName"))
             {
                 instance.Parameters.CircularLog = true;
@@ -41,7 +42,7 @@ namespace EsentTests
 
                     JET_TABLEID tableid;
 
-                    if (Api.TryOpenTable(session, dbid, "message", OpenTableGrbit.None, out tableid))
+                    if (Api.TryOpenTable(session, dbid, "EsentTestsDummymessage", OpenTableGrbit.None, out tableid))
                     {
                         IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, tableid);
                         JET_COLUMNID columnidMessage = columnids["message"];
@@ -53,7 +54,7 @@ namespace EsentTests
                     }
                     else
                     {
-                        using (var table = new Table(session, dbid, TableName, OpenTableGrbit.None))
+                        using (var table = new Table(session, dbid, "EsentTestsDummymessage", OpenTableGrbit.None))
                         {
                             IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, table);
                             JET_COLUMNID columnidMessage = columnids["message"];
@@ -100,10 +101,10 @@ namespace EsentTests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void IinsertAndReadOneMessage()
         {
-            TestHelper.CreateDatabase(DatabaseName);
+            TestHelper.CreateDatabase("EsentTestsDummy");
             using (var instance = new Instance("MyInstanceName"))
             {
                 instance.Parameters.CircularLog = true;
@@ -116,7 +117,7 @@ namespace EsentTests
 
                     JET_TABLEID tableid;
 
-                    if (Api.TryOpenTable(session, dbid, "messages", OpenTableGrbit.None, out tableid))
+                    if (Api.TryOpenTable(session, dbid, "EsentTestsDummymessages", OpenTableGrbit.None, out tableid))
                     {
                         IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, tableid);
                         JET_COLUMNID columnidMessage = columnids["message"];
@@ -126,14 +127,14 @@ namespace EsentTests
                         Assert.IsInstanceOfType(columnidMetaData, typeof(JET_COLUMNID));
                         AddMessage(session, tableid, ref columnidMessage, ref columnidMetaData);
 
-                        var results = DumpByIndex(session, tableid, null, columnids);
+                        var results = TestHelper.DumpByIndex(session, tableid, null, columnids);
                         Assert.IsNotNull(results);
                         Assert.IsTrue(results.Count == 1);
                         Assert.AreEqual("Hi this is the message", results[0]);
                     }
                     else
                     {
-                        using (var table = new Table(session, dbid, TableName, OpenTableGrbit.None))
+                        using (var table = new Table(session, dbid, "EsentTestsDummymessages", OpenTableGrbit.None))
                         {
                             IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, table);
                             JET_COLUMNID columnidMessage = columnids["message"];
@@ -143,7 +144,7 @@ namespace EsentTests
                             Assert.IsInstanceOfType(columnidMetaData, typeof(JET_COLUMNID));
                             AddMessage(session, table, ref columnidMessage, ref columnidMetaData);
 
-                            var results = DumpByIndex(session, table, null, columnids);
+                            var results = TestHelper.DumpByIndex(session, table, null, columnids);
                             Assert.IsNotNull(results);
                             Assert.IsTrue(results.Count == 1);
                             Assert.AreEqual("Hi this is the message", results[0]);
@@ -154,42 +155,9 @@ namespace EsentTests
 
         }
 
-        private static List<string> DumpByIndex(JET_SESID sesid, JET_TABLEID tableid, string index, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            Api.JetSetCurrentIndex(sesid, tableid, index);
-            return GetAllRecords(sesid, tableid, columnids);
-        }
-        private static List<string> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            List<string> results = null;
-            if (Api.TryMoveFirst(sesid, tableid))
-            {
-                results = GetRecordsToEnd(sesid, tableid, columnids);
-            }
-            return results;
-        }
-        private static List<string> GetRecordsToEnd(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            List<string> results = new List<string>();
-            do
-            {
-                results.Add(GetOneRow(sesid, tableid, columnids));
-            }
-            while (Api.TryMoveNext(sesid, tableid));
-            return results;
-        }
 
-        private static string GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            JET_COLUMNID columnidMessage = columnids["message"];
-            JET_COLUMNID columnidMetaData = columnids["metadata"];
 
-            string message = Api.RetrieveColumnAsString(sesid, tableid, columnidMessage);
-            string Metadata = Api.RetrieveColumnAsString(sesid, tableid, columnidMetaData);
-            return message;
-        }
-
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void InsertRecordRetrieveAutoIncrement()
         {
             TestHelper.CreateDatabase(DatabaseName);

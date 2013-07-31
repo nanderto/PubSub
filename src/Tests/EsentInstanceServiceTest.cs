@@ -84,7 +84,7 @@ namespace UnitTests
             store.Dispose();
         }
 
-        [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("IntegrationEsent")]
         public void NinjectEsentUseTest()
         {
             IKernel kernel = new StandardKernel();

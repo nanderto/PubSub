@@ -20,6 +20,7 @@ namespace Phantom.PubSub
     public class Repository<T>
     {
         private IEsentStore<T> store;
+        //private EsentStoreResourceManager<T> rm;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Repository{T}" /> class.
@@ -28,6 +29,21 @@ namespace Phantom.PubSub
         public Repository(IEsentStore<T> store)
         {
             this.store = store;         
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Repository{T}" /> class.
+        /// </summary>
+        /// <param name="resourceManager">The resource manager. Used for enlisting in external transaction. (not for Esent transaction)</param>
+        /// <exception cref="System.ArgumentNullException">resourceManager was Null</exception>
+        public Repository(EsentStoreResourceManager<T> resourceManager)
+        {
+            if (resourceManager == null)
+            {
+                throw new ArgumentNullException("resourceManager");
+            }
+
+            this.store = resourceManager.Store;
         }
 
         public int AddMessage(MessagePacket<T> messagePacket)

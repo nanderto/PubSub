@@ -18,6 +18,7 @@ namespace Phantom.PubSub
     /// </summary>
     public static class EsentConfig
     {
+        private const string DatabaseName = "PhantomPubSub.edb";
         /// <summary>
         /// Doeses the database exist.
         /// </summary>
@@ -39,10 +40,8 @@ namespace Phantom.PubSub
         /// Creates the message store.
         /// </summary>
         /// <param name="database">The database.</param>
-        public static void CreateMessageStore(string database)
+        public static void CreateDatabaseandMessageStore(string MessageTypeName)
         {
-            var tableName = "messages";
-            
             using (var instance = new Instance("createdatabase"))
             {
                 instance.Parameters.CircularLog = true;
@@ -50,27 +49,53 @@ namespace Phantom.PubSub
                 using (var session = new Session(instance))
                 {
                     JET_DBID dbid;
-                    Api.JetCreateDatabase(session, database, null, out dbid, CreateDatabaseGrbit.OverwriteExisting);
-                    using (var transaction = new Transaction(session))
-                    {
-                        JET_TABLEID tableid;
-                        Api.JetCreateTable(session, dbid, tableName, 16, 100, out tableid);
-                        CreateColumnsAndIndexes(session, tableid);
-                        Api.JetCloseTable(session, tableid);
-                        transaction.Commit(CommitTransactionGrbit.LazyFlush);
-                    }
-
-                    tableName = "subscribermetadata";
-
-                    using (var transaction = new Transaction(session))
-                    {
-                        JET_TABLEID tableid;
-                        Api.JetCreateTable(session, dbid, tableName, 16, 100, out tableid);
-                        CreateColumnsAndIndexesForSubscriberMetadata(session, tableid);
-                        Api.JetCloseTable(session, tableid);
-                        transaction.Commit(CommitTransactionGrbit.LazyFlush);
-                    }
+                    Api.JetCreateDatabase(session, DatabaseName, null, out dbid, CreateDatabaseGrbit.OverwriteExisting);
+                    CreateMessageTable(MessageTypeName, session, dbid);
+                    CreateSubscriberMetadataTable(MessageTypeName, session, dbid);
                 }
+            }
+        }
+
+        public static void CreateMessageStore(string MessageTypeName)
+        {
+            using (var instance = new Instance("createdatabase"))
+            {
+                instance.Parameters.CircularLog = true;
+                instance.Init();
+                using (var session = new Session(instance))
+                {
+                    JET_DBID dbid;
+                    Api.JetOpenDatabase(session, DatabaseName, null, out dbid, OpenDatabaseGrbit.None);
+                    CreateMessageTable(MessageTypeName, session, dbid);
+                    CreateSubscriberMetadataTable(MessageTypeName, session, dbid);
+                }
+            }
+        }
+
+        private static void CreateSubscriberMetadataTable(string tableName, Session session, JET_DBID dbid)
+        {
+            tableName = tableName + "subscribermetadata";
+
+            using (var transaction = new Transaction(session))
+            {
+                JET_TABLEID tableid;
+                Api.JetCreateTable(session, dbid, tableName, 16, 100, out tableid);
+                CreateColumnsAndIndexesForSubscriberMetadata(session, tableid);
+                Api.JetCloseTable(session, tableid);
+                transaction.Commit(CommitTransactionGrbit.LazyFlush);
+            }
+        }
+
+        private static void CreateMessageTable(string tableName, Session session, JET_DBID dbid)
+        {
+            tableName = tableName + "messages";
+            using (var transaction = new Transaction(session))
+            {
+                JET_TABLEID tableid;
+                Api.JetCreateTable(session, dbid, tableName, 16, 100, out tableid);
+                CreateColumnsAndIndexes(session, tableid);
+                Api.JetCloseTable(session, tableid);
+                transaction.Commit(CommitTransactionGrbit.LazyFlush);
             }
         }
 
@@ -178,6 +203,31 @@ namespace Phantom.PubSub
 
                 transaction.Commit(CommitTransactionGrbit.LazyFlush);
             }
+        }
+
+        public static bool DoesStoreExist<T>(string storeName)
+        {
+            JET_DBID dbid;
+            using (var store = new EsentStore<T>(false))
+            {
+                return store.DoesStoreExist();
+            }
+            //using(var instance =  EsentInstanceService.Service.EsentInstance)
+            //{
+            //    using(var session = new Session(instance))
+            //    {
+            //        Api.JetOpenDatabase(session, DatabaseName, null, out dbid, OpenDatabaseGrbit.None);
+            //        JET_TABLEID tableid;
+            //if (Api.TryOpenTable(session, dbid, storeName + "messages", OpenTableGrbit.None, out tableid))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            //    }
+            //}
         }
     }
 }

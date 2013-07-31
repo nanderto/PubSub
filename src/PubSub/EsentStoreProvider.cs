@@ -2,253 +2,257 @@
 // <copyright file="EsentStoreProvider.cs" company="The Phantom Coder">
 //     Copyright The Phantom Coder. All rights reserved.
 // </copyright>
-//-----------------------------------------------------------------------
+//------------------------------------------------------------------
 namespace Phantom.PubSub
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Isam.Esent.Interop;
+    using Newtonsoft.Json;
+    using System.Transactions;
 
-    public class EsentStoreProvider<T> : IStoreProvider<T>
+    /// <summary>
+    /// Esent Implementation of the IStoreProvider.
+    /// </summary>
+    /// <typeparam name="T">The type that this component handles</typeparam>
+    public class EsentStoreProvider<T> : IStoreProvider<T> 
     {
         private static readonly object SyncLock = new object();
+        
         private static volatile bool isStoreConfigured = false;
+        
         private string longStoreName = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EsentStoreProvider{T}" /> class.
+        /// </summary>
         public EsentStoreProvider()
         {
             this.Name = CleanupName(typeof(T).ToString());
-            this.longStoreName = this.Name + ".edb";
+            this.longStoreName = "PhantomPubSub";
 
-            if (!isStoreConfigured)
+            bool esentTempPathInUseExceptionTrue = false;
+            int retryCount = 0;
+            do
             {
-                lock (SyncLock)
+                esentTempPathInUseExceptionTrue = false;
+                try
                 {
-                    isStoreConfigured = this.ConfigureStore(this.longStoreName, StoreTransactionOption.SupportTransactions);
+                    if (!isStoreConfigured)
+                    {
+                        lock (SyncLock)
+                        {
+                            if (!isStoreConfigured)
+                            {
+                                isStoreConfigured = this.ConfigureStore(this.Name, StoreTransactionOption.SupportTransactions);
+                            }
+                        }
+                    }
                 }
-            }
-        }
+                catch (EsentTempPathInUseException)
+                {
+                    Trace.WriteLine("Path in use exception" + retryCount.ToString(CultureInfo.CurrentCulture));
+                    esentTempPathInUseExceptionTrue = true;
+                    ++retryCount;                    
+                    if (retryCount > 4)
+                    {
+                        throw;
+                    }
+
+                    Thread.Sleep(retryCount * retryCount * 1000);
+                }
+            }          
+            while (esentTempPathInUseExceptionTrue);           
+        }       
 
         public string Name { get; set; }
 
-        public static bool DoesDatabaseExist(string databaseName)
-        {
-            bool result = false;
-
-            using (var instance = new Instance("DoesDatabaseExistInstance"))
-            {
-                instance.Parameters.CircularLog = true;
-                instance.Init();
-                using (var session = new Session(instance))
-                {
-                    JET_DBID dbid;
-                    try
-                    {
-                        Api.JetAttachDatabase(session, databaseName, AttachDatabaseGrbit.None);
-                        Api.JetOpenDatabase(session, databaseName, null, out dbid, OpenDatabaseGrbit.None);
-                        ////JET_TABLEID tableid;
-                        result = true;
-                        ////does not seem to be working 
-                        ////if (Api.TryOpenTable(session, dbid, "message", OpenTableGrbit.None, out tableid))
-                        ////{
-                        ////    IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, tableid);
-                        ////    JET_COLUMNID columnidMessage = columnids["message"];
-                        ////    JET_COLUMNID columnidMetaData = columnids["metadata"];
-                        ////    result = true;
-                        ////    //Assert.IsInstanceOfType(columnidMessage, typeof(JET_COLUMNID));
-                        ////    //Assert.IsInstanceOfType(columnidMetaData, typeof(JET_COLUMNID));
-                        ////    //AddMessage(session, tableid, ref columnidMessage, ref columnidMetaData);
-                        ////}
-                    }
-                    catch (EsentFileNotFoundException)
-                    {
-                        result = false;
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        public static void CreateDatabase(string database)
-        {
-            var tableName = "messages";
-
-            using (var instance = new Instance("createdatabase"))
-            {
-                instance.Init();
-                using (var session = new Session(instance))
-                {
-                    JET_DBID dbid;
-                    Api.JetCreateDatabase(session, database, null, out dbid, CreateDatabaseGrbit.OverwriteExisting);
-                    using (var transaction = new Transaction(session))
-                    {
-                        JET_TABLEID tableid;
-                        Api.JetCreateTable(session, dbid, tableName, 16, 100, out tableid);
-                        CreateColumnsAndIndexes(session, tableid);
-                        Api.JetCloseTable(session, tableid);
-                        transaction.Commit(CommitTransactionGrbit.LazyFlush);
-                    }
-                }
-            }
-        }
-
         public bool ConfigureStore(string storeName, StoreTransactionOption storeTransactionOption)
         {
-            if (!DoesDatabaseExist(storeName))
+            if (!EsentConfig.DoesDatabaseExist("PhantomPubsub.edb"))
             {
-                CreateDatabase(storeName);
+                EsentConfig.CreateDatabaseandMessageStore(storeName);
+            }
+            else
+            {
+                if (!EsentConfig.DoesStoreExist<T>(storeName))
+                {
+                    EsentConfig.CreateMessageStore(storeName);
+                }
             }
 
             return true;
         }
 
-        public bool RemoveFromStorage(string messageId)
+        public bool SubscriberGroupCompletedForMessage(string messageId)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void ProcessStoreAsBatch(Func<MessagePacket<T>, string, bool> messageHandlingInitiated)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckItsStillInTheStore(string messageId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string PutMessage(MessagePacket<T> message)
-        {
-            throw new NotImplementedException();
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "This is spelled correctly")]
-        public List<MessagePacket<T>> GetAllMessages()
-        {
-            using (var instance = new Instance("GetAllMessagesInstance"))
+            if (messageHandlingInitiated == null)
             {
-                instance.Parameters.CircularLog = true;
-                instance.Init();
-                using (var session = new Session(instance))
+                throw new ArgumentNullException("messageHandlingInitiated");
+            }
+            
+            IEnumerable<MessagePacket<T>> result = null;
+            using (var store = new EsentStore<T>())
+            {
+                Repository<T> repository = new Repository<T>(store);
+                result = repository.GetAllMessages();
+                Trace.WriteLineIf(Utils.EsentSwitch.TraceInfo, "Their are: " + result.Count().ToString(CultureInfo.CurrentCulture) + " messages in store"); 
+                int i = 0;
+                foreach (var item in result)
                 {
-                    JET_DBID dbid;
-                    Api.JetAttachDatabase(session, this.longStoreName, AttachDatabaseGrbit.None);
-                    Api.JetOpenDatabase(session, this.longStoreName, null, out dbid, OpenDatabaseGrbit.None);
-
-                    JET_TABLEID tableid;
-
-                    if (Api.TryOpenTable(session, dbid, "messages", OpenTableGrbit.None, out tableid))
+                    if (item != null)
                     {
-                        IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(session, tableid);
-
-                        return GetAllRecords(session, tableid, null, columnids);
-                    }
-                    else
-                    {
-                        throw new ApplicationException("Messages Table does not exist in database");
+                        try
+                        {
+                            i++;
+                            messageHandlingInitiated(item, item.MessageId.ToString());
+                        }
+                        catch (ApplicationException ex)
+                        {
+                            //// log the error but just let the application continue.
+                            //// this will get retried. 
+                            //// need to handle bad messages that cause this to fail 
+                            //// all other exceptions allowed to traverse back up stack
+                            //// todo do this
+#if DEBUG
+                            Counter.Increment(6); 
+#endif
+                            Trace.WriteLine(ex); 
+                            ////this.HandlePoisonMessage(id);
+                        }
+                        ////catch (Exception ex)
+                        ////{
+                        ////    // these catches will ensure next message is processed
+                        ////    Counter.Increment(6);
+                        ////    Trace.WriteLine(ex);
+                        ////}
                     }
                 }
             }
         }
 
+        public bool CheckItsStillInTheStore(string messageId)
+        {
+            using (var store = new EsentStore<T>())
+            {
+                Repository<T> repository = new Repository<T>(store);
+                var result = repository.PeekForMessage(messageId);
+                return result;
+            }         
+        }
+        
+        public void UpdateMessageStore(MessagePacket<T> messagePacket)
+        {
+            this.UpdateMessage(messagePacket);
+        }
+
+        public string PutMessage(MessagePacket<T> messagePacket)
+        {
+            if (messagePacket == null)
+            {
+                throw new ArgumentNullException("MessagePacket is null for store name: " + this.Name);
+            }
+
+            if (string.IsNullOrEmpty(this.Name))
+            {
+                throw new ArgumentNullException("Store provider name is null for Store name: " + this.Name);
+            }
+
+            string messageId = string.Empty;
+
+            if (System.Transactions.Transaction.Current != null && System.Transactions.Transaction.Current.TransactionInformation.Status == TransactionStatus.Active)
+            {
+                var store = new EsentStore<T>(true);
+                var resourceManager = new EsentStoreResourceManager<T>(store);
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    Repository<T> repository = new Repository<T>(resourceManager);
+                    messageId = repository.AddMessage(messagePacket).ToString(CultureInfo.CurrentCulture);
+                    scope.Complete();
+                }
+            }
+            else
+            {
+                using (var store = new EsentStore<T>(true))
+                {
+                    Repository<T> repository = new Repository<T>(store);
+                    messageId = repository.AddMessage(messagePacket).ToString(CultureInfo.CurrentCulture);
+                    store.Commit();
+                }
+            }
+            return messageId;
+        }
+
+        public string UpdateMessage(MessagePacket<T> message)
+        {
+            if (string.IsNullOrEmpty(this.Name))
+            {
+                throw new ArgumentNullException("Queue provider name is null for Queue name: " + this.Name);
+            } 
+            
+            if (message == null)
+            {
+                throw new ArgumentNullException("Message is null for Queue name: " + this.Name);
+            }
+            
+            string result = string.Empty;
+            using (var store = new EsentStore<T>(true))
+            {
+                Repository<T> repository = new Repository<T>(store);
+                repository.UpdateMessage(message);
+                store.Commit();
+            }
+
+            return result;
+        }
+
+        public List<MessagePacket<T>> GetAllMessages()
+        {
+            List<MessagePacket<T>> result = null;
+            using (var store = new EsentStore<T>())
+            {
+                Repository<T> repository = new Repository<T>(store);
+                result = repository.GetAllMessages().ToList();
+            }
+
+            return result;
+        }
+
+        public void DeleteMessage(string messageId)
+        {
+            using (var store = new EsentStore<T>())
+            {
+                Repository<T> repository = new Repository<T>(store);
+                repository.Delete(messageId);
+            }
+        }
+
+        public int GetMessageCount()
+        {
+            int result = 0;
+            using (var store = new EsentStore<T>())
+            {
+                Repository<T> repository = new Repository<T>(store);
+                result = repository.GetRecordCount();
+            }
+
+            return result;
+        }
+       
         private static string CleanupName(string dirtyname)
         {
             return dirtyname.ToString().Replace("{", string.Empty).Replace("}", string.Empty).Replace("_", string.Empty).Replace(".", string.Empty);
-        }
-
-        /// <summary>
-        /// Setup the meta-data for the given table.
-        /// </summary>
-        /// <param name="sesid">The session to use.</param>
-        /// <param name="tableid">
-        /// The table to add the columns/indexes to. This table must be opened exclusively.
-        /// </param>
-        private static void CreateColumnsAndIndexes(JET_SESID sesid, JET_TABLEID tableid)
-        {
-            using (var transaction = new Transaction(sesid))
-            {
-                JET_COLUMNID columnid;
-
-                var columndef = new JET_COLUMNDEF
-                {
-                    coltyp = JET_coltyp.LongText,
-                    cp = JET_CP.Unicode
-                };
-
-                Api.JetAddColumn(sesid, tableid, "message", columndef, null, 0, out columnid);
-                Api.JetAddColumn(sesid, tableid, "metadata", columndef, null, 0, out columnid);
-
-                columndef = new JET_COLUMNDEF
-                {
-                    coltyp = JET_coltyp.Long,
-                    grbit = ColumndefGrbit.ColumnAutoincrement
-                };
-
-                Api.JetAddColumn(sesid, tableid, "id", columndef, null, 0, out columnid);
-
-                string indexDef = "+id\0\0";
-                Api.JetCreateIndex(sesid, tableid, "primary", CreateIndexGrbit.IndexPrimary, indexDef, indexDef.Length, 100);
-
-                transaction.Commit(CommitTransactionGrbit.LazyFlush);
-            }
-        }
-
-        private static List<MessagePacket<T>> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, string index, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            Api.JetSetCurrentIndex(sesid, tableid, index);
-            return GetAllRecords(sesid, tableid, columnids);
-        }
-
-        private static List<MessagePacket<T>> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            List<MessagePacket<T>> results = null;
-            if (Api.TryMoveFirst(sesid, tableid))
-            {
-                results = GetRecordsToEnd(sesid, tableid, columnids);
-            }
-
-            return results;
-        }
-
-        private static List<MessagePacket<T>> GetRecordsToEnd(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            List<MessagePacket<T>> results = new List<MessagePacket<T>>();
-            do
-            {
-                results.Add(GetRow(sesid, tableid, columnids));
-            }
-            while (Api.TryMoveNext(sesid, tableid));
-            return results;
-        }
-
-        private static MessagePacket<T> GetRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
-        {
-            JET_COLUMNID columnidId = columnids["id"]; 
-            JET_COLUMNID columnidMessage = columnids["message"];
-            JET_COLUMNID columnidMetaData = columnids["metadata"];
-             
-            int? id = Api.RetrieveColumnAsInt32(sesid, tableid, columnidId);
-            string message = Api.RetrieveColumnAsString(sesid, tableid, columnidMessage);
-            string metadata = Api.RetrieveColumnAsString(sesid, tableid, columnidMetaData);
-             
-            return new MessagePacket<T>(GetBody(message), GetMetadata(metadata))
-                {
-                    Id = id.ToString()
-                };
-        }
-
-        private static List<ISubscriberMetadata> GetMetadata(string metadata)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static T GetBody(string message)
-        {
-            throw new NotImplementedException();
-        }
+        }    
     }
 }

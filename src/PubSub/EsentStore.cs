@@ -23,6 +23,8 @@ namespace Phantom.PubSub
     {
         private const string SubscriberMetadataTableName = "subscribermetadata"; 
         
+        private const string DatabaseName = "PhantomPubSub.edb";
+
         private Instance instance = null;
         
         private Session currentSession;
@@ -30,6 +32,10 @@ namespace Phantom.PubSub
         private JET_DBID dbid;
         
         private string longStoreName;
+
+        private string messageTableName;
+
+        private string messageMetadataTableName;
         
         private Transaction transaction;
         
@@ -40,10 +46,13 @@ namespace Phantom.PubSub
         /// </summary>
         public EsentStore()
         {
-            this.longStoreName = CleanupName(typeof(T).ToString()) + ".edb";
+            this.longStoreName = CleanupName(typeof(T).ToString());
+            this.messageTableName = new StringBuilder(this.longStoreName).Append("messages").ToString();
+            this.messageMetadataTableName = new StringBuilder(this.longStoreName).Append("subscribermetadata").ToString();
+
             if (this.instance == null)
             {
-                this.instance = EsentInstanceService<T>.Service.EsentInstance;
+                this.instance = EsentInstanceService.Service.EsentInstance;
             }
 
             this.currentSession = this.OpenSession();
@@ -55,10 +64,12 @@ namespace Phantom.PubSub
         /// <param name="forWrite">if set to <c>true</c> [for write].</param>
         public EsentStore(bool forWrite)
         {
-            this.longStoreName = CleanupName(typeof(T).ToString()) + ".edb";
+            this.longStoreName = CleanupName(typeof(T).ToString());
+            this.messageTableName = new StringBuilder(this.longStoreName).Append("messages").ToString();
+            this.messageMetadataTableName = new StringBuilder(this.longStoreName).Append("subscribermetadata").ToString();
             if (this.instance == null)
             {
-                this.instance = EsentInstanceService<T>.Service.EsentInstance;
+                this.instance = EsentInstanceService.Service.EsentInstance;
             }
 
             this.defaultForWrite = forWrite;
@@ -89,7 +100,7 @@ namespace Phantom.PubSub
         public Session OpenSession()
         {
             this.currentSession = new Session(this.instance);
-            Api.JetOpenDatabase(this.currentSession, this.longStoreName, null, out this.dbid, OpenDatabaseGrbit.None);
+            Api.JetOpenDatabase(this.currentSession, DatabaseName, null, out this.dbid, OpenDatabaseGrbit.None);
             if (this.defaultForWrite)
             {
                 this.transaction = new Transaction(this.currentSession);
@@ -167,7 +178,7 @@ namespace Phantom.PubSub
         public int? AddMessageInTransaction(string body, string metadata)
         {
             int? autoinc = null;
-            using (var table = new Table(this.currentSession, this.dbid, "messages", OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageTableName, OpenTableGrbit.None))
             {
                 IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
                 JET_COLUMNID autoincColumn = columnids["id"];
@@ -214,7 +225,7 @@ namespace Phantom.PubSub
             }
 
             int? autoinc = null;
-            using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
             {
                 IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
                 JET_COLUMNID autoincColumn = columnids["id"];
@@ -264,7 +275,7 @@ namespace Phantom.PubSub
         /// <returns>Subscriber Metadata</returns>
         public ISubscriberMetadata GetMetadata(int messageId, int metadataId)
         {
-            using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
             {
                 IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
                 
@@ -302,7 +313,7 @@ namespace Phantom.PubSub
         public List<ISubscriberMetadata> GetMetadata(int messageId)
         {
             List<ISubscriberMetadata> metadatas = new List<ISubscriberMetadata>();
-            using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
             {
                 metadatas = this.GetMetadata(messageId, table);
             }
@@ -322,7 +333,7 @@ namespace Phantom.PubSub
                 throw new ArgumentNullException("subscriberMetadata");
             }
 
-            using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
             {
                 IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
 
@@ -377,7 +388,7 @@ namespace Phantom.PubSub
                 throw new ArgumentNullException("metadatas");
             }
 
-            using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
             {
                 foreach (var item in metadatas)
                 {
@@ -393,11 +404,11 @@ namespace Phantom.PubSub
         /// <returns>List od MessagePackets</returns>
         public IEnumerable<MessagePacket<T>> GetAllMessages()
         {
-            using (var table = new Table(this.currentSession, this.dbid, "messages", OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageTableName, OpenTableGrbit.None))
             {
                 IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
                 Api.JetSetCurrentIndex(this.currentSession, table, null);
-                return this.GetAllRecords<T>(this.currentSession, table, columnids);
+                return this.GetAllRecords(this.currentSession, table, columnids);
             }
         }
 
@@ -408,12 +419,12 @@ namespace Phantom.PubSub
         /// <returns>Message Packet</returns>
         public MessagePacket<T> GetMessage(int messageId)
         {
-            using (var table = new Table(this.currentSession, this.dbid, "messages", OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageTableName, OpenTableGrbit.None))
             {
                 if (SeekToId(this.currentSession, table, messageId))
                 {
                     IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
-                    var result = GetOneRow<T>(this.currentSession, table, columnids);
+                    var result = GetOneRow(this.currentSession, table, columnids);
                     result.ReplaceMetadatas(this.GetMetadata(messageId));
                     return result;
                 }
@@ -428,7 +439,7 @@ namespace Phantom.PubSub
         /// <returns>the count</returns>
         public int GetRecordCount()
         {
-            using (var table = new Table(this.currentSession, this.dbid, "messages", OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageTableName, OpenTableGrbit.None))
             {
                 Api.JetSetCurrentIndex(this.currentSession, table, null);
                 return GetRecordCount(this.currentSession, table);
@@ -448,7 +459,7 @@ namespace Phantom.PubSub
         public bool PeekForMessage(string messageId)
         {
             bool result = false;
-            using (var table = new Table(this.currentSession, this.dbid, "messages", OpenTableGrbit.None))
+            using (var table = new Table(this.currentSession, this.dbid, this.messageTableName, OpenTableGrbit.None))
             {
                 if (SeekToId(this.currentSession, table, Convert.ToInt32(messageId, CultureInfo.CurrentCulture)))
                 {
@@ -472,7 +483,7 @@ namespace Phantom.PubSub
                     this.currentSession.Dispose();
                 }
 
-                EsentInstanceService<T>.Service.DisposeOfEsentInstance();
+                EsentInstanceService.Service.DisposeOfEsentInstance();
             }
         }
 
@@ -524,12 +535,11 @@ namespace Phantom.PubSub
         /// <summary>
         /// Gets the one row. 
         /// </summary>
-        /// <typeparam name="T">The type that this component handles</typeparam>
         /// <param name="sesid">The sesid.</param>
         /// <param name="tableid">The tableid.</param>
         /// <param name="columnids">The columnids.</param>
         /// <returns>database values from this row </returns>
-        private static MessagePacket<T> GetOneRow<T>(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
+        private static MessagePacket<T> GetOneRow(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
         {
             JET_COLUMNID columnidId = columnids["id"];
             JET_COLUMNID columnidMessage = columnids["message"];
@@ -547,7 +557,7 @@ namespace Phantom.PubSub
             return metadata;
         }
 
-        private static object Deserialize<T>(string input)
+        private static object Deserialize(string input)
         {
             return Serializer.Deserializer<T>(input);
         }
@@ -626,21 +636,20 @@ namespace Phantom.PubSub
         /// <summary>
         /// Gets all records.
         /// </summary>
-        /// <typeparam name="T">The type that this component handles</typeparam>
         /// <param name="sesid">The sesid.</param>
         /// <param name="tableid">The tableid.</param>
         /// <param name="columnids">The columnids.</param>
         /// <returns>INumerable of Message packets all records in database</returns>
-        private IEnumerable<MessagePacket<T>> GetAllRecords<T>(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
+        private IEnumerable<MessagePacket<T>> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
         {
             List<MessagePacket<T>> results = new List<MessagePacket<T>>();
             if (Api.TryMoveFirst(sesid, tableid))
             {
-                using (var table = new Table(this.currentSession, this.dbid, SubscriberMetadataTableName, OpenTableGrbit.None))
+                using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))
                 {
                     do
                     {
-                        var row = GetOneRow<T>(sesid, tableid, columnids);
+                        var row = GetOneRow(sesid, tableid, columnids);
                         if (row != null)
                         {
                             row.ReplaceMetadatas(this.GetMetadata((int)row.MessageId, table));
@@ -652,6 +661,12 @@ namespace Phantom.PubSub
             }
 
             return results;
+        }
+
+        internal bool DoesStoreExist()
+        {
+            JET_TABLEID tableid;
+            return Api.TryOpenTable(this.currentSession, this.dbid, this.longStoreName + "messages", OpenTableGrbit.None, out tableid);
         }
     }
 }

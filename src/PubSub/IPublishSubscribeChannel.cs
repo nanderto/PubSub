@@ -16,6 +16,14 @@ namespace Phantom.PubSub
     public interface IPublishSubscribeChannel<T>
     {
         /// <summary>
+        /// Gets the count. Number of messages in channel storage
+        /// </summary>
+        /// <value>
+        /// The count.
+        /// </value>
+        int Count { get; }
+
+        /// <summary>
         /// Gets the subscriptions.
         /// </summary>
         /// <returns>Returns <see cref="SubscribersCollection{T}"/></returns>

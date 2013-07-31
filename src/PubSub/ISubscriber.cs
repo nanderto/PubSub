@@ -1,16 +1,8 @@
-// ***********************************************************************
-// Assembly         : Phantom.PubSub
-// Author           : Noel
-// Created          : 09-04-2012
-//
-// Last Modified By : Noel
-// Last Modified On : 09-07-2012
-// ***********************************************************************
-// <copyright file="ISubscriber.cs" company="">
-//     . All rights reserved.
+//-----------------------------------------------------------------------
+// <copyright file="ISubscriber.cs" company="The Phantom Coder">
+//     Copyright The Phantom Coder. All rights reserved.
 // </copyright>
-// <summary></summary>
-// ***********************************************************************
+//----------------------------------------------------------------
 namespace Phantom.PubSub
 {
     using System;
@@ -25,7 +17,7 @@ namespace Phantom.PubSub
     /// <summary>
     /// Interface ISubscriber
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type that this component handles</typeparam>
     public interface ISubscriber<T>
     {
         /// <summary>
@@ -105,7 +97,7 @@ namespace Phantom.PubSub
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>Task{System.Boolean}.</returns>
+        /// <returns>Task of Bool.</returns>
         Task<bool> RunAsync(T message, CancellationToken cancellationToken);
     }
 }

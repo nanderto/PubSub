@@ -146,6 +146,9 @@ namespace UnitTests
             var messageForQueue = new MessagePacket<Models.Message>(m, metadatalist);
             return messageForQueue;
         }
+
+        
+
         //public static bool IsQueueEmpty()
         //{
         //    if (msgQ == null)
@@ -384,6 +387,31 @@ namespace UnitTests
             return recoverableMessage.Id;
         }
 
+        public static MessageAdder<T> AddAMessage<T>()
+        {
+            string name = CleanupName(typeof(T).ToString());
+                
+            
+
+            T message = (T)Activator.CreateInstance(typeof(T));
+
+
+
+           
+
+            //message.Name = "Gwen";
+            //m.BatchNumber = 1;
+            //m.Guid = System.Guid.NewGuid();
+            //m.MessageID = "MessageID";
+            //m.SubscriptionID = "SubscriptionID";
+            //m.MessagePutTime = DateTime.Now;
+
+            //var message = GetMessagePacketwith10SecondTTE(m);
+
+            var messageAdder = new MessageAdder<T>(message, name);
+            return messageAdder;
+        }
+
 
         public static string AddAMessageMessage()
         {
@@ -464,23 +492,88 @@ namespace UnitTests
             }
             return recoverableMessage.Id;
         }
+    
+        public static string CleanupName(string dirtyname)
+        {
+            return dirtyname.ToString().Replace("{", string.Empty).Replace("}", string.Empty).Replace("_", string.Empty).Replace(".", string.Empty);
+        }
     }
+        public class TestSubscriberZZZ<T> : Subscriber<T>
+        {
+            #region ISubscriber Members
+            public override bool Process(T input)
+            {
+                System.Diagnostics.Debug.WriteLine("Writing stuff: {0}", "");
+                return true;
+            }
 
-    public class TestSubscriberZZZ<T> : Subscriber<T>
+
+            public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+            {
+                throw new NotImplementedException();
+            }
+
+            #endregion
+        }
+    
+
+    public class MessageAdder<T>
     {
-        #region ISubscriber Members
-        public override bool Process(T input)
+        public MessagePacket<T> messagePacket;
+        private  string QueueName;
+        private T message;
+        public List<ISubscriberMetadata> metadatalist;
+
+        public MessageAdder(T message, string queueName)
         {
-            System.Diagnostics.Debug.WriteLine("Writing stuff: {0}", "");
-            return true;
+            this.message = message;
+            this.QueueName = queueName;
+        }
+        
+        public string AddMessage()
+        {
+
+            Message recoverableMessage = new Message();
+            recoverableMessage.Body = messagePacket;
+            recoverableMessage.Formatter = new BinaryMessageFormatter(System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, System.Runtime.Serialization.Formatters.FormatterTypeStyle.TypesAlways);
+            recoverableMessage.Recoverable = true;
+            var msgQ = new MessageQueue(@".\private$\" + QueueName);
+            try
+            {
+                msgQ.Send(recoverableMessage);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception::::::: " + ex.ToString());
+            }
+            finally
+            {
+            }
+            return recoverableMessage.Id;
         }
 
-
-        public override Task<bool> ProcessAsync(T input, CancellationToken cancellationToken)
+        public MessageAdder<T> WithSubscriberMetadataFor(Type SubscriberType, TimeSpan timeToExpire)
         {
-            throw new NotImplementedException();
+            if(metadatalist ==null)
+            {
+                metadatalist = new List<ISubscriberMetadata>();
+            }
+            var subscribermetadata1 = new SubscriberMetadata()
+            {
+                Name = SubscriberType.Name,// TestHelper.CleanupName(SubscriberType.ToString()),
+                TimeToExpire = timeToExpire,
+                StartTime = DateTime.Now
+            };
+
+            metadatalist.Add(subscribermetadata1);
+
+            if (messagePacket == null)
+            {
+                messagePacket = new MessagePacket<T>(message, metadatalist);
+            }
+            return this;
         }
 
-        #endregion
+        
     }
 }

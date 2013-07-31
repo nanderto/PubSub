@@ -11,7 +11,7 @@ namespace Phantom.PubSub
     /// <summary>
     /// Interface IStoreProvider
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type that this component handles</typeparam>
     public interface IStoreProvider<T>
     {
         /// <summary>
@@ -24,8 +24,10 @@ namespace Phantom.PubSub
         /// Configures the store.
         /// </summary>
         /// <param name="storeName">Name of the store.</param>
-        /// <param name="queueTransactionOption">The queue transaction option.</param>
-        /// <returns><c>true</c> if store id configured, <c>false</c> otherwise</returns>
+        /// <param name="storeTransactionOption">The store transaction option.</param>
+        /// <returns>
+        ///   <c>true</c> if store id configured, <c>false</c> otherwise
+        /// </returns>
         bool ConfigureStore(string storeName, StoreTransactionOption storeTransactionOption);
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace Phantom.PubSub
         /// </summary>
         /// <param name="messageId">The message id.</param>
         /// <returns><c>true</c> if message is removed from store, <c>false</c> otherwise</returns>
-        bool RemoveFromStorage(string messageId);
+        bool SubscriberGroupCompletedForMessage(string messageId);
 
         /// <summary>
         /// Processes the store as batch.
@@ -51,8 +53,20 @@ namespace Phantom.PubSub
         /// <summary>
         /// Puts the message.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <returns>System.String.</returns>
-        string PutMessage(MessagePacket<T> message);
+        /// <param name="messagePacket">The message.</param>
+        /// <returns>Message Id.</returns>
+        string PutMessage(MessagePacket<T> messagePacket);
+
+        /// <summary>
+        /// Gets the message count, in the store.
+        /// </summary>
+        /// <returns>the number of messages</returns>
+        int GetMessageCount();
+
+        /// <summary>
+        /// Updates the message store.
+        /// </summary>
+        /// <param name="messagePacket">The message packet.</param>
+        void UpdateMessageStore(MessagePacket<T> messagePacket);
     }
 }
