@@ -1,4 +1,5 @@
 Thumbs.db
+*.ncrunchsolution
 *.obj
 *.exe
 *.pdb
