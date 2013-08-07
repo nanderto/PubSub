@@ -45,53 +45,6 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharpEntities", "FSharpEntities\FSharpEntities.fsproj", "{32A8C673-0CE6-4247-92BD-26EB81B65D55}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 13
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://anderton.tfspreview.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = BusinessLogic\\BusinessLogic.csproj
-		SccProjectName1 = BusinessLogic
-		SccLocalPath1 = BusinessLogic
-		SccProjectUniqueName2 = Data\\Data.csproj
-		SccProjectName2 = Data
-		SccLocalPath2 = Data
-		SccProjectUniqueName3 = Entities\\Entities.csproj
-		SccProjectName3 = Entities
-		SccLocalPath3 = Entities
-		SccProjectUniqueName4 = Interceptor\\Interceptor.csproj
-		SccProjectName4 = Interceptor
-		SccLocalPath4 = Interceptor
-		SccProjectUniqueName5 = Tests\\Tests.csproj
-		SccProjectTopLevelParentUniqueName5 = PubSub.sln
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = UnitTests\\IntegrationTests.csproj
-		SccProjectTopLevelParentUniqueName6 = PubSub.sln
-		SccProjectName6 = UnitTests
-		SccLocalPath6 = UnitTests
-		SccProjectUniqueName7 = ReflectionTests\\ReflectionTests.csproj
-		SccProjectTopLevelParentUniqueName7 = PubSub.sln
-		SccProjectName7 = ReflectionTests
-		SccLocalPath7 = ReflectionTests
-		SccProjectUniqueName8 = PubSub\\Phantom.PubSub.csproj
-		SccProjectName8 = PubSub
-		SccLocalPath8 = PubSub
-		SccProjectUniqueName9 = Interface\\Interface.csproj
-		SccProjectName9 = Interface
-		SccLocalPath9 = Interface
-		SccProjectUniqueName10 = EsentTests\\EsentTests.csproj
-		SccProjectTopLevelParentUniqueName10 = PubSub.sln
-		SccProjectName10 = EsentTests
-		SccLocalPath10 = EsentTests
-		SccProjectUniqueName11 = TestUtils\\TestUtils.csproj
-		SccProjectTopLevelParentUniqueName11 = PubSub.sln
-		SccProjectName11 = TestUtils
-		SccLocalPath11 = TestUtils
-		SccProjectUniqueName12 = FSharpEntities\\FSharpEntities.fsproj
-		SccProjectName12 = FSharpEntities
-		SccLocalPath12 = FSharpEntities
-	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = ReferenceImplementatikon.vsmdi
 	EndGlobalSection
