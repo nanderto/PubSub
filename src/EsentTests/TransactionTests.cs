@@ -62,7 +62,7 @@ namespace EsentTests
             
             if (!EsentConfig.DoesDatabaseExist("EsentTestsDummy"))
             {
-                EsentConfig.CreateDatabaseandMessageStore("EsentTestsDummy");
+                EsentConfig.CreateDatabaseAndMessageStore("EsentTestsDummy");
             }
 
             try
@@ -104,7 +104,7 @@ namespace EsentTests
 
             if (!EsentConfig.DoesDatabaseExist("EsentTestsDummy.edb"))
             {
-                EsentConfig.CreateDatabaseandMessageStore("EsentTestsDummy.edb");
+                EsentConfig.CreateDatabaseAndMessageStore("EsentTestsDummy.edb");
             }
 
             try

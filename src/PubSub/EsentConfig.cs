@@ -26,21 +26,14 @@ namespace Phantom.PubSub
         /// <returns>True if database exists</returns>
         public static bool DoesDatabaseExist(string databaseName)
         {
-            bool result = false;
-
-            if (File.Exists(databaseName))
-            {
-                result = true;
-            }
-
-            return result;
+            return File.Exists(databaseName);
         }
 
         /// <summary>
         /// Creates the message store.
         /// </summary>
-        /// <param name="database">The database.</param>
-        public static void CreateDatabaseandMessageStore(string MessageTypeName)
+        /// <param name="messageTypeName">Name of store</param>
+        public static void CreateDatabaseAndMessageStore(string messageTypeName)
         {
             using (var instance = new Instance("createdatabase"))
             {
@@ -50,13 +43,13 @@ namespace Phantom.PubSub
                 {
                     JET_DBID dbid;
                     Api.JetCreateDatabase(session, DatabaseName, null, out dbid, CreateDatabaseGrbit.OverwriteExisting);
-                    CreateMessageTable(MessageTypeName, session, dbid);
-                    CreateSubscriberMetadataTable(MessageTypeName, session, dbid);
+                    CreateMessageTable(messageTypeName, session, dbid);
+                    CreateSubscriberMetadataTable(messageTypeName, session, dbid);
                 }
             }
         }
 
-        public static void CreateMessageStore(string MessageTypeName)
+        public static void CreateMessageStore(string messageTypeName)
         {
             using (var instance = new Instance("createdatabase"))
             {
@@ -66,8 +59,8 @@ namespace Phantom.PubSub
                 {
                     JET_DBID dbid;
                     Api.JetOpenDatabase(session, DatabaseName, null, out dbid, OpenDatabaseGrbit.None);
-                    CreateMessageTable(MessageTypeName, session, dbid);
-                    CreateSubscriberMetadataTable(MessageTypeName, session, dbid);
+                    CreateMessageTable(messageTypeName, session, dbid);
+                    CreateSubscriberMetadataTable(messageTypeName, session, dbid);
                 }
             }
         }

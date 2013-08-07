@@ -21,17 +21,25 @@ namespace EsentTests
 
         public static void CreateDatabase(string storeName)
         {
-             bool esentTempPathInUseExceptionTrue = false;
-            int retryCount = 0;
-            if (!File.Exists(DatabaseName))
-            {
+            CreateDatabase(storeName, null);
+        }
 
+        public static void CreateDatabase(string storeName, string path)
+        {
+            string FullPath = DatabaseName;
+            if (!string.IsNullOrEmpty(path))
+            {
+                FullPath = path + "\\" + DatabaseName;
+            }
+            bool esentTempPathInUseExceptionTrue = false;
+            int retryCount = 0;
+            if (!File.Exists(FullPath))
+            {
                 do
                 {
                     esentTempPathInUseExceptionTrue = false;
                     try
                     {
-
                         using (var instance = new Instance("createdatabasetest"))
                         {
                             instance.Init();

@@ -45,8 +45,8 @@ namespace EsentTests
         [TestMethod, TestCategory("IntegrationEsent")]
         public void DoesDatabaseExistReturnsTrue()
         {
-            TestHelper.CreateDatabase("EsentTestsDummy");
             string binFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            TestHelper.CreateDatabase("EsentTestsDummy", binFolder);
             IList<string> dllFiles = Directory.GetFiles(binFolder, "*.edb", SearchOption.TopDirectoryOnly).ToList();
             Assert.IsTrue(dllFiles[0].Contains("PhantomPubSub.edb"));
 

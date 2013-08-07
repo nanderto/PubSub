@@ -91,11 +91,11 @@
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateColumnsAndIndexesJET_SESIDJET_TABLEID">
             <summary>Sets the shim of EsentConfig.CreateColumnsAndIndexes(JET_SESID sesid, JET_TABLEID tableid)</summary>
         </member>
-        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateDatabaseandMessageStoreString">
-            <summary>Sets the shim of EsentConfig.CreateDatabaseandMessageStore(String MessageTypeName)</summary>
+        <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateDatabaseAndMessageStoreString">
+            <summary>Sets the shim of EsentConfig.CreateDatabaseAndMessageStore(String messageTypeName)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateMessageStoreString">
-            <summary>Sets the shim of EsentConfig.CreateMessageStore(String MessageTypeName)</summary>
+            <summary>Sets the shim of EsentConfig.CreateMessageStore(String messageTypeName)</summary>
         </member>
         <member name="P:Phantom.PubSub.Fakes.ShimEsentConfig.CreateMessageTableStringSessionJET_DBID">
             <summary>Sets the shim of EsentConfig.CreateMessageTable(String tableName, Session session, JET_DBID dbid)</summary>

@@ -77,7 +77,7 @@ namespace Phantom.PubSub
         {
             if (!EsentConfig.DoesDatabaseExist("PhantomPubsub.edb"))
             {
-                EsentConfig.CreateDatabaseandMessageStore(storeName);
+                EsentConfig.CreateDatabaseAndMessageStore(storeName);
             }
             else
             {
