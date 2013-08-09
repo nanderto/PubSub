@@ -21,7 +21,7 @@ namespace Phantom.PubSub
     {
         public static string Serialize<T>(T input)
         {
-            return JsonConvert.SerializeObject(input, Formatting.Indented);
+            return JsonConvert.SerializeObject(input, Formatting.None);
         }
 
         public static T Deserializer<T>(string input)
@@ -31,27 +31,27 @@ namespace Phantom.PubSub
 
         public static string GetSerializedMetadata(List<ISubscriberMetadata> input)
         {
-            return JsonConvert.SerializeObject(input, Formatting.Indented);
+            return JsonConvert.SerializeObject(input, Formatting.None);
         }
 
         public static string GetSerializedBody<T>(MessagePacket<T> input)
         {
-            return JsonConvert.SerializeObject(input, Formatting.Indented);
+            return JsonConvert.SerializeObject(input, Formatting.None);
         }
 
         public static MessagePacket<T> DeserializeMessagePacket<T>(string body, string metadata)
         {
-            MessagePacket<T> mp = (MessagePacket<T>)JsonConvert.DeserializeObject<MessagePacket<T>>(body, new SubscriberMetadataConverter());
+            var mp = (MessagePacket<T>)JsonConvert.DeserializeObject<MessagePacket<T>>(body, new SubscriberMetadataConverter());
             mp.ReplaceMetadatas((List<ISubscriberMetadata>)JsonConvert.DeserializeObject<List<ISubscriberMetadata>>(metadata, new SubscriberMetadataConverter()));
             return mp;
         }
 
         public static MessagePacket<T> DeserializeMessagePacket<T>(string body)
         {
-            MessagePacket<T> mp = (MessagePacket<T>)JsonConvert.DeserializeObject<MessagePacket<T>>(body, new SubscriberMetadataConverter());
+            var mp = (MessagePacket<T>)JsonConvert.DeserializeObject<MessagePacket<T>>(body, new SubscriberMetadataConverter());
             var metadata = JObject.Parse(body);
             IList<JToken> metadataList = metadata["SubscriberMetadataList"].Children().ToList();
-            List<ISubscriberMetadata> metadatas = new List<ISubscriberMetadata>();
+            var metadatas = new List<ISubscriberMetadata>();
             foreach (var item in metadataList)
             {
                 var ret = JsonConvert.DeserializeObject<ISubscriberMetadata>(item.ToString(), new SubscriberMetadataConverter());

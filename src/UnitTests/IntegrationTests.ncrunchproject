@@ -13,13 +13,48 @@
   <AnalyseExecutionTimes>true</AnalyseExecutionTimes>
   <IncludeStaticReferencesInWorkspace>true</IncludeStaticReferencesInWorkspace>
   <DefaultTestTimeout>60000</DefaultTestTimeout>
-  <UseBuildConfiguration />
-  <UseBuildPlatform />
-  <ProxyProcessPath />
+  <UseBuildConfiguration></UseBuildConfiguration>
+  <UseBuildPlatform></UseBuildPlatform>
+  <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
+  <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
+  <BuildProcessArchitecture>x86</BuildProcessArchitecture>
   <IgnoredTests>
     <RegexTestSelector>
-      <RegularExpression>.*</RegularExpression>
+      <RegularExpression>IntegrationTests\.MessageReceiverTest\..*</RegularExpression>
     </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>IntegrationTests\.AssemblyLocatorTests\..*</RegularExpression>
+    </RegexTestSelector>
+    <RegexTestSelector>
+      <RegularExpression>UnitTests\.UserManagerServiceWithInterceptorTest\..*</RegularExpression>
+    </RegexTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.PutMessageInTransactionbutDontuseTransactionTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.PutMessageInTransactionbutDontCommitTransactionTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.MSMQPutMessageInTransactionProviderTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.MSMQPutMessageInTransactionProviderAbortedTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.CreateMSMQProvider</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.ConfigureQueueSupportTransactionsTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.RemoveFromQueueTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.SaveandRetrieveMessageWithMetadataTest</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>IntegrationTests.QueueProviderTest.SaveMessageTest</TestName>
+    </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

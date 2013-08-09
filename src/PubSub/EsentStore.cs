@@ -425,7 +425,11 @@ namespace Phantom.PubSub
                 {
                     IDictionary<string, JET_COLUMNID> columnids = Api.GetColumnDictionary(this.currentSession, table);
                     var result = GetOneRow(this.currentSession, table, columnids);
-                    result.ReplaceMetadatas(this.GetMetadata(messageId));
+                    if (result != null)
+                    {
+                        //null result caused by data tha cannot be deserialized.
+                        result.ReplaceMetadatas(this.GetMetadata(messageId));
+                    }
                     return result;
                 }
 
@@ -551,9 +555,18 @@ namespace Phantom.PubSub
             messageId = Api.RetrieveColumnAsInt32(sesid, tableid, columnidId);
             serializedBody = Api.RetrieveColumnAsString(sesid, tableid, columnidMessage);
             serializedMetadata = Api.RetrieveColumnAsString(sesid, tableid, columnidMetaData);
-
-            var metadata = Serializer.DeserializeMessagePacket<T>(serializedBody, serializedMetadata);
-            metadata.MessageId = messageId;
+            MessagePacket<T> metadata = null;
+            try
+            {
+                metadata = Serializer.DeserializeMessagePacket<T>(serializedBody, serializedMetadata);
+                metadata.MessageId = messageId;
+            }
+            catch (JsonReaderException ex)
+            {
+                //data in the table that cannot beserialized should get removed.
+                Api.JetDelete(sesid, tableid);
+            }
+                     
             return metadata;
         }
 
@@ -642,7 +655,7 @@ namespace Phantom.PubSub
         /// <returns>INumerable of Message packets all records in database</returns>
         private IEnumerable<MessagePacket<T>> GetAllRecords(JET_SESID sesid, JET_TABLEID tableid, IDictionary<string, JET_COLUMNID> columnids)
         {
-            List<MessagePacket<T>> results = new List<MessagePacket<T>>();
+            var results = new List<MessagePacket<T>>();
             if (Api.TryMoveFirst(sesid, tableid))
             {
                 using (var table = new Table(this.currentSession, this.dbid, this.messageMetadataTableName, OpenTableGrbit.None))

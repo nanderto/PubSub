@@ -13,22 +13,18 @@
   <AnalyseExecutionTimes>true</AnalyseExecutionTimes>
   <IncludeStaticReferencesInWorkspace>true</IncludeStaticReferencesInWorkspace>
   <DefaultTestTimeout>60000</DefaultTestTimeout>
-  <UseBuildConfiguration />
-  <UseBuildPlatform />
-  <ProxyProcessPath />
+  <UseBuildConfiguration></UseBuildConfiguration>
+  <UseBuildPlatform></UseBuildPlatform>
+  <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
+  <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
+  <BuildProcessArchitecture>x86</BuildProcessArchitecture>
   <IgnoredTests>
-    <RegexTestSelector>
-      <RegularExpression>EsentTests\.EsentStoreTests\..*</RegularExpression>
-    </RegexTestSelector>
     <RegexTestSelector>
       <RegularExpression>EsentTests\.RepositoryTests\..*</RegularExpression>
     </RegexTestSelector>
     <RegexTestSelector>
       <RegularExpression>EsentTests\.SerializerTests\..*</RegularExpression>
-    </RegexTestSelector>
-    <RegexTestSelector>
-      <RegularExpression>EsentTests\.TransactionTests\..*</RegularExpression>
     </RegexTestSelector>
     <NamedTestSelector>
       <TestName>EsentTests.EsentTest.CheckSerialization</TestName>
@@ -86,6 +82,30 @@
     </NamedTestSelector>
     <NamedTestSelector>
       <TestName>EsentTests.DatabaseTests.testdosomething</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.EsentStoreTests.UpdateMetadata_WithMultipleRecords</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.EsentStoreTests.GetMetadata_WithMultipleRecords</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.EsentStoreTests.AddMessageAndSeperateMetadata</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.TransactionTests.ResourceManagerExceptionthrown2</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.TransactionTests.ResourceManagerExceptionthrown</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.TransactionTests.Explore4TransactionManagement</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.TransactionTests.Explore3TransactionManagement</TestName>
+    </NamedTestSelector>
+    <NamedTestSelector>
+      <TestName>EsentTests.TransactionTests.Explore1</TestName>
     </NamedTestSelector>
   </IgnoredTests>
 </ProjectConfiguration>

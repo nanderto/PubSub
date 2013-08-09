@@ -35,10 +35,10 @@ namespace Phantom.PubSub
         /// <param name="messageTypeName">Name of store</param>
         public static void CreateDatabaseAndMessageStore(string messageTypeName)
         {
-            using (var instance = new Instance("createdatabase"))
+            using (var instance = EsentInstanceService.Service.EsentInstance)
             {
-                instance.Parameters.CircularLog = true;
-                instance.Init();
+                //instance.Parameters.CircularLog = true;
+                //instance.Init();
                 using (var session = new Session(instance))
                 {
                     JET_DBID dbid;
@@ -51,10 +51,8 @@ namespace Phantom.PubSub
 
         public static void CreateMessageStore(string messageTypeName)
         {
-            using (var instance = new Instance("createdatabase"))
+            using (var instance = EsentInstanceService.Service.EsentInstance)
             {
-                instance.Parameters.CircularLog = true;
-                instance.Init();
                 using (var session = new Session(instance))
                 {
                     JET_DBID dbid;

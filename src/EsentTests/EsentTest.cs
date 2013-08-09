@@ -45,10 +45,24 @@ namespace EsentTests
         [TestMethod, TestCategory("IntegrationEsent")]
         public void DoesDatabaseExistReturnsTrue()
         {
-            string binFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            TestHelper.CreateDatabase("EsentTestsDummy", binFolder);
-            IList<string> dllFiles = Directory.GetFiles(binFolder, "*.edb", SearchOption.TopDirectoryOnly).ToList();
-            Assert.IsTrue(dllFiles[0].Contains("PhantomPubSub.edb"));
+            //string binFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string binFolder = Environment.CurrentDirectory;
+
+            //TestHelper.CreateDatabase("EsentTestsDummy");
+            IList<string> dllFiles = Directory.GetFiles(binFolder, "*.edb", SearchOption.AllDirectories).ToList();
+            Assert.IsTrue(dllFiles.Count > 0);
+            if (dllFiles.Count > 0)
+            {
+                var result = "notfound";
+                foreach (var dllFile in dllFiles)
+                {
+                    if (dllFile.Contains("PhantomPubSub.edb"))
+                    {
+                        result = "found";
+                    }
+                }
+                Assert.AreEqual("found", result);
+            }
 
             var store = new EsentStoreProvider<Dummy>();
 
