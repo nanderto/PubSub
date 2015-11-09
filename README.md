@@ -10,18 +10,30 @@ It is designed to be used like a generic List, or Stack. In the end I chose not 
 what the best default store would be. 
 
 1. If I want to publish a customer object then first I need to create the type of store you would like to use, in this case I have chosen to use the ESENT store.
-IEsentStoreProvider<Customer> store = new EsentStoreProvider<Customer>();
 
+    ```cs 
+	IEsentStoreProvider<Customer> store = new EsentStoreProvider<Customer>();
+    ```
+    
 2. Create a new subscriber
-var pubsub = new PublishSubscribeChannel<Customer>(new EsentStoreProvider<Customer>()); 
 
+    ```cs 
+	var pubsub = new PublishSubscribeChannel<Customer>(new EsentStoreProvider<Customer>()); 
+    ```
+    
 3. Add some subscribers, in this case 2 subscribers with the time that the message will expire.
+
+    ```cs 
 	pubsub.AddSubscriberType(typeof(SpeedySubscriber<Customer>)).WithTimeToExpire(new TimeSpan(0, 1, 0))
               .AddSubscriberType(typeof(SpeedySubscriber2<Customer>)).WithTimeToExpire(new TimeSpan(0, 0, 100));
+    ```
 
 4. Now just publish your messages.
-       pubsub.PublishMessage(new Customer());
 
+    ```cs 
+    pubsub.PublishMessage(new Customer());
+    ```
+    
 **Notes:**
 - The subscribers need to inherit from ISubscriber
 - The creation of the store and channels hides alot of complexity. If you are using the MSMQ then it will check if you have queues set up and create them for you, if you dont.
@@ -40,6 +52,8 @@ your database and to the pubsub store and guarantee either both or neither will 
 **Using IoC (Ninject)**
 
 for a "User"
+
+```cs
 IKernel kernel = new StandardKernel();
 
 kernel.Bind<Store<User>>().ToSelf().InSingletonScope();
@@ -52,6 +66,7 @@ var store = kernel.Get<Store<User>>();
 var publishSubscribeChannel = kernel.Get<IPublishSubscribeChannel<User>>();
 
 store.Dispose();
+```
 
 **Features** A couple of additional features
 1) You dont need to add subscribers!! 
