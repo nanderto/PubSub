@@ -69,10 +69,14 @@ store.Dispose();
 ```
 
 **Features** A couple of additional features
-1) You dont need to add subscribers!! 
+
+1. You dont need to add subscribers!! 
+
 When a PubSubChannel is instantiated for the first time if you do not specify a subscriber
 then it will search through the executing folder for all components that implement the ISubscriber<YourmatchingType>. It will create a list and save the list for building
 each PubSubChannel as they are created.
+
 This functionality is intended to enable developers who are working on a product to provide a mechanism for their custmers to integrate via a Pubsub mechanism.
+
 For example you can add this funtionality to the Save of Customer. 
 Then a consumer of your product can create implementations of the ISubscriber<Customer>, throw them in the bin and presto they are integrated.
