@@ -56,7 +56,7 @@ namespace ReflectionTests
         }
 
 
-        [TestMethod, TestCategory("IntegrationMSMQ")]
+        [TestMethod, TestCategory("IntegrationMsmq")]
         public void Publish_1_Message_AutoConfig()
         {
             Publish_1_MessageHelper<Dummy>();
