@@ -27,3 +27,12 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.vssscc
 $tf*/
+/src/.vs/PubSub/v15/Server/sqlite3
+/src/EsentTests/Fakes/TestUtils.fakes
+/src/EsentTests/FakesAssemblies/TestUtils.Fakes.dll
+/src/EsentTests/FakesAssemblies/TestUtils.Fakes.fakesconfig
+/src/EsentTests/FakesAssemblies/TestUtils.Fakes.messages
+/src/EsentTests/FakesAssemblies/TestUtils.Fakes.xml
+/src/Tests/Fakes
+/src/Tests/FakesAssemblies
+/src/Backup/PubSub.sln

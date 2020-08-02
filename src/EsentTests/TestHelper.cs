@@ -17,11 +17,17 @@ namespace EsentTests
     class TestHelper
     {
         private const string TableName = "messages";
-        private const string DatabaseName = "PhantomPubSub.edb";
+        private static string DatabaseName = "PhantomPubSub.edb";
+
+        public static void CreateDatabase(string storeName, string databaseName)
+        {
+            DatabaseName = databaseName;
+            CreateDatabase(storeName);
+        }
 
         public static void CreateDatabase(string storeName)
         {
-             bool esentTempPathInUseExceptionTrue = false;
+            bool esentTempPathInUseExceptionTrue = false;
             int retryCount = 0;
             if (!File.Exists(DatabaseName))
             {

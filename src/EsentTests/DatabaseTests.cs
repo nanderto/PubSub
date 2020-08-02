@@ -12,11 +12,12 @@ namespace EsentTests
     {
         private static string DatabaseName = "PhantomPubSub.edb";
         private static string TableName = "messages";
+        private static string StoreName = "storenametest";
 
         [TestMethod, TestCategory("IntegrationEsent")]
         public void CreateDatabase()
         {
-            TestHelper.CreateDatabase(DatabaseName);
+            TestHelper.CreateDatabase(StoreName);
         }
 
         [TestMethod, TestCategory("IntegrationEsent")]
@@ -104,7 +105,8 @@ namespace EsentTests
         [TestMethod, TestCategory("IntegrationEsent")]
         public void IinsertAndReadOneMessage()
         {
-            TestHelper.CreateDatabase("EsentTestsDummy");
+            DatabaseName = "EsentTestsDummy";
+            TestHelper.CreateDatabase("EsentTestsDummy", "EsentTestsDummy");
             using (var instance = new Instance("MyInstanceName"))
             {
                 instance.Parameters.CircularLog = true;
