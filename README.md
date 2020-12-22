@@ -15,7 +15,7 @@ what the best default store would be.
 	IEsentStoreProvider<Customer> store = new EsentStoreProvider<Customer>();
     ```
     
-2. Create a new subscriber
+2. Create a new pblisher channel
 
     ```cs 
 	var pubsub = new PublishSubscribeChannel<Customer>(new EsentStoreProvider<Customer>()); 
